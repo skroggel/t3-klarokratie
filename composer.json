@@ -1,10 +1,10 @@
 {
     "name": "madj2k/t3-klarokratie",
     "type": "typo3-cms-extension",
-    "description": "Includes Klaro! consent-manager into TYPO3. Completly file-based configuration for versioning without having to take care of database-entries.",
+    "description": "Includes Klaro!-Consent-Manager into TYPO3. Completly file-based configuration for versioning without having to take care of database-entries.",
     "homepage": "https://www.steffenkroggel.de",
     "license": ["GPL-2.0+"],
-    "keywords": ["TYPO3 CMS", "Consent management", "Klaro!", "DSGVO", "GDPR"],
+    "keywords": ["TYPO3 CMS", "Consent management", "Klaro", "DSGVO", "GDPR"],
     "support": {
         "email": "developer@steffenkroggel.de"
     },
