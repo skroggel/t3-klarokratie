@@ -1,0 +1,20 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Madj2k\Klarokratie\:
+    resource: '../Classes/*'
+
+  Madj2k\Klarokratie\EventListener\JavaScript:
+    tags:
+      - name: event.listener
+        identifier: 'Klarokratie/JavaScript'
+        event: TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent
+
+  Madj2k\Klarokratie\EventListener\Stylesheet:
+    tags:
+      - name: event.listener
+        identifier: 'Klarokratie/Stylesheet'
+        event: TYPO3\CMS\Core\Page\Event\BeforeStylesheetsRenderingEvent

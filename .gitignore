@@ -11,6 +11,7 @@ bower_components
 /.bowerrc
 /.bundle
 /.env
+/.idea
 /.settings
 /.project
 /.php-version
