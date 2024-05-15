@@ -13,13 +13,29 @@ Simply install the extension.
 After that you have to define the path to your Klaro!-configuration in your website-setup (YAML).
 You can also use extension-paths if you use a site-package.
 ```
+klaro:
+    config: EXT:site_default/Resources/Public/Config/KlaroConfig.js
+    customCss: EXT:site_default/Resources/Public/Css/Klaro.css
+```
+Alternatively you can use this notation (working, but discouraged for the sake of having clear namespaces):
+```
 klaroConfig: EXT:site_default/Resources/Public/Config/KlaroConfig.js
 klaroCustomCss: EXT:site_default/Resources/Public/Css/Klaro.css
 ```
+If you do not define any configuration or custom CSS a default configuration with the default styles is used.
+However, you can explicitly disable the klaro! consent manager by using the following setting:
+```
+klaro:
+    disable: true
+```
+or - accordingly -
+```
+klaroDisable: true
+```
 ## Re-Open Modal
 If you want to show a menu-item on your website to re-open the modal, this extension
-adds a field tx_klarokratie_open_modal to the pages-table. You can use this field 
-to render your menu accordingly and add the required JS to re-open the modal
+adds a field tx_klarokratie_open_modal to the pages-table including the corresponding TCA-configuration for convenient switching using the page properties in the backend.
+You can use this field to render your menu accordingly and add the required JS to re-open the modal
 instead of a normal link to the page.
 
 Example:
@@ -28,11 +44,12 @@ Example:
    href="{f:if(condition:'{menuItem.data.tx_klarokratie_open_modal}', then:'#', else:'{menuItem.link}')}"
    {f:if(condition:'{menuItem.data.tx_klarokratie_open_modal}', then:'onclick="javascript:klaro.show(undefined, true);return false;"')}
    target="{menuItem.target}"
-   title="{menuItem.data.title}"
+   title="{menuItem.title}"
    role="menuitem">
     <span>{title}</span>
 </a>
 ```
+
 ## Custom CSS
 It is possible to include a custom CSS-file for adaption the Klaro! overlay to your needs (see second line above).
 The CSS partly uses variables which you can override in your custom CSS:
