@@ -53,8 +53,15 @@ class JavaScript
             ($site = $request->getAttribute('site'))
             && ($siteConfiguration = $site->getConfiguration())
         ){
-            if (file_exists(GeneralUtility::getFileAbsFileName($siteConfiguration['klaroConfig']))) {
-                $configFile = $siteConfiguration['klaroConfig'];
+
+            $disable = (bool) ($siteConfiguration['klaro']['disable'] ?? $siteConfiguration['klaroDisable']);
+            if ($disable) {
+                return;
+            }
+
+            $pathFromConfig = $siteConfiguration['klaro']['config'] ?? $siteConfiguration['klaroConfig'];
+            if (file_exists(GeneralUtility::getFileAbsFileName($pathFromConfig))) {
+                $configFile = $pathFromConfig;
             }
         }
 

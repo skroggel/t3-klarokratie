@@ -51,8 +51,14 @@ class Stylesheet
             ($site = $request->getAttribute('site'))
             && ($siteConfiguration = $site->getConfiguration())
         ){
-            if (file_exists(GeneralUtility::getFileAbsFileName($siteConfiguration['klaroCustomCss']))) {
-                $customCssFile = $siteConfiguration['klaroCustomCss'];
+            $disable = (bool) ($siteConfiguration['klaro']['disable'] ?? $siteConfiguration['klaroDisable']);
+            if ($disable) {
+                return;
+            }
+
+            $pathFromConfig= $siteConfiguration['klaro']['customCss'] ?? $siteConfiguration['klaroCustomCss'];
+            if (file_exists(GeneralUtility::getFileAbsFileName($pathFromConfig))) {
+                $customCssFile = $pathFromConfig;
             }
         }
 
