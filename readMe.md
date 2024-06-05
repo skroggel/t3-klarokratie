@@ -7,6 +7,7 @@ This extension automatically adds a consent-overlay to embedded YouTube- and Vim
 More information on Klaro! can be found here:
 * https://klaro.org/docs/getting-started
 * https://github.com/klaro-org/klaro-js
+
 ## Installation & Configuration
 Simply install the extension.
 
