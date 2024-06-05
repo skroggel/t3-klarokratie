@@ -54,13 +54,16 @@ class JavaScript
             && ($siteConfiguration = $site->getConfiguration())
         ){
 
-            $disable = (bool) ($siteConfiguration['klaro']['disable'] ?? $siteConfiguration['klaroDisable']);
+            $disable = (bool) ($siteConfiguration['klaro']['disable'] ?? ($siteConfiguration['klaroDisable'] ?? false));
             if ($disable) {
                 return;
             }
 
-            $pathFromConfig = $siteConfiguration['klaro']['config'] ?? $siteConfiguration['klaroConfig'];
-            if (file_exists(GeneralUtility::getFileAbsFileName($pathFromConfig))) {
+            $pathFromConfig = $siteConfiguration['klaro']['config'] ?? ($siteConfiguration['klaroConfig'] ?? '');
+            if (
+                ($pathFromConfig)
+                && (file_exists(GeneralUtility::getFileAbsFileName($pathFromConfig)))
+            ){
                 $configFile = $pathFromConfig;
             }
         }
