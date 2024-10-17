@@ -106,12 +106,12 @@ var klaroConfig = {
 		// translationsed defined under the 'zz' language code act as default
 		// translations.
 		zz: {
-			privacyPolicyUrl: "/datenschutzerklaerung",
+			privacyPolicyUrl: "/datenschutz",
 		},
 		// If you erase the "consentModal" translations, Klaro will use the
 		// bundled translations.
 		de: {
-			privacyPolicyUrl: "/datenschutzerklaerung",
+			privacyPolicyUrl: "/datenschutz",
 			consentModal: {
         title: "Hat jemand \"Cookies\" gesagt?!",
 				description:
@@ -297,61 +297,9 @@ var klaroConfig = {
       },
     },
     {
-      name: "google-tag-manager",
-      purposes: ["marketing"],
-      translations: {
-        zz: {
-          title: 'Google Tag Manager'
-        },
-        en: {
-          description: 'We use the "Google Tag Manager" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.'
-        },
-        de: {
-          description: 'Wir setzen auf unserer Website den "Google Tag Manager" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.'
-        },
-      },
-      onAccept: `
-        // we notify the tag manager about all services that were accepted. You can define
-        // a custom event in GTM to load the service if consent was given.
-        for(let k of Object.keys(opts.consents)){
-            if (opts.consents[k]){
-                let eventName = 'klaro-'+k+'-accepted'
-                dataLayer.push({'event': eventName})
-            }
-        }
-        // if consent for Google Analytics was granted we enable analytics storage
-        if (opts.consents[opts.vars.googleAnalyticsName || 'google-analytics']){
-            console.log("Google analytics usage was granted")
-            gtag('consent', 'update', {'analytics_storage': 'granted'})
-        }
-        // if consent for Google Ads was granted we enable ad storage
-        if (opts.consents[opts.vars.adStorageName || 'google-ads']){
-            console.log("Google ads usage was granted")
-            gtag('consent', 'update', {'ad_storage': 'granted'})
-        }
-            `,
-      onInit: `
-				// initialization code here (will be executed only once per page-load)
-				window.dataLayer = window.dataLayer || [];
-				window.gtag = function(){dataLayer.push(arguments)}
-				gtag('consent', 'default', {'ad_storage': 'denied', 'analytics_storage': 'denied'})
-				gtag('set', 'ads_data_redaction', true)
-			`,
-      onDecline: `
-				// decline code here (will be executed only once per page-load)
-				window.dataLayer = window.dataLayer || [];
-				window.gtag = function(){dataLayer.push(arguments)}
-				gtag('consent', 'default', {'ad_storage': 'denied', 'analytics_storage': 'denied'})
-				gtag('set', 'ads_data_redaction', true)
-			`,
-      vars: {
-        googleAnalytics: "google-analytics",
-      },
-    },
-    {
       // In GTM, you should define a custom event trigger named `klaro-google-analytics-accepted` which should trigger the Google Analytics integration.
       name: "google-analytics",
-      purposes: ["marketing"],
+      purposes: ["statistics"],
       cookies: [
         /^_ga(_.*)?/, // we delete the Google Analytics cookies if the user declines its use
       ],
@@ -366,6 +314,20 @@ var klaroConfig = {
           description: 'Wir setzen auf unserer Website den "Google Analytics" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.'
         },
       },
+      onAccept: `
+        // we grant analytics storage
+        gtag('consent', 'update', {
+            'analytics_storage': 'granted',
+        });
+        console.log('Google Analytics allowed! Thank you!');
+      `,
+      onDecline: `
+        // we again explicitly deny analytics storage
+        gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+        });
+        console.log('Google Analytics denied! You are welcome!');
+      `,
     },
 	],
 };

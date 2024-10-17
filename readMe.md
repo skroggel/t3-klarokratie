@@ -8,10 +8,13 @@ More information on Klaro! can be found here:
 * https://klaro.org/docs/getting-started
 * https://github.com/klaro-org/klaro-js
 
-## Installation & Configuration
+## Installation & Basic Configuration
 Simply install the extension.
 
-After that you have to define the path to your Klaro!-configuration in your website-setup (YAML).
+If you want to use the available tracking-code-insertion for etracker or Google Analytics also include the TypoScript in your Rootpage (see below).
+Otherwise you don't need the TypoScript.
+
+After installation you have to define the path to your Klaro!-configuration in your website-setup (YAML).
 You can also use extension-paths if you use a site-package.
 ```
 klaro:
@@ -24,7 +27,7 @@ klaroConfig: EXT:site_default/Resources/Public/Config/KlaroConfig.js
 klaroCustomCss: EXT:site_default/Resources/Public/Css/Klaro.css
 ```
 If you do not define any configuration or custom CSS a default configuration with the default styles is used.
-However, you can explicitly disable the klaro! consent manager by using the following setting:
+However, you can explicitly disable the klaro! Consent Manager by using the following setting:
 ```
 klaro:
     disable: true
@@ -33,6 +36,105 @@ or - accordingly -
 ```
 klaroDisable: true
 ```
+## Advanced Configuration
+### Optional: Use Tracking-Code insertion for etracker or Google Analytics
+If you want to use the available tracking-code-insertion for etracker or Google Analytics also include the TypoScript in your Rootpage.
+Otherwise you don't need the TypoScript.
+
+**An enabled tracking-code-insertion would either include the current etracker-tracklet or the current Google Analytics tracking code.**
+
+In the TypoScript you will find the following configuration options that should be self-explaining:
+```
+plugin.tx_klarokratie {
+    settings {
+
+        etracker {
+
+            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Enable etracker code insertion
+            enable = 0
+
+            # cat=plugin.tx_klarokratie/etracker; type=string; label=The secure code of your etracker account
+            secureCode =
+
+            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Enable blocking cookies on page load (should be active according to GDPR)
+            blockCookiesOnPageLoad = 1
+
+            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Respect DoNotTrack in browser (should be active according to GDPR)
+            respectDoNotTrack = 1
+        }
+
+        googleAnalytics {
+
+            # cat=plugin.tx_klarokratie/googleAnalytics; type=bool; label=Enable Google Analytics code insertion
+            enable = 0
+
+            # cat=plugin.tx_klarokratie/googleAnalytics; type=string; label=The Tag-ID of your Google Analytics account
+            tagId =
+        }
+    }
+}
+```
+There are also Klaro!-configuration-files for etracker and Google Analytics included.
+This files handle the cookie-opt-in for your tracking according to GDPR.
+You can use them by setting the desired file in your configuration:
+```
+klaro:
+    config: EXT:site_default/Resources/Public/Config/KlaroConfigEtracker.js
+```
+or
+```
+klaro:
+    config: EXT:site_default/Resources/Public/Config/KlaroConfigGoogleAnalytics.js
+```
+### Optional: Categories for etracker (et_areas)
+If you use etracker there is a lib-object included which you can use to set hierarchical categories.
+
+**IMPORTANT: In order to take effect, you have to use COA-objects in your lib-override-TypoScript!**
+
+Below you find a hypothetical example that sets the current domain as first category and
+as category of the second level the project-name is used that is fetched from the page-properties of the current page
+via the field "tx_example_project" as reference to table "tx_example_domain_model_project".
+The example below would result in the following category-value (et_areas) for etracker:
+```
+www.mydomain.com/myProjectName
+```
+
+```
+lib {
+    txKlarokratie {
+        etracker {
+
+            domain = COA
+            domain {
+                10 = TEXT
+                10.data = getIndpEnv:HTTP_HOST
+            }
+
+            categoryLevel1 = COA
+            categoryLevel1 {
+                30 = RECORDS
+                30 {
+                    source.data = levelfield: -1 , tx_example_project, slide
+                    tables = tx_example_domain_model_project
+                    conf.tx_example_domain_model_project = TEXT
+                    conf.tx_example_domain_model_project {
+                        field = name
+                        override.field = short_name
+                    }
+
+                    // Default value if empty
+                    stdWrap.ifEmpty.cObject = COA
+                    stdWrap.ifEmpty.cObject {
+                        10 = TEXT
+                        10.value = Default
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
 ## Re-Open Modal
 If you want to show a menu-item on your website to re-open the modal, this extension
 adds a field tx_klarokratie_open_modal to the pages-table including the corresponding TCA-configuration for convenient switching using the page properties in the backend.

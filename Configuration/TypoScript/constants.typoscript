@@ -1,0 +1,44 @@
+plugin.tx_klarokratie {
+	view {
+
+	    # cat=plugin.tx_klarokratie/file; type=string; label=Path to  layouts (FE)
+        layoutRootPaths = EXT:klarokratie/Resources/Private/Layouts/
+
+        # cat=plugin.tx_klarokratie/file; type=string; label=Path to templates(FE)
+        templateRootPaths = EXT:klarokratie/Resources/Private/Templates/
+
+        # cat=plugin.tx_klarokratie/file; type=string; label=Path to partials (FE)
+        partialRootPaths = EXT:klarokratie/Resources/Private/Partials/
+	}
+
+	persistence {
+		storagePid =
+	}
+
+    settings {
+
+        etracker {
+
+            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Enable etracker code insertion
+            enable = 0
+
+            # cat=plugin.tx_klarokratie/etracker; type=string; label=The secure code of your eTracker account
+            secureCode =
+
+            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Enable blocking cookies on page load (should be active according to GDPR)
+            blockCookiesOnPageLoad = 1
+
+            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Respect DoNotTrack in browser (should be active according to GDPR)
+            respectDoNotTrack = 1
+        }
+
+        googleAnalytics {
+
+            # cat=plugin.tx_klarokratie/googleAnalytics; type=bool; label=Enable Google Analytics code insertion
+            enable = 0
+
+            # cat=plugin.tx_klarokratie/googleAnalytics; type=string; label=The Tag-ID of your Google Analytics account
+            tagId =
+        }
+ 	}
+}

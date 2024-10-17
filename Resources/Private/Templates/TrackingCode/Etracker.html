@@ -1,0 +1,38 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:klarokratie="http://typo3.org/ns/Madj2k/Klarokratie/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:comment><!-- see: https://help.etracker.com/article/consent-management-tools/ --></f:comment>
+
+    <f:variable name="areas"><klarokratie:implodeCategories 
+                                domain="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.domain')}" 
+                                category1="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel1')}" 
+                                category2="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel2')}" 
+                                category3="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel3')}" 
+                                category4="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel4')}" 
+                                category5="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel5')}" /></f:variable>
+    
+    <!-- Copyright (c) 2000-2024 etracker GmbH. All rights reserved. -->
+    <!-- This material may not be reproduced, displayed, modified or distributed -->
+    <!-- without the express prior written permission of the copyright holder. -->
+    <!-- etracker tracklet 5.0 -->
+    <script type="text/javascript">
+        var et_pagename = '{url}';
+        var et_areas = "{areas}";
+        // var et_tval = 0;
+        // var et_tsale = 0;
+        // var et_tonr = "";
+        // var et_basket = "";
+    </script>
+
+    <script id="_etLoader"
+            async
+            type="text/javascript" 
+            charset="UTF-8" 
+            data-block-cookies="{f:if(condition:'{settings.blockCookies}', then: 'true', else: 'false')}" 
+            data-respect-dnt="{f:if(condition:'{settings.respectDoNotTrack}', then: 'true', else: 'false')}" 
+            data-secure-code="{settings.secureCode}"
+            src="//code.etracker.com/code/e.js"></script>
+    <!-- etracker tracklet 5.0 end -->
+
+</html>

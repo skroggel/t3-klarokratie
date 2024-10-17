@@ -106,12 +106,12 @@ var klaroConfig = {
 		// translationsed defined under the 'zz' language code act as default
 		// translations.
 		zz: {
-			privacyPolicyUrl: "/datenschutzerklaerung",
+			privacyPolicyUrl: "/datenschutz",
 		},
 		// If you erase the "consentModal" translations, Klaro will use the
 		// bundled translations.
 		de: {
-			privacyPolicyUrl: "/datenschutzerklaerung",
+			privacyPolicyUrl: "/datenschutz",
 			consentModal: {
         title: "Hat jemand \"Cookies\" gesagt?!",
 				description:
@@ -250,21 +250,6 @@ var klaroConfig = {
       },
     },
     {
-      purposes: ['statistics'],
-      name: "etracker",
-      translations: {
-        zz: {
-          title: 'eTracker'
-        },
-        en: {
-          description: 'In order to continuously develop and improve our website, we record visits and downloads on our website. We use etracker Analytics from the provider etracker GmbH, Erste Brunnenstraße 1, 20459 Hamburg, Germany. The data collected is not passed on to third parties and does not allow any conclusions to be drawn about your person. The data collection is also not used for the purpose of processing for the provision of personalized content and advertising, i.e. for direct communication with a specific person, but for the aggregated statistical evaluation of website usage.  The data generated with etracker is processed and stored by etracker on behalf of the provider of this website exclusively in Germany and is therefore subject to the strict German and European data protection laws and standards. etracker has been independently audited, certified and awarded the ePrivacyseal data protection seal of approval in this respect. If you agree, you allow us to record your usage behavior on this website using cookies, among other things. If you do not agree to the setting of cookies, the recording of user behavior on this website is carried out exclusively without cookies (cookie-less). You can find more information on cookie-less tracking in our privacy policy.'
-        },
-        de: {
-          description: 'Um unser Webangebot kontinuierlich weiterentwickeln und verbessern zu können, erfassen wir die Besuche und Downloads auf unserer Website. Wir setzen etracker Analytics des Anbieters etracker GmbH, Erste Brunnenstraße 1, 20459 Hamburg, Deutschland, ein. Die erfassten Daten werden nicht an Dritte weitergegeben und erlauben keinen Rückschluss auf Ihre Person. Auch dient die Datenerfassung nicht dem Zweck der Verarbeitung für die Bereitstellung personalisierter Inhalte und Werbung, d.h. zur direkten Kommunikation mit einer bestimmten Person, sondern der aggregierten statistischen Auswertung der Website-Nutzung.  Die mit etracker erzeugten Daten werden im Auftrag des Anbieters dieser Website von etracker ausschließlich in Deutschland verarbeitet und gespeichert und unterliegen damit den strengen deutschen und europäischen Datenschutzgesetzen und -standards. etracker wurde diesbezüglich unabhängig geprüft, zertifiziert und mit dem Datenschutz-Gütesiegel ePrivacyseal ausgezeichnet. Wenn Sie zustimmen, erlauben Sie es uns, Ihr Nutzungsverhalten auf dieser Website u. a. durch Cookies zu erfassen. Stimmen Sie dem Setzen von Cookies nicht zu, erfolgt die Erfassung des Nutzungsverhaltens auf dieser Website ausschließlich ohne Cookies (Cookie-less). Nähere Informationen zum Cookie-less-Tracking finden Sie in unserer Datenschutzerklärung.'
-        },
-      },
-    },
-    {
       name: "youTube",
       purposes: ['multimedia'],
       contextualConsentOnly: true,
@@ -297,75 +282,36 @@ var klaroConfig = {
       },
     },
     {
-      name: "google-tag-manager",
-      purposes: ["marketing"],
-      translations: {
-        zz: {
-          title: 'Google Tag Manager'
-        },
-        en: {
-          description: 'We use the "Google Tag Manager" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.'
-        },
-        de: {
-          description: 'Wir setzen auf unserer Website den "Google Tag Manager" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.'
-        },
-      },
-      onAccept: `
-        // we notify the tag manager about all services that were accepted. You can define
-        // a custom event in GTM to load the service if consent was given.
-        for(let k of Object.keys(opts.consents)){
-            if (opts.consents[k]){
-                let eventName = 'klaro-'+k+'-accepted'
-                dataLayer.push({'event': eventName})
-            }
-        }
-        // if consent for Google Analytics was granted we enable analytics storage
-        if (opts.consents[opts.vars.googleAnalyticsName || 'google-analytics']){
-            console.log("Google analytics usage was granted")
-            gtag('consent', 'update', {'analytics_storage': 'granted'})
-        }
-        // if consent for Google Ads was granted we enable ad storage
-        if (opts.consents[opts.vars.adStorageName || 'google-ads']){
-            console.log("Google ads usage was granted")
-            gtag('consent', 'update', {'ad_storage': 'granted'})
-        }
-            `,
-      onInit: `
-				// initialization code here (will be executed only once per page-load)
-				window.dataLayer = window.dataLayer || [];
-				window.gtag = function(){dataLayer.push(arguments)}
-				gtag('consent', 'default', {'ad_storage': 'denied', 'analytics_storage': 'denied'})
-				gtag('set', 'ads_data_redaction', true)
-			`,
-      onDecline: `
-				// decline code here (will be executed only once per page-load)
-				window.dataLayer = window.dataLayer || [];
-				window.gtag = function(){dataLayer.push(arguments)}
-				gtag('consent', 'default', {'ad_storage': 'denied', 'analytics_storage': 'denied'})
-				gtag('set', 'ads_data_redaction', true)
-			`,
-      vars: {
-        googleAnalytics: "google-analytics",
-      },
-    },
-    {
-      // In GTM, you should define a custom event trigger named `klaro-google-analytics-accepted` which should trigger the Google Analytics integration.
-      name: "google-analytics",
-      purposes: ["marketing"],
+      purposes: ['statistics'],
+      name: "etracker",
       cookies: [
-        /^_ga(_.*)?/, // we delete the Google Analytics cookies if the user declines its use
+        /^et_(_.*)?/, // we delete the cookies if the user declines its use
       ],
       translations: {
         zz: {
-          title: 'Google Analytics'
+          title: 'eTracker'
         },
         en: {
-          description: 'We use the "Google Analytics" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.'
+          description: 'In order to continuously develop and improve our website, we record visits and downloads on our website. We use etracker Analytics from the provider etracker GmbH, Erste Brunnenstraße 1, 20459 Hamburg, Germany. The data collected is not passed on to third parties and does not allow any conclusions to be drawn about your person. The data collection is also not used for the purpose of processing for the provision of personalized content and advertising, i.e. for direct communication with a specific person, but for the aggregated statistical evaluation of website usage.  The data generated with etracker is processed and stored by etracker on behalf of the provider of this website exclusively in Germany and is therefore subject to the strict German and European data protection laws and standards. etracker has been independently audited, certified and awarded the ePrivacyseal data protection seal of approval in this respect. If you agree, you allow us to record your usage behavior on this website using cookies, among other things. If you do not agree to the setting of cookies, the recording of user behavior on this website is carried out exclusively without cookies (cookie-less). You can find more information on cookie-less tracking in our privacy policy.'
         },
         de: {
-          description: 'Wir setzen auf unserer Website den "Google Analytics" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.'
+          description: 'Um unser Webangebot kontinuierlich weiterentwickeln und verbessern zu können, erfassen wir die Besuche und Downloads auf unserer Website. Wir setzen etracker Analytics des Anbieters etracker GmbH, Erste Brunnenstraße 1, 20459 Hamburg, Deutschland, ein. Die erfassten Daten werden nicht an Dritte weitergegeben und erlauben keinen Rückschluss auf Ihre Person. Auch dient die Datenerfassung nicht dem Zweck der Verarbeitung für die Bereitstellung personalisierter Inhalte und Werbung, d.h. zur direkten Kommunikation mit einer bestimmten Person, sondern der aggregierten statistischen Auswertung der Website-Nutzung.  Die mit etracker erzeugten Daten werden im Auftrag des Anbieters dieser Website von etracker ausschließlich in Deutschland verarbeitet und gespeichert und unterliegen damit den strengen deutschen und europäischen Datenschutzgesetzen und -standards. etracker wurde diesbezüglich unabhängig geprüft, zertifiziert und mit dem Datenschutz-Gütesiegel ePrivacyseal ausgezeichnet. Wenn Sie zustimmen, erlauben Sie es uns, Ihr Nutzungsverhalten auf dieser Website u. a. durch Cookies zu erfassen. Stimmen Sie dem Setzen von Cookies nicht zu, erfolgt die Erfassung des Nutzungsverhaltens auf dieser Website ausschließlich ohne Cookies (Cookie-less). Nähere Informationen zum Cookie-less-Tracking finden Sie in unserer Datenschutzerklärung.'
         },
       },
+      onAccept: `
+        var _etrackerOnReady = typeof _etrackerOnReady === 'undefined' ? [] : _etrackerOnReady;
+        var domain = window.location.hostname;
+        _etrackerOnReady.push(function(){ _etracker.enableCookies(domain);  });
+        console.log('Cookies enabled for ' + domain + '! Thank you!');
+      `,
+      onInit: `
+      `,
+      onDecline: `
+        var _etrackerOnReady = typeof _etrackerOnReady === 'undefined' ? [] : _etrackerOnReady;
+        var domain = window.location.hostname;
+        _etrackerOnReady.push(function(){ _etracker.disableCookies(domain) });
+        console.log('Cookies disabled for ' + domain + '! You are welcome!');
+			`,
     },
 	],
 };
