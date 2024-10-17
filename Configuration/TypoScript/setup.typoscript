@@ -1,0 +1,111 @@
+plugin.tx_klarokratie {
+	view {
+        layoutRootPaths {
+            0 = EXT:klarokratie/Resources/Private/Layouts/
+            1 = {$plugin.tx_klarokratie.view.layoutRootPath}
+        }
+        templateRootPaths {
+            0 = EXT:klarokratie/Resources/Private/Templates/
+            1 = {$plugin.tx_klarokratie.view.templateRootPath}
+        }
+        partialRootPaths {
+            0 = EXT:klarokratie/Resources/Private/Partials/
+            1 = {$plugin.tx_klarokratie.view.partialRootPath}
+        }
+	}
+	persistence {
+		storagePid = {$plugin.tx_klarokratie.persistence.storagePid}
+	}
+
+    settings {
+
+        etracker {
+            enable = {$plugin.tx_klarokratie.settings.etracker.enable}
+            secureCode = {$plugin.tx_klarokratie.settings.etracker.secureCode}
+            blockCookiesOnPageLoad = {$plugin.tx_klarokratie.settings.etracker.blockCookiesOnPageLoad}
+            respectDoNotTrack = {$plugin.tx_klarokratie.settings.etracker.respectDoNotTrack}
+        }
+
+        googleAnalytics {
+            enable = {$plugin.tx_klarokratie.settings.googleAnalytics.enable}
+            tagId = {$plugin.tx_klarokratie.settings.googleAnalytics.tagId}
+        }
+ 	}
+}
+
+#=================================================================
+// set categories for etracker via TypoScript - this way we can use levelfield-slide AND we
+// have the possibility to override the values via TypoScript
+#=================================================================
+lib {
+    txKlarokratie {
+        etracker {
+
+            domain = COA
+
+            categoryLevel1 =COA
+
+            categoryLevel2 = COA
+
+            categoryLevel3 = COA
+
+            categoryLevel4 = COA
+
+            categoryLevel5 = COA
+        }
+    }
+}
+
+[{$plugin.tx_klarokratie.settings.etracker.enable} == 1]
+    # Include tracking code in header of page
+    page.headerData {
+
+        1490340885 = USER
+        1490340885 {
+
+            userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+            extensionName = Klarokratie
+            pluginName = TrackingCode
+            vendorName = Madj2k
+            controller = TrackingCode
+            switchableControllerActions {
+
+                # Again: Controller-Name and Action
+                TrackingCode {
+                    1 = etracker
+                }
+            }
+
+            view =< plugin.tx_klarokratie.view
+            persistence =< plugin.tx_klarokratie.persistence
+            settings =< plugin.tx_klarokratie.settings
+        }
+    }
+[GLOBAL]
+
+[{$plugin.tx_klarokratie.settings.googleAnalytics.enable} == 1]
+    # Include tracking code in header of page
+    page.headerData {
+
+        1490340885 = USER
+        1490340885 {
+
+            userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+            extensionName = Klarokratie
+            pluginName = TrackingCode
+            vendorName = Madj2k
+            controller = TrackingCode
+            switchableControllerActions {
+
+                # Again: Controller-Name and Action
+                TrackingCode {
+                    1 = googleAnalytics
+                }
+            }
+
+            view =< plugin.tx_klarokratie.view
+            persistence =< plugin.tx_klarokratie.persistence
+            settings =< plugin.tx_klarokratie.settings
+        }
+    }
+[GLOBAL]

@@ -6,6 +6,34 @@ call_user_func(
     {
 
         //=================================================================
+        // Configure Plugins
+        //=================================================================
+        $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        $version = $typo3Version->getMajorVersion();
+        /** @todo remove this if support for v10 is dropped */
+        if ($version == 10) {
+
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+                'Madj2k.Klarokratie',
+                'TrackingCode',
+                ['TrackingCode' => 'etracker, googleAnalytics'],
+
+                // non-cacheable actions
+                [],
+            );
+
+        } else {
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+                $extKey,
+                'TrackingCode',
+                [\Madj2k\Klarokratie\Controller\TrackingCodeController::class => 'etracker, googleAnalytics'],
+
+                // non-cacheable actions
+                [],
+            );
+        }
+
+        //=================================================================
         // XClasses
         //=================================================================
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Core\Resource\Rendering\YouTubeRenderer::class] = [

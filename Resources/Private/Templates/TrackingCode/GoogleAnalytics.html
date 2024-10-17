@@ -1,0 +1,32 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:comment><!-- see: https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced&hl=de#gtag.js_1 --></f:comment>
+
+    <!-- Google Analytics start -->
+    <script>
+        // Define dataLayer and the gtag function.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        
+        // Set default consent to 'denied' as a placeholder
+        // Determine actual values based on your own requirements
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied'
+        });
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id={settings.googleAnalytics.tagId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+    
+      gtag('js', new Date());
+      gtag('config', '{settings.googleAnalytics.tagId}');
+    </script>
+    <!-- Google Analytics end -->
+
+</html>
