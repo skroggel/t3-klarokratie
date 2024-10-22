@@ -302,7 +302,7 @@ var klaroConfig = {
         var _etrackerOnReady = typeof _etrackerOnReady === 'undefined' ? [] : _etrackerOnReady;
         var domain = window.location.hostname;
         _etrackerOnReady.push(function(){ _etracker.enableCookies(domain);  });
-        console.log('Cookies enabled for ' + domain + '! Thank you!');
+        // console.log('Cookies enabled for ' + domain + '! Thank you!');
       `,
       onInit: `
       `,
@@ -310,7 +310,7 @@ var klaroConfig = {
         var _etrackerOnReady = typeof _etrackerOnReady === 'undefined' ? [] : _etrackerOnReady;
         var domain = window.location.hostname;
         _etrackerOnReady.push(function(){ _etracker.disableCookies(domain) });
-        console.log('Cookies disabled for ' + domain + '! You are welcome!');
+        // console.log('Cookies disabled for ' + domain + '! You are welcome!');
 			`,
     },
 	],
