@@ -300,18 +300,28 @@ var klaroConfig = {
         },
       },
       onAccept: `
+        // we notify the tag manager about all services that were accepted. You can define
+        // a custom event in GTM to load the service if consent was given.
+        for(let k of Object.keys(opts.consents)){
+            if (opts.consents[k]){
+                let eventName = 'klaro-'+k+'-accepted';
+                dataLayer.push({'event': eventName});
+                // console.log('Event "' + eventName + '" fired');
+            }
+        }
+
         // we grant analytics storage
         gtag('consent', 'update', {
             'analytics_storage': 'granted',
         });
-        console.log('Google Analytics allowed! Thank you!');
+        // console.log('Google Analytics allowed! Thank you!');
       `,
       onDecline: `
         // we again explicitly deny analytics storage
         gtag('consent', 'update', {
             'analytics_storage': 'denied',
         });
-        console.log('Google Analytics denied! You are welcome!');
+        // console.log('Google Analytics denied! You are welcome!');
       `,
     },
 	],
