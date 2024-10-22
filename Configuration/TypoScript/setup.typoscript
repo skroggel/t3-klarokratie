@@ -28,6 +28,7 @@ plugin.tx_klarokratie {
 
         googleAnalytics {
             enable = {$plugin.tx_klarokratie.settings.googleAnalytics.enable}
+            useTagManager = {$plugin.tx_klarokratie.settings.googleAnalytics.useTagManager}
             tagId = {$plugin.tx_klarokratie.settings.googleAnalytics.tagId}
         }
  	}
