@@ -68,6 +68,9 @@ plugin.tx_klarokratie {
             # cat=plugin.tx_klarokratie/googleAnalytics; type=bool; label=Enable Google Analytics code insertion
             enable = 0
 
+            # cat=plugin.tx_klarokratie/googleAnalytics; type=bool; label=Use Google Tag Manager
+            useTagManager = 0
+
             # cat=plugin.tx_klarokratie/googleAnalytics; type=string; label=The Tag-ID of your Google Analytics account
             tagId =
         }
