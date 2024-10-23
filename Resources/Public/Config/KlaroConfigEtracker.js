@@ -286,6 +286,8 @@ var klaroConfig = {
       name: "etracker",
       cookies: [
         /^(_)?et_(.*)?/, // we delete the cookies if the user declines its use
+        'isSdEnabled',
+        'cookiesAvailable'
       ],
       translations: {
         zz: {
