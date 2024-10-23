@@ -285,7 +285,7 @@ var klaroConfig = {
       purposes: ['statistics'],
       name: "etracker",
       cookies: [
-        /^et_(_.*)?/, // we delete the cookies if the user declines its use
+        /^(_)?et_(.*)?/, // we delete the cookies if the user declines its use
       ],
       translations: {
         zz: {
