@@ -299,18 +299,46 @@ var klaroConfig = {
         },
       },
       onAccept: `
-        var _etrackerOnReady = typeof _etrackerOnReady === 'undefined' ? [] : _etrackerOnReady;
-        var domain = window.location.hostname;
-        _etrackerOnReady.push(function(){ _etracker.enableCookies(domain);  });
-        // console.log('Cookies enabled for ' + domain + '! Thank you!');
+        let intervalEtracker = null;
+        function updateEtracker() {
+          if (typeof window._etracker == 'object'
+              && typeof _etracker.enableCookies == 'function'
+              && typeof _etracker.disableCookies == 'function'
+          ) {
+
+            let domain = window.location.hostname;
+            _etracker.enableCookies(domain);
+
+            window.clearInterval(intervalEtracker);
+            intervalEtracker = null;
+
+            // console.log('Cookies allowed for ' + domain + '! Thank you!');
+          }
+        }
+
+        intervalEtracker = window.setInterval(updateEtracker, 200);
       `,
       onInit: `
       `,
       onDecline: `
-        var _etrackerOnReady = typeof _etrackerOnReady === 'undefined' ? [] : _etrackerOnReady;
-        var domain = window.location.hostname;
-        _etrackerOnReady.push(function(){ _etracker.disableCookies(domain) });
-        // console.log('Cookies disabled for ' + domain + '! You are welcome!');
+        let intervalEtracker = null;
+        function updateEtracker() {
+          if (typeof window._etracker == 'object'
+              && typeof _etracker.enableCookies == 'function'
+              && typeof _etracker.disableCookies == 'function'
+          ) {
+
+            let domain = window.location.hostname;
+            _etracker.disableCookies(domain);
+
+            window.clearInterval(intervalEtracker);
+            intervalEtracker = null;
+
+            // console.log('Cookies disabled for ' + domain + '! You are welcome!');
+          }
+        }
+
+        intervalEtracker = window.setInterval(updateEtracker, 200);
 			`,
     },
 	],
