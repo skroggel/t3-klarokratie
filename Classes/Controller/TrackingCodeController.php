@@ -20,6 +20,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
@@ -105,11 +106,21 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function loaderAction(): ResponseInterface
     {
         if ($this->settings['etracker']['enable']) {
-            return $this->redirect('etracker');
+
+            /** @todo remove when support for version 10 is dropped */
+            if (method_exists(self::class, 'forward')) {
+                $this->forward('etracker');
+            }
+            return new ForwardResponse('etracker');
         }
 
         if ($this->settings['googleAnalytics']['enable']) {
-            return $this->redirect('googleAnalytics');
+
+            /** @todo remove when support for version 10 is dropped */
+            if (method_exists(self::class, 'forward')) {
+                $this->forward('googleAnalytics');
+            }
+            return new ForwardResponse('googleAnalytics');
         }
 
         return $this->htmlResponse();
