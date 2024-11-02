@@ -57,56 +57,28 @@ lib {
     }
 }
 
-[{$plugin.tx_klarokratie.settings.etracker.enable} == 1]
-    # Include tracking code in header of page
-    page.headerData {
 
-        1490340885 = USER
-        1490340885 {
+# Include tracking code in header of page
+page.headerData {
 
-            userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-            extensionName = Klarokratie
-            pluginName = TrackingCode
-            vendorName = Madj2k
-            controller = TrackingCode
-            switchableControllerActions {
+    1490340885 = USER
+    1490340885 {
 
-                # Again: Controller-Name and Action
-                TrackingCode {
-                    1 = etracker
-                }
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        extensionName = Klarokratie
+        pluginName = TrackingCode
+        vendorName = Madj2k
+        controller = TrackingCode
+        switchableControllerActions {
+
+            # Again: Controller-Name and Action
+            TrackingCode {
+                1 = loader
             }
-
-            view =< plugin.tx_klarokratie.view
-            persistence =< plugin.tx_klarokratie.persistence
-            settings =< plugin.tx_klarokratie.settings
         }
+
+        view =< plugin.tx_klarokratie.view
+        persistence =< plugin.tx_klarokratie.persistence
+        settings =< plugin.tx_klarokratie.settings
     }
-[GLOBAL]
-
-[{$plugin.tx_klarokratie.settings.googleAnalytics.enable} == 1]
-    # Include tracking code in header of page
-    page.headerData {
-
-        1490340885 = USER
-        1490340885 {
-
-            userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-            extensionName = Klarokratie
-            pluginName = TrackingCode
-            vendorName = Madj2k
-            controller = TrackingCode
-            switchableControllerActions {
-
-                # Again: Controller-Name and Action
-                TrackingCode {
-                    1 = googleAnalytics
-                }
-            }
-
-            view =< plugin.tx_klarokratie.view
-            persistence =< plugin.tx_klarokratie.persistence
-            settings =< plugin.tx_klarokratie.settings
-        }
-    }
-[GLOBAL]
+}

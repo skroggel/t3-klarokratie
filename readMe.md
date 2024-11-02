@@ -17,11 +17,17 @@ Otherwise you don't need the TypoScript.
 After installation you have to define the path to your Klaro!-configuration in your website-setup (YAML).
 You can also use extension-paths if you use a site-package.
 ```
+klarokratie:
+    klaro:
+        config: EXT:site_default/Resources/Public/Config/KlaroConfig.js
+        customCss: EXT:site_default/Resources/Public/Css/Klaro.css
+```
+Alternatively you can use this older notations (working, but discouraged for the sake of having clear namespaces):
+```
 klaro:
     config: EXT:site_default/Resources/Public/Config/KlaroConfig.js
     customCss: EXT:site_default/Resources/Public/Css/Klaro.css
 ```
-Alternatively you can use this notation (working, but discouraged for the sake of having clear namespaces):
 ```
 klaroConfig: EXT:site_default/Resources/Public/Config/KlaroConfig.js
 klaroCustomCss: EXT:site_default/Resources/Public/Css/Klaro.css
@@ -29,13 +35,19 @@ klaroCustomCss: EXT:site_default/Resources/Public/Css/Klaro.css
 If you do not define any configuration or custom CSS a default configuration with the default styles is used.
 However, you can explicitly disable the klaro! Consent Manager by using the following setting:
 ```
+klarokratie:
+    klaro:
+        disable: true
+```
+or - accordingly the discouraged (!!!) older versions -
+```
 klaro:
     disable: true
 ```
-or - accordingly -
 ```
 klaroDisable: true
 ```
+
 ## Advanced Configuration
 ### Optional: Use Tracking-Code insertion for etracker or Google Analytics
 If you want to use the available tracking-code-insertion for etracker or Google Analytics also include the TypoScript in your Rootpage.
@@ -81,14 +93,25 @@ There are also Klaro!-configuration-files for etracker and Google Analytics incl
 This files handle the cookie-opt-in for your tracking according to GDPR.
 You can use them by setting the desired file in your configuration:
 ```
-klaro:
-    config: EXT:site_default/Resources/Public/Config/KlaroConfigEtracker.js
+klarokratie:
+    klaro:
+        config: EXT:site_default/Resources/Public/Config/KlaroConfigEtracker.js
 ```
 or
 ```
-klaro:
-    config: EXT:site_default/Resources/Public/Config/KlaroConfigGoogleAnalytics.js
+klarokratie:
+    klaro:
+        config: EXT:site_default/Resources/Public/Config/KlaroConfigGoogleAnalytics.js
 ```
+If you have a multi-site setup you can either define different tracking-options in each rootpage - or use the site-configuration (YAML).
+Using the site-configuration is the preferred way. **Please note: settings in the site-configuration always override TypoScript-settings.**
+```
+klarokratie:
+    googleAnalytics:
+        enable: 1
+        tagId: 123456
+```
+
 ### Optional: Categories for etracker (et_areas)
 If you use etracker there is a lib-object included which you can use to set hierarchical categories.
 
@@ -159,6 +182,7 @@ Example:
 ## Custom CSS
 It is possible to include a custom CSS-file for adaption the Klaro! overlay to your needs (see second line above).
 The CSS partly uses variables which you can override in your custom CSS:
+### Plain CSS
 ```
 body .klaro {
     --green1: #d63f11;
@@ -232,5 +256,85 @@ body .klaro .cookie-modal .cm-list-description {
 body .klaro .cookie-modal .cm-modal .cm-header,
 body .klaro .cookie-modal .cm-list-title {
     font-size: 1.2em;
+}
+```
+### Example with SASS and Bootstrap
+```
+// We need at least the mixins
+@import "../../node_modules/bootstrap/scss/mixins";
+
+@import "default/00_mixins/_import";
+@import "default/10_config/_variables";
+@import "default/10_config/_maps";
+@import "default/20_basics/_cta";
+
+body .klaro {
+    --green1: #{$color-primary};
+    --green2: #{$color-primary};
+    --green3: #{$color-primary};
+    --font-family: #{$font-family-sans-serif};
+
+    &.cm-as-context-notice {
+        padding:0;
+    }
+
+    .context-notice {
+        @include copy;
+        background-color: $color-secondary-200;
+        border-color: $color-secondary;
+        border-radius:0;
+    }
+
+    label {
+        margin:0;
+    }
+
+    .cookie-modal .cm-btn,
+    .context-notice .cm-btn,
+    .cookie-notice .cm-btn {
+        border-radius: 0;
+        @extend .cta;
+        @extend .cta-small;
+    }
+
+    .context-notice .cm-btn.cm-btn-success-var,
+    .cookie-notice .cm-btn.cm-btn-success-var,
+    .cookie-modal .cm-btn.cm-btn-success-var,
+    .cookie-modal .cm-btn.cm-btn-accept,
+    .cookie-modal .cm-btn.cm-btn-decline {
+        color: $color-white;
+        background-color: $color-secondary;
+
+        &:hover {
+            background-color: $color-secondary-600;
+        }
+    }
+
+    .context-notice .cm-list-label .slider,
+    .cookie-notice .cm-list-label .slider,
+    .cookie-modal .cm-list-label .slider {
+        background-color: #676767;
+    }
+
+    .cookie-modal .cm-caret,
+    .cookie-modal .cm-list-description {
+        @include copy-small;
+    }
+
+    .cookie-modal .cm-header{
+        @include copy;
+        .title {
+            @include h2;
+        }
+    }
+
+    .cookie-modal .cm-list-title {
+        @include h6;
+        margin-bottom: 0
+    }
+
+    .cookie-modal .cm-footer-buttons {
+        margin-top: 1rem;
+    }
 }
 ```

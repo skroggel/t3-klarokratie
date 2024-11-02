@@ -16,7 +16,7 @@ call_user_func(
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
                 'Madj2k.Klarokratie',
                 'TrackingCode',
-                ['TrackingCode' => 'etracker, googleAnalytics'],
+                ['TrackingCode' => 'loader, etracker, googleAnalytics'],
 
                 // non-cacheable actions
                 [],
@@ -26,7 +26,7 @@ call_user_func(
             \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
                 $extKey,
                 'TrackingCode',
-                [\Madj2k\Klarokratie\Controller\TrackingCodeController::class => 'etracker, googleAnalytics'],
+                [\Madj2k\Klarokratie\Controller\TrackingCodeController::class => 'loader, etracker, googleAnalytics'],
 
                 // non-cacheable actions
                 [],

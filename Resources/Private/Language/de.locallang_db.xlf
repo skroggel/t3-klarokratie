@@ -6,6 +6,14 @@
 				<source>Use to open Klaro! Consent-Modal</source>
 				<target>Verwenden, um Klaro! Consent-Modal zu öffnen</target>
 			</trans-unit>
+
+
+            <!-- Plugin -->
+			<trans-unit id="plugin.trackingCode.title" approved="yes">
+				<source>Klarokratie: Tracking Code</source>
+				<target>Klarokratie: Tracking Code</target>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>

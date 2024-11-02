@@ -25,7 +25,7 @@ call_user_func(
                     $extKey,
                     \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName),
                     'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
-                    \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName) . '.title'
+                    \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName) . '.title'
                 );
 
                 // add content element
@@ -58,5 +58,5 @@ call_user_func(
             }
         }
     },
-    'copyright_guardian'
+    'klarokratie'
 );
