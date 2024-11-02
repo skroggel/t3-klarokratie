@@ -19,6 +19,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class JavaScript
@@ -54,12 +55,12 @@ class JavaScript
             && ($siteConfiguration = $site->getConfiguration())
         ){
 
-            $disable = (bool) ($siteConfiguration['klaro']['disable'] ?? ($siteConfiguration['klaroDisable'] ?? false));
+            $disable = (bool) ($siteConfiguration['klarokratie']['klaro']['disable'] ?? ($siteConfiguration['klaro']['disable'] ?? ($siteConfiguration['klaroDisable'] ?? false)));
             if ($disable) {
                 return;
             }
 
-            $pathFromConfig = $siteConfiguration['klaro']['config'] ?? ($siteConfiguration['klaroConfig'] ?? '');
+            $pathFromConfig = ($siteConfiguration['klarokratie']['klaro']['config'] ?? ($siteConfiguration['klaro']['config'] ?? ($siteConfiguration['klaroConfig'] ?? '')));
             if (
                 ($pathFromConfig)
                 && (file_exists(GeneralUtility::getFileAbsFileName($pathFromConfig)))
@@ -67,7 +68,6 @@ class JavaScript
                 $configFile = $pathFromConfig;
             }
         }
-
         $files = [
             'KlaroConfig' => $configFile,
             'KlaroDefault' => $jsFile

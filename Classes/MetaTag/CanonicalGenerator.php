@@ -15,6 +15,9 @@ namespace Madj2k\Klarokratie\MetaTag;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * Class CanonicalGenerator
  *
@@ -28,12 +31,25 @@ class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
 
     /**
      * @return string
+     * @see \TYPO3\CMS\Seo\Canonical\CanonicalGenerator::generate()
      */
     public function getPath(): string
     {
-        $canonicalTag = $this->generate();
-        preg_match('/href="([^"]+)"/i', $canonicalTag, $pregMatch);
 
-        return $pregMatch[1] ?? '';
+        // 1) Check if page has canonical URL set
+        $href = $this->checkForCanonicalLink();
+
+        if (empty($href)) {
+
+            // 2) Check if page show content from other page
+            $href = $this->checkContentFromPid();
+        }
+        if (empty($href)) {
+
+            // 3) Fallback, create canonical URL
+            $href = $this->checkDefaultCanonical();
+        }
+
+        return  $href;
     }
 }

@@ -19,6 +19,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Page\Event\BeforeStylesheetsRenderingEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class Stylesheet
@@ -51,12 +52,13 @@ class Stylesheet
             ($site = $request->getAttribute('site'))
             && ($siteConfiguration = $site->getConfiguration())
         ){
-            $disable = (bool) ($siteConfiguration['klaro']['disable'] ?? ($siteConfiguration['klaroDisable'] ?? false));
+
+            $disable = (bool) ($siteConfiguration['klarokratie']['klaro']['disable'] ?? ($siteConfiguration['klaro']['disable'] ?? ($siteConfiguration['klaroDisable'] ?? false)));
             if ($disable) {
                 return;
             }
 
-            $pathFromConfig = $siteConfiguration['klaro']['customCss'] ?? ($siteConfiguration['klaroCustomCss'] ?? '');
+            $pathFromConfig = ($siteConfiguration['klarokratie']['klaro']['customCss'] ?? ($siteConfiguration['klaro']['customCss'] ?? ($siteConfiguration['klaroCustomCss'] ?? '')));
             if (
                 ($pathFromConfig)
                 && (file_exists(GeneralUtility::getFileAbsFileName($pathFromConfig)))

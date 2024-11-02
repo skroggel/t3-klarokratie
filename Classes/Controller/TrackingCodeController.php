@@ -15,12 +15,13 @@ namespace Madj2k\Klarokratie\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Madj2k\CoreExtended\Utility\GeneralUtility;
 use Madj2k\Klarokratie\MetaTag\CanonicalGenerator;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class CodeController
@@ -32,7 +33,6 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
  */
 class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-
 
     /**
      * @var \Psr\Http\Message\ResponseFactoryInterface
@@ -58,6 +58,7 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $this->responseFactory = $responseFactory;
     }
 
+
     /**
      * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
      * @return void
@@ -66,6 +67,52 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function injectStreamFactoryForV10(StreamFactoryInterface $streamFactory)
     {
         $this->streamFactory = $streamFactory;
+    }
+
+
+    /**
+     * Load tracking-settings from site-configuration.
+     * This overrides the typoscript-settings
+     *
+     * @return void
+     */
+    protected function initializeAction(): void
+    {
+
+        if (
+            ($site = $this->request->getAttribute('site'))
+            && ($siteConfiguration = $site->getConfiguration())
+        ){
+            foreach (['googleAnalytics', 'etracker'] as $type) {
+                if (
+                    ($settings = ($siteConfiguration['klarokratie'][$type] ?? ($siteConfiguration['klaro'][$type] ?? ($siteConfiguration['klaro' . ucfirst($type)] ?? []))))
+                    && (is_array($settings))
+                ) {
+                    foreach ($settings as $key => $value) {
+                        $this->settings[$type][$key] = $value;
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * action loader
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function loaderAction(): ResponseInterface
+    {
+        if ($this->settings['etracker']['enable']) {
+            return $this->redirect('etracker');
+        }
+
+        if ($this->settings['googleAnalytics']['enable']) {
+            return $this->redirect('googleAnalytics');
+        }
+
+        return $this->htmlResponse();
     }
 
 
@@ -118,7 +165,7 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     protected function htmlResponse(string $html = null): ResponseInterface
     {
-        $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
         if ($typo3Version->getMajorVersion() < 11) {
             if ($this->view instanceof ViewInterface) {
                 $this->response->appendContent($this->view->render());

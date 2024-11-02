@@ -5,6 +5,11 @@
 			<trans-unit id="pages.tx_klarokratie_open_modal">
 				<source>Use to open Klaro! Consent-Modal</source>
 			</trans-unit>
+
+            <!-- Plugin -->
+			<trans-unit id="plugin.trackingCode.title" approved="yes">
+				<source>Klarokratie: Tracking Code</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
