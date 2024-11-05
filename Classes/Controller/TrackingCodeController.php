@@ -79,18 +79,20 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     protected function initializeAction(): void
     {
-
-        if (
-            ($site = $this->request->getAttribute('site'))
-            && ($siteConfiguration = $site->getConfiguration())
-        ){
-            foreach (['googleAnalytics', 'etracker'] as $type) {
-                if (
-                    ($settings = ($siteConfiguration['klarokratie'][$type] ?? ($siteConfiguration['klaro'][$type] ?? ($siteConfiguration['klaro' . ucfirst($type)] ?? []))))
-                    && (is_array($settings))
-                ) {
-                    foreach ($settings as $key => $value) {
-                        $this->settings[$type][$key] = $value;
+        $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        if ($typo3Version->getMajorVersion() >= 11) {
+            if (
+                ($site = $this->request->getAttribute('site'))
+                && ($siteConfiguration = $site->getConfiguration())
+            ) {
+                foreach (['googleAnalytics', 'etracker'] as $type) {
+                    if (
+                        ($settings = ($siteConfiguration['klarokratie'][$type] ?? ($siteConfiguration['klaro'][$type] ?? ($siteConfiguration['klaro' . ucfirst($type)] ?? []))))
+                        && (is_array($settings))
+                    ) {
+                        foreach ($settings as $key => $value) {
+                            $this->settings[$type][$key] = $value;
+                        }
                     }
                 }
             }
