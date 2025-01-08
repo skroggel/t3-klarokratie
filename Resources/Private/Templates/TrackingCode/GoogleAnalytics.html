@@ -3,41 +3,46 @@
 
     <f:comment><!-- see: https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced&hl=de#gtag.js_1 --></f:comment>
 
-    <!-- Google Analytics start -->
-    <script>
-        // Define dataLayer and the gtag function.
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+    <template id="tx-klarokratie-tracking-script" data-injected="0">
+        <!-- Google Analytics start -->
+        <script>
+            // Define dataLayer and the gtag function.
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            
+            // Set default consent to 'denied' as a placeholder
+            // Determine actual values based on your own requirements
+            gtag('consent', 'default', {
+              'ad_storage': 'denied',
+              'ad_user_data': 'denied',
+              'ad_personalization': 'denied',
+              'analytics_storage': 'denied'
+            });
+        </script>
+
         
-        // Set default consent to 'denied' as a placeholder
-        // Determine actual values based on your own requirements
-        gtag('consent', 'default', {
-          'ad_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied',
-          'analytics_storage': 'denied'
-        });
-    </script>
+        <f:if condition="{settings.googleAnalytics.useTagManager}">
+            <f:then>
+                <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','{settings.googleAnalytics.tagId}');</script>
+            </f:then>
+            <f:else>
+                <script async src="https://www.googletagmanager.com/gtag/js?id={settings.googleAnalytics.tagId}"></script>
+            </f:else>
+        </f:if>
+        
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+        
+          gtag('js', new Date());
+          gtag('config', '{settings.googleAnalytics.tagId}');
+        </script>
+        <!-- Google Analytics end -->
+    </template>
 
-    <f:if condition="{settings.googleAnalytics.useTagManager}">
-        <f:then>
-            <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','{settings.googleAnalytics.tagId}');</script>
-        </f:then>
-        <f:else>
-            <script async src="https://www.googletagmanager.com/gtag/js?id={settings.googleAnalytics.tagId}"></script>
-        </f:else>
-    </f:if>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-    
-      gtag('js', new Date());
-      gtag('config', '{settings.googleAnalytics.tagId}');
-    </script>
-    <!-- Google Analytics end -->
-
+    <f:render partial="TrackingCodeInjection" arguments="{blockInjection: settings.googleAnalytics.blockScriptBeforeConsent}" />
 </html>

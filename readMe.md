@@ -73,6 +73,9 @@ plugin.tx_klarokratie {
 
             # cat=plugin.tx_klarokratie/etracker; type=bool; label=Respect DoNotTrack in browser (should be active according to GDPR)
             respectDoNotTrack = 1
+
+            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Block tracking script before consent
+            blockScriptBeforeConsent = 0
         }
 
         googleAnalytics {
@@ -85,6 +88,9 @@ plugin.tx_klarokratie {
 
             # cat=plugin.tx_klarokratie/googleAnalytics; type=string; label=The Tag-ID of your Google Analytics account
             tagId =
+
+            # cat=plugin.tx_klarokratie/googleAnalytic; type=bool; label=Block tracking script before consent
+            blockScriptBeforeConsent = 0
         }
     }
 }
@@ -111,6 +117,9 @@ klarokratie:
         enable: 1
         tagId: 123456
 ```
+
+**IMORTANT:** to ensure that the tracking code is only executed if consent is given, set blockScriptBeforeConsent = 1.
+For reasons of backwards-compatibility the default value currently is 0.
 
 ### Optional: Categories for etracker (et_areas)
 If you use etracker there is a lib-object included which you can use to set hierarchical categories.

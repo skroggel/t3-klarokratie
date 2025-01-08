@@ -301,6 +301,16 @@ var klaroConfig = {
         },
       },
       onAccept: `
+
+        // check if code is injected - if not, do it now
+        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
+        if (
+            (codeTemplate)
+            && (codeTemplate.getAttribute('data-injected') != 1)
+        ){
+          txKlarokratieInjectTrackingCode();
+        }
+
         let intervalEtracker = null;
         function updateEtracker() {
           if (typeof window._etracker == 'object'
@@ -323,24 +333,33 @@ var klaroConfig = {
       onInit: `
       `,
       onDecline: `
-        let intervalEtracker = null;
-        function updateEtracker() {
-          if (typeof window._etracker == 'object'
-              && typeof _etracker.enableCookies == 'function'
-              && typeof _etracker.disableCookies == 'function'
-          ) {
 
-            let domain = window.location.hostname;
-            _etracker.disableCookies(domain);
+        // check if code is injected - if not, there is nothing to do!
+        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
+        if (
+            (codeTemplate)
+            && (codeTemplate.getAttribute('data-injected') == 1)
+        ){
 
-            window.clearInterval(intervalEtracker);
-            intervalEtracker = null;
+          let intervalEtracker = null;
+          function updateEtracker() {
+            if (typeof window._etracker == 'object'
+                && typeof _etracker.enableCookies == 'function'
+                && typeof _etracker.disableCookies == 'function'
+            ) {
 
-            // console.log('Cookies disabled for ' + domain + '! You are welcome!');
+              let domain = window.location.hostname;
+              _etracker.disableCookies(domain);
+
+              window.clearInterval(intervalEtracker);
+              intervalEtracker = null;
+
+              // console.log('Cookies disabled for ' + domain + '! You are welcome!');
+            }
           }
-        }
 
-        intervalEtracker = window.setInterval(updateEtracker, 200);
+          intervalEtracker = window.setInterval(updateEtracker, 200);
+        }
 			`,
     },
 	],

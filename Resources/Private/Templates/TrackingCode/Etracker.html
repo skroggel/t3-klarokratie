@@ -16,23 +16,27 @@
     <!-- This material may not be reproduced, displayed, modified or distributed -->
     <!-- without the express prior written permission of the copyright holder. -->
     <!-- etracker tracklet 5.0 -->
-    <script type="text/javascript">
-        var et_pagename = '{url}';
-        var et_areas = "{areas}";
-        // var et_tval = 0;
-        // var et_tsale = 0;
-        // var et_tonr = "";
-        // var et_basket = "";
-    </script>
+    <template id="tx-klarokratie-tracking-script" data-injected="0">
+        <script type="text/javascript">
+            var et_pagename = '{url}';
+            var et_areas = "{areas}";
+            // var et_tval = 0;
+            // var et_tsale = 0;
+            // var et_tonr = "";
+            // var et_basket = "";
+        </script>
+    
+        <script id="_etLoader"
+                async
+                type="text/javascript" 
+                charset="UTF-8" 
+                data-block-cookies="{f:if(condition:'{settings.etracker.blockCookiesOnPageLoad}', then: 'true', else: 'false')}"
+                data-respect-dnt="{f:if(condition:'{settings.etracker.respectDoNotTrack}', then: 'true', else: 'false')}"
+                data-secure-code="{settings.etracker.secureCode}"
+                src="//code.etracker.com/code/e.js"></script>
+        <!-- etracker tracklet 5.0 end -->
+    </template>
 
-    <script id="_etLoader"
-            async
-            type="text/javascript" 
-            charset="UTF-8" 
-            data-block-cookies="{f:if(condition:'{settings.blockCookies}', then: 'true', else: 'false')}" 
-            data-respect-dnt="{f:if(condition:'{settings.respectDoNotTrack}', then: 'true', else: 'false')}" 
-            data-secure-code="{settings.secureCode}"
-            src="//code.etracker.com/code/e.js"></script>
-    <!-- etracker tracklet 5.0 end -->
+    <f:render partial="TrackingCodeInjection" arguments="{blockInjection: settings.etracker.blockScriptBeforeConsent}" />
 
 </html>

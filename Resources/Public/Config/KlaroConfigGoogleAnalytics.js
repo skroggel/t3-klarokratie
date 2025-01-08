@@ -300,28 +300,47 @@ var klaroConfig = {
         },
       },
       onAccept: `
+
+        // check if code is injected - if not, do it now
+        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
+        if (
+            (codeTemplate)
+            && (codeTemplate.getAttribute('data-injected') != 1)
+        ){
+          txKlarokratieInjectTrackingCode();
+        }
+
         // we notify the tag manager about all services that were accepted. You can define
         // a custom event in GTM to load the service if consent was given.
         for(let k of Object.keys(opts.consents)){
-            if (opts.consents[k]){
-                let eventName = 'klaro-'+k+'-accepted';
-                dataLayer.push({'event': eventName});
-                // console.log('Event "' + eventName + '" fired');
-            }
+          if (opts.consents[k]){
+            let eventName = 'klaro-'+k+'-accepted';
+            dataLayer.push({'event': eventName});
+            // console.log('Event "' + eventName + '" fired');
+          }
         }
 
         // we grant analytics storage
         gtag('consent', 'update', {
-            'analytics_storage': 'granted',
+          'analytics_storage': 'granted',
         });
         // console.log('Google Analytics allowed! Thank you!');
       `,
       onDecline: `
-        // we again explicitly deny analytics storage
-        gtag('consent', 'update', {
+
+        // check if code is injected - if not, there is nothing to do!
+        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
+        if (
+            (codeTemplate)
+            && (codeTemplate.getAttribute('data-injected') == 1)
+        ){
+
+          // we again explicitly deny analytics storage
+          gtag('consent', 'update', {
             'analytics_storage': 'denied',
-        });
-        // console.log('Google Analytics denied! You are welcome!');
+            });
+            // console.log('Google Analytics denied! You are welcome!');
+        }
       `,
     },
 	],
