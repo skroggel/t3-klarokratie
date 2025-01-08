@@ -24,12 +24,14 @@ plugin.tx_klarokratie {
             secureCode = {$plugin.tx_klarokratie.settings.etracker.secureCode}
             blockCookiesOnPageLoad = {$plugin.tx_klarokratie.settings.etracker.blockCookiesOnPageLoad}
             respectDoNotTrack = {$plugin.tx_klarokratie.settings.etracker.respectDoNotTrack}
+            blockScriptBeforeConsent = {$plugin.tx_klarokratie.settings.etracker.blockScriptBeforeConsent}
         }
 
         googleAnalytics {
             enable = {$plugin.tx_klarokratie.settings.googleAnalytics.enable}
             useTagManager = {$plugin.tx_klarokratie.settings.googleAnalytics.useTagManager}
             tagId = {$plugin.tx_klarokratie.settings.googleAnalytics.tagId}
+            blockScriptBeforeConsent = {$plugin.tx_klarokratie.settings.googleAnalytics.blockScriptBeforeConsent}
         }
  	}
 }
