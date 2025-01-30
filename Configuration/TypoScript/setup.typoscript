@@ -25,6 +25,7 @@ plugin.tx_klarokratie {
             blockCookiesOnPageLoad = {$plugin.tx_klarokratie.settings.etracker.blockCookiesOnPageLoad}
             respectDoNotTrack = {$plugin.tx_klarokratie.settings.etracker.respectDoNotTrack}
             blockScriptBeforeConsent = {$plugin.tx_klarokratie.settings.etracker.blockScriptBeforeConsent}
+            doNotUseSessionStorage = {$plugin.tx_klarokratie.settings.etracker.doNotUseSessionStorage}
         }
 
         googleAnalytics {

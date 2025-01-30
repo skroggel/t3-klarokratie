@@ -76,6 +76,9 @@ plugin.tx_klarokratie {
 
             # cat=plugin.tx_klarokratie/etracker; type=bool; label=Block tracking script before consent
             blockScriptBeforeConsent = 0
+
+            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Do not use Session Storage (WARNING: this has a negative impact on page- and tracking-performance!)
+            doNotUseSessionStorage = 0
         }
 
         googleAnalytics {
