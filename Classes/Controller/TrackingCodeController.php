@@ -79,24 +79,22 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     protected function initializeAction(): void
     {
-        $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-        if ($typo3Version->getMajorVersion() >= 11) {
-            if (
-                ($site = $this->request->getAttribute('site'))
-                && ($siteConfiguration = $site->getConfiguration())
-            ) {
-                foreach (['googleAnalytics', 'etracker'] as $type) {
-                    if (
-                        ($settings = ($siteConfiguration['klarokratie'][$type] ?? ($siteConfiguration['klaro'][$type] ?? ($siteConfiguration['klaro' . ucfirst($type)] ?? []))))
-                        && (is_array($settings))
-                    ) {
-                        foreach ($settings as $key => $value) {
-                            $this->settings[$type][$key] = $value;
-                        }
+        if (
+            ($site = $this->getRequest()->getAttribute('site'))
+            && ($siteConfiguration = $site->getConfiguration())
+        ) {
+            foreach (['googleAnalytics', 'etracker'] as $type) {
+                if (
+                    ($settings = ($siteConfiguration['klarokratie'][$type] ?? ($siteConfiguration['klaro'][$type] ?? ($siteConfiguration['klaro' . ucfirst($type)] ?? []))))
+                    && (is_array($settings))
+                ) {
+                    foreach ($settings as $key => $value) {
+                        $this->settings[$type][$key] = $value;
                     }
                 }
             }
         }
+
     }
 
 
@@ -104,6 +102,7 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * action loader
      *
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
     public function loaderAction(): ResponseInterface
     {
@@ -188,5 +187,19 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         return $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'text/html; charset=utf-8')
             ->withBody($this->streamFactory->createStream((string)($html ?? $this->view->render())));
+    }
+
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Mvc\Request|\Psr\Http\Message\ServerRequestInterface
+     */
+    protected function getRequest() {
+
+        $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        if ($typo3Version->getMajorVersion() >= 11) {
+            return $this->request;
+        }
+
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 }
