@@ -15,6 +15,7 @@ namespace Madj2k\Klarokratie\MetaTag;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
@@ -26,28 +27,52 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
+readonly class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
 {
 
     /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
      * @return string
      * @see \TYPO3\CMS\Seo\Canonical\CanonicalGenerator::generate()
      */
-    public function getPath(): string
+    public function getPath(ServerRequestInterface $request): string
     {
 
-        // 1) Check if page has canonical URL set
-        $href = $this->checkForCanonicalLink();
+        $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        $version = $typo3Version->getMajorVersion();
 
-        if (empty($href)) {
+        /** @todo remove if support for v12 and below is dropped */
+        if ($version <= 12) {
 
-            // 2) Check if page show content from other page
-            $href = $this->checkContentFromPid();
-        }
-        if (empty($href)) {
+            // 1) Check if page has canonical URL set
+            $href = $this->checkForCanonicalLink();
 
-            // 3) Fallback, create canonical URL
-            $href = $this->checkDefaultCanonical();
+            if (empty($href)) {
+
+                // 2) Check if page show content from other page
+                $href = $this->checkContentFromPid();
+            }
+            if (empty($href)) {
+
+                // 3) Fallback, create canonical URL
+                $href = $this->checkDefaultCanonical();
+            }
+            
+        } else {
+
+            // 1) Check if page has canonical URL set
+            $href = $this->checkForCanonicalLink($request);
+
+            if (empty($href)) {
+
+                // 2) Check if page show content from other page
+                $href = $this->checkContentFromPid($request);
+            }
+            if (empty($href)) {
+
+                // 3) Fallback, create canonical URL
+                $href = $this->checkDefaultCanonical($request);
+            }
         }
 
         return  $href;

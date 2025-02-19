@@ -39,14 +39,14 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @var \Psr\Http\Message\ResponseFactoryInterface
      * @todo can be removed when support for v10 is dropped
      */
-    protected $responseFactory;
+    protected ResponseFactoryInterface $responseFactory;
 
 
     /**
      * @var \Psr\Http\Message\StreamFactoryInterface
      * @todo can be removed when support for v10 is dropped
      */
-    protected $streamFactory;
+    protected StreamFactoryInterface $streamFactory;
 
 
     /**
@@ -54,7 +54,7 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @return void
      * @todo can be removed when support for v10 is dropped
      */
-    public function injectResponseFactoryForV10(ResponseFactoryInterface $responseFactory)
+    public function injectResponseFactoryForV10(ResponseFactoryInterface $responseFactory): void
     {
         $this->responseFactory = $responseFactory;
     }
@@ -65,7 +65,7 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @return void
      * @todo can be removed when support for v10 is dropped
      */
-    public function injectStreamFactoryForV10(StreamFactoryInterface $streamFactory)
+    public function injectStreamFactoryForV10(StreamFactoryInterface $streamFactory): void
     {
         $this->streamFactory = $streamFactory;
     }
@@ -141,7 +141,7 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
          */
         $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
         $this->view->assignMultiple([
-            'url' => $canonicalGenerator->getPath(),
+            'url' => $canonicalGenerator->getPath($this->request),
             'domain' => getenv('HTTP_HOST')
         ]);
 
@@ -161,7 +161,7 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
          */
         $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
         $this->view->assignMultiple([
-            'url' => $canonicalGenerator->getPath(),
+            'url' => $canonicalGenerator->getPath($this->request),
             'domain' => getenv('HTTP_HOST')
         ]);
 
