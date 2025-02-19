@@ -20,12 +20,15 @@
     	<!-- etracker tracklet 5.0 -->
     
         <script type="text/javascript">
-            var et_pagename = '{url}';
+            var et_pagename = "{url}";
             var et_areas = "{areas}";
             // var et_tval = 0;
             // var et_tsale = 0;
             // var et_tonr = "";
             // var et_basket = "";
+            <f:if condition="{settings.etracker.doNotUseSessionStorage}">
+                _etr = { doNotUseSessionStorage: true };
+            </f:if>
         </script>
     
         <script id="_etLoader"
