@@ -16,6 +16,7 @@ namespace Madj2k\Klarokratie\Controller;
  */
 
 use Madj2k\Klarokratie\MetaTag\CanonicalGenerator;
+use Madj2k\Klarokratie\MetaTag\CanonicalGeneratorLegacy;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -147,7 +148,15 @@ class TrackingCodeController extends TrackingCodeControllerAbstract
         /**
          * @var \Madj2k\Klarokratie\MetaTag\CanonicalGenerator $canonicalGenerator
          */
-        $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
+
+        /** @todo can be removed if support for v12 is dropped */
+        $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        if ($typo3Version->getMajorVersion() <= 12) {
+            $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGeneratorLegacy::class);
+        } else {
+            $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
+        }
+
         $this->view->assignMultiple([
             'url' => $canonicalGenerator->getPath($this->request),
             'domain' => getenv('HTTP_HOST')
@@ -167,7 +176,14 @@ class TrackingCodeController extends TrackingCodeControllerAbstract
         /**
          * @var \Madj2k\Klarokratie\MetaTag\CanonicalGenerator $canonicalGenerator
          */
-        $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
+        /** @todo can be removed if support for v12 is dropped */
+        $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        if ($typo3Version->getMajorVersion() <= 12) {
+            $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGeneratorLegacy::class);
+        } else {
+            $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
+        }
+
         $this->view->assignMultiple([
             'url' => $canonicalGenerator->getPath($this->request),
             'domain' => getenv('HTTP_HOST')

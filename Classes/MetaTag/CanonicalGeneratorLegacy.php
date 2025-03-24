@@ -26,8 +26,9 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @copyright Steffen Kroggel
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @todo can be removed if support for v12 is dropped
  */
-readonly class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
+final class CanonicalGeneratorLegacy extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
 {
 
     /**
@@ -39,19 +40,18 @@ readonly class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGene
     {
 
         // 1) Check if page has canonical URL set
-        $href = $this->checkForCanonicalLink($request);
+        $href = $this->checkForCanonicalLink();
 
         if (empty($href)) {
 
             // 2) Check if page show content from other page
-            $href = $this->checkContentFromPid($request);
+            $href = $this->checkContentFromPid();
         }
         if (empty($href)) {
 
             // 3) Fallback, create canonical URL
-            $href = $this->checkDefaultCanonical($request);
+            $href = $this->checkDefaultCanonical();
         }
-
 
         return  $href;
     }
