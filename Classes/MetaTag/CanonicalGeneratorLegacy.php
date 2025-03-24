@@ -11,13 +11,12 @@ namespace Madj2k\Klarokratie\MetaTag;
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- * 
+ *
  * The TYPO3 project - inspiring people to share!
  */
 
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 
 /**
  * Class CanonicalGenerator
@@ -29,40 +28,31 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @todo can be removed if support for v12 is dropped
  * @deprecated since v12
  */
-$typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-if ($typo3Version->getMajorVersion() <= 12) {
-    final class CanonicalGeneratorLegacy extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
+final class CanonicalGeneratorLegacy extends CanonicalGeneratorLegacyAbstract
+{
+
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @return string
+     * @see \TYPO3\CMS\Seo\Canonical\CanonicalGenerator::generate()
+     */
+    public function getPath(ServerRequestInterface $request): string
     {
 
-        /**
-         * @param \Psr\Http\Message\ServerRequestInterface $request
-         * @return string
-         * @see \TYPO3\CMS\Seo\Canonical\CanonicalGenerator::generate()
-         */
-        public function getPath(ServerRequestInterface $request): string
-        {
+        // 1) Check if page has canonical URL set
+        $href = $this->checkForCanonicalLink();
 
-            // 1) Check if page has canonical URL set
-            $href = $this->checkForCanonicalLink();
+        if (empty($href)) {
 
-            if (empty($href)) {
-
-                // 2) Check if page show content from other page
-                $href = $this->checkContentFromPid();
-            }
-            if (empty($href)) {
-
-                // 3) Fallback, create canonical URL
-                $href = $this->checkDefaultCanonical();
-            }
-
-            return $href;
+            // 2) Check if page show content from other page
+            $href = $this->checkContentFromPid();
         }
-    }
+        if (empty($href)) {
 
-} else {
-    final class CanonicalGeneratorLegacy
-    {
+            // 3) Fallback, create canonical URL
+            $href = $this->checkDefaultCanonical();
+        }
 
+        return $href;
     }
 }
