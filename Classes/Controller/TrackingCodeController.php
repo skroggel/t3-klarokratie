@@ -32,44 +32,54 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+$typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+$version = $typo3Version->getMajorVersion();
+if ($version <= 10) {
+    class TrackingCodeControllerAbstract extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+    {
+        /**
+         * @var \Psr\Http\Message\ResponseFactoryInterface
+         * @todo can be removed when support for v10 is dropped
+         */
+        protected $responseFactory;
+
+
+        /**
+         * @var \Psr\Http\Message\StreamFactoryInterface
+         * @todo can be removed when support for v10 is dropped
+         */
+        protected $streamFactory;
+
+
+        /**
+         * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory
+         * @return void
+         * @todo can be removed when support for v10 is dropped
+         */
+        public function injectResponseFactoryForV10(ResponseFactoryInterface $responseFactory)
+        {
+            $this->responseFactory = $responseFactory;
+        }
+
+
+        /**
+         * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
+         * @return void
+         * @todo can be removed when support for v10 is dropped
+         */
+        public function injectStreamFactoryForV10(StreamFactoryInterface $streamFactory)
+        {
+            $this->streamFactory = $streamFactory;
+        }
+    }
+} {
+    class TrackingCodeControllerAbstract extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+
+    }
+}
+
+class TrackingCodeController extends TrackingCodeControllerAbstract
 {
-
-    /**
-     * @var \Psr\Http\Message\ResponseFactoryInterface
-     * @todo can be removed when support for v10 is dropped
-     */
-    protected ResponseFactoryInterface $responseFactory;
-
-
-    /**
-     * @var \Psr\Http\Message\StreamFactoryInterface
-     * @todo can be removed when support for v10 is dropped
-     */
-    protected StreamFactoryInterface $streamFactory;
-
-
-    /**
-     * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory
-     * @return void
-     * @todo can be removed when support for v10 is dropped
-     */
-    public function injectResponseFactoryForV10(ResponseFactoryInterface $responseFactory): void
-    {
-        $this->responseFactory = $responseFactory;
-    }
-
-
-    /**
-     * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
-     * @return void
-     * @todo can be removed when support for v10 is dropped
-     */
-    public function injectStreamFactoryForV10(StreamFactoryInterface $streamFactory): void
-    {
-        $this->streamFactory = $streamFactory;
-    }
-
 
     /**
      * Load tracking-settings from site-configuration.
@@ -102,7 +112,6 @@ class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * action loader
      *
      * @return \Psr\Http\Message\ResponseInterface
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
     public function loaderAction(): ResponseInterface
     {

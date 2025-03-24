@@ -27,7 +27,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-readonly class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
+final class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
 {
 
     /**
