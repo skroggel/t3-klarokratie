@@ -1,7 +1,7 @@
 {
     "name": "madj2k/t3-klarokratie",
     "type": "typo3-cms-extension",
-    "description": "Includes Klaro!-Consent-Manager into TYPO3. Completely file-based configuration for versioning without having to take care of database-entries.",
+    "description": "Includes Klaro! Consent-Manager into TYPO3. Completely file-based configuration for versioning without having to take care of database-entries. This extension automatically adds a consent-overlay to embedded YouTube- and Vimeo-Videos. It also comes with a ready-to-use integration for Google Analytics / Google Tag Manager and etracker.",
     "homepage": "https://www.steffenkroggel.de",
     "license": ["GPL-2.0+"],
     "keywords": ["TYPO3 CMS", "Consent management", "Klaro", "DSGVO", "GDPR"],
