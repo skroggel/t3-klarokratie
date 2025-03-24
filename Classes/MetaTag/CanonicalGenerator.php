@@ -38,42 +38,20 @@ readonly class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGene
     public function getPath(ServerRequestInterface $request): string
     {
 
-        $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-        $version = $typo3Version->getMajorVersion();
+        // 1) Check if page has canonical URL set
+        $href = $this->checkForCanonicalLink($request);
 
-        /** @todo remove if support for v12 and below is dropped */
-        if ($version <= 12) {
+        if (empty($href)) {
 
-            // 1) Check if page has canonical URL set
-            $href = $this->checkForCanonicalLink();
-
-            if (empty($href)) {
-
-                // 2) Check if page show content from other page
-                $href = $this->checkContentFromPid();
-            }
-            if (empty($href)) {
-
-                // 3) Fallback, create canonical URL
-                $href = $this->checkDefaultCanonical();
-            }
-            
-        } else {
-
-            // 1) Check if page has canonical URL set
-            $href = $this->checkForCanonicalLink($request);
-
-            if (empty($href)) {
-
-                // 2) Check if page show content from other page
-                $href = $this->checkContentFromPid($request);
-            }
-            if (empty($href)) {
-
-                // 3) Fallback, create canonical URL
-                $href = $this->checkDefaultCanonical($request);
-            }
+            // 2) Check if page show content from other page
+            $href = $this->checkContentFromPid($request);
         }
+        if (empty($href)) {
+
+            // 3) Fallback, create canonical URL
+            $href = $this->checkDefaultCanonical($request);
+        }
+
 
         return  $href;
     }
