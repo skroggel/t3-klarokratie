@@ -75,7 +75,7 @@ if ($version <= 10) {
             $this->streamFactory = $streamFactory;
         }
     }
-} {
+} else {
     abstract class AbstractTrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
     }
