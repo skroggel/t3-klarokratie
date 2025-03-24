@@ -16,8 +16,6 @@ namespace Madj2k\Klarokratie\MetaTag;
  */
 
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class CanonicalGenerator
@@ -26,8 +24,9 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @copyright Steffen Kroggel
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @todo replace CanonicalGeneratorAbstract with \TYPO3\CMS\Seo\Canonical\CanonicalGenerator when support for v12 an below is dropped
  */
-readonly class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
+final class CanonicalGenerator extends CanonicalGeneratorAbstract
 {
 
     /**
@@ -53,6 +52,6 @@ readonly class CanonicalGenerator extends \TYPO3\CMS\Seo\Canonical\CanonicalGene
         }
 
 
-        return  $href;
+        return $href;
     }
 }
