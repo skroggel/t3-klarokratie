@@ -17,6 +17,7 @@ namespace Madj2k\Klarokratie\Controller;
 
 use Madj2k\Klarokratie\MetaTag\CanonicalGenerator;
 use Madj2k\Klarokratie\MetaTag\CanonicalGeneratorLegacy;
+use Madj2k\Klarokratie\MetaTag\CanonicalGeneratorLegacy10;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -106,7 +107,9 @@ class TrackingCodeController extends AbstractTrackingCodeController
 
         /** @todo can be removed if support for v12 is dropped */
         $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-        if ($typo3Version->getMajorVersion() <= 12) {
+        if ($typo3Version->getMajorVersion() <= 10) {
+            $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGeneratorLegacy10::class);
+        } else if ($typo3Version->getMajorVersion() <= 12) {
             $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGeneratorLegacy::class);
         } else {
             $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
@@ -133,7 +136,9 @@ class TrackingCodeController extends AbstractTrackingCodeController
          */
         /** @todo can be removed if support for v12 is dropped */
         $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-        if ($typo3Version->getMajorVersion() <= 12) {
+        if ($typo3Version->getMajorVersion() <= 10) {
+            $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGeneratorLegacy10::class);
+        } else if ($typo3Version->getMajorVersion() <= 12) {
             $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGeneratorLegacy::class);
         } else {
             $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);

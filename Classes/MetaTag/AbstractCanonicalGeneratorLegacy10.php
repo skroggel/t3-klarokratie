@@ -29,29 +29,35 @@ use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
  *
  * @internal this class is not part of TYPO3's Core API.
  * @todo can be removed if support for v12 is dropped
- * @deprecated since v13
+ * @deprecated since v12
  */
-abstract class AbstractCanonicalGeneratorLegacy
+abstract class AbstractCanonicalGeneratorLegacy10
 {
-    protected TypoScriptFrontendController $typoScriptFrontendController;
-    protected PageRepository $pageRepository;
-    protected EventDispatcherInterface $eventDispatcher;
+    /**
+     * @var TypoScriptFrontendController
+     */
+    protected $typoScriptFrontendController;
 
-    public function __construct(?TypoScriptFrontendController $typoScriptFrontendController = null, ?EventDispatcherInterface $eventDispatcher = null)
+    /**
+     * @var PageRepository
+     */
+    protected $pageRepository;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    public function __construct(TypoScriptFrontendController $typoScriptFrontendController = null, EventDispatcherInterface $eventDispatcher = null)
     {
-        $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcherInterface::class);
+        $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::getContainer()->get(EventDispatcherInterface::class);
         $this->typoScriptFrontendController = $typoScriptFrontendController ?? $this->getTypoScriptFrontendController();
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
     }
 
-    public function generate(array $params): string
+    public function generate(): string
     {
-        if ($this->typoScriptFrontendController->config['config']['disableCanonical'] ?? false) {
-            return '';
-        }
-
-        $event = new ModifyUrlForCanonicalTagEvent('', $params['request'], new Page($params['page']));
-        $event = $this->eventDispatcher->dispatch($event);
+        $event = $this->eventDispatcher->dispatch(new ModifyUrlForCanonicalTagEvent(''));
         $href = $event->getUrl();
 
         if (empty($href) && (int)$this->typoScriptFrontendController->page['no_index'] === 1) {
@@ -59,12 +65,12 @@ abstract class AbstractCanonicalGeneratorLegacy
         }
 
         if (empty($href)) {
-            // 1) Check if page has canonical URL set
-            $href = $this->checkForCanonicalLink();
+            // 1) Check if page show content from other page
+            $href = $this->checkContentFromPid();
         }
         if (empty($href)) {
-            // 2) Check if page show content from other page
-            $href = $this->checkContentFromPid();
+            // 2) Check if page has canonical URL set
+            $href = $this->checkForCanonicalLink();
         }
         if (empty($href)) {
             // 3) Fallback, create canonical URL
@@ -74,7 +80,7 @@ abstract class AbstractCanonicalGeneratorLegacy
         if (!empty($href)) {
             $canonical = '<link ' . GeneralUtility::implodeAttributes([
                     'rel' => 'canonical',
-                    'href' => $href,
+                    'href' => $href
                 ], true) . '/>' . LF;
             $this->typoScriptFrontendController->additionalHeaderData[] = $canonical;
             return $canonical;
@@ -82,10 +88,13 @@ abstract class AbstractCanonicalGeneratorLegacy
         return '';
     }
 
+    /**
+     * @return string
+     */
     protected function checkForCanonicalLink(): string
     {
         if (!empty($this->typoScriptFrontendController->page['canonical_link'])) {
-            return $this->typoScriptFrontendController->cObj->createUrl([
+            return $this->typoScriptFrontendController->cObj->typoLink_URL([
                 'parameter' => $this->typoScriptFrontendController->page['canonical_link'],
                 'forceAbsoluteUrl' => true,
             ]);
@@ -93,16 +102,19 @@ abstract class AbstractCanonicalGeneratorLegacy
         return '';
     }
 
+    /**
+     * @return string
+     */
     protected function checkContentFromPid(): string
     {
-        if ($this->typoScriptFrontendController->contentPid !== $this->typoScriptFrontendController->id) {
-            $parameter = $this->typoScriptFrontendController->contentPid;
+        if (!empty($this->typoScriptFrontendController->page['content_from_pid'])) {
+            $parameter = (int)$this->typoScriptFrontendController->page['content_from_pid'];
             if ($parameter > 0) {
                 $targetPage = $this->pageRepository->getPage($parameter, true);
                 if (!empty($targetPage['canonical_link'])) {
                     $parameter = $targetPage['canonical_link'];
                 }
-                return $this->typoScriptFrontendController->cObj->createUrl([
+                return $this->typoScriptFrontendController->cObj->typoLink_URL([
                     'parameter' => $parameter,
                     'forceAbsoluteUrl' => true,
                 ]);
@@ -111,10 +123,13 @@ abstract class AbstractCanonicalGeneratorLegacy
         return '';
     }
 
+    /**
+     * @return string
+     */
     protected function checkDefaultCanonical(): string
     {
         // We should only create a canonical link to the target, if the target is within a valid site root
-        $inSiteRoot = $this->isPageWithinSiteRoot($this->typoScriptFrontendController->id);
+        $inSiteRoot = $this->isPageWithinSiteRoot((int)$this->typoScriptFrontendController->id);
         if (!$inSiteRoot) {
             return '';
         }
@@ -125,19 +140,20 @@ abstract class AbstractCanonicalGeneratorLegacy
         $previousMp = $this->typoScriptFrontendController->MP;
         $this->typoScriptFrontendController->MP = '';
 
-        $link = $this->typoScriptFrontendController->cObj->createUrl([
-            'parameter' => $this->typoScriptFrontendController->id . ',' . $this->typoScriptFrontendController->getPageArguments()->getPageType(),
+        $link = $this->typoScriptFrontendController->cObj->typoLink_URL([
+            'parameter' => $this->typoScriptFrontendController->id . ',' . $this->typoScriptFrontendController->type,
             'forceAbsoluteUrl' => true,
             'addQueryString' => true,
             'addQueryString.' => [
+                'method' => 'GET',
                 'exclude' => implode(
                     ',',
                     CanonicalizationUtility::getParamsToExcludeForCanonicalizedUrl(
-                        $this->typoScriptFrontendController->id,
+                        (int)$this->typoScriptFrontendController->id,
                         (array)$GLOBALS['TYPO3_CONF_VARS']['FE']['additionalCanonicalizedUrlParameters']
                     )
-                ),
-            ],
+                )
+            ]
         ]);
         $this->typoScriptFrontendController->MP = $previousMp;
         return $link;
@@ -154,6 +170,9 @@ abstract class AbstractCanonicalGeneratorLegacy
         return false;
     }
 
+    /**
+     * @return TypoScriptFrontendController
+     */
     protected function getTypoScriptFrontendController(): TypoScriptFrontendController
     {
         return $GLOBALS['TSFE'];
