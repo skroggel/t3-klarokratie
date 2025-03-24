@@ -25,7 +25,7 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
- * Class TrackingCodeController
+ * Class CodeController
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Steffen Kroggel
@@ -35,7 +35,7 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
 $version = $typo3Version->getMajorVersion();
 if ($version <= 10) {
-    class TrackingCodeControllerAbstract  extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+    class TrackingCodeControllerAbstract extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         /**
          * @var \Psr\Http\Message\ResponseFactoryInterface
@@ -43,14 +43,6 @@ if ($version <= 10) {
          */
         protected $responseFactory;
 
-<<<<<<< Updated upstream
-    /**
-     * @var \Psr\Http\Message\ResponseFactoryInterface
-     * @todo can be removed when support for v10 is dropped
-     */
-    protected $responseFactory;
-=======
->>>>>>> Stashed changes
 
         /**
          * @var \Psr\Http\Message\StreamFactoryInterface
@@ -58,14 +50,6 @@ if ($version <= 10) {
          */
         protected $streamFactory;
 
-<<<<<<< Updated upstream
-    /**
-     * @var \Psr\Http\Message\StreamFactoryInterface
-     * @todo can be removed when support for v10 is dropped
-     */
-    protected $streamFactory;
-=======
->>>>>>> Stashed changes
 
         /**
          * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory
@@ -77,18 +61,6 @@ if ($version <= 10) {
             $this->responseFactory = $responseFactory;
         }
 
-<<<<<<< Updated upstream
-    /**
-     * @param \Psr\Http\Message\ResponseFactoryInterface $responseFactory
-     * @return void
-     * @todo can be removed when support for v10 is dropped
-     */
-    public function injectResponseFactoryForV10(ResponseFactoryInterface $responseFactory)
-    {
-        $this->responseFactory = $responseFactory;
-    }
-=======
->>>>>>> Stashed changes
 
         /**
          * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
@@ -103,17 +75,6 @@ if ($version <= 10) {
 } {
     class TrackingCodeControllerAbstract extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
-<<<<<<< Updated upstream
-    /**
-     * @param \Psr\Http\Message\StreamFactoryInterface $streamFactory
-     * @return void
-     * @todo can be removed when support for v10 is dropped
-     */
-    public function injectStreamFactoryForV10(StreamFactoryInterface $streamFactory)
-    {
-        $this->streamFactory = $streamFactory;
-=======
->>>>>>> Stashed changes
     }
 }
 
@@ -128,24 +89,22 @@ class TrackingCodeController extends TrackingCodeControllerAbstract
      */
     protected function initializeAction(): void
     {
-        $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-        if ($typo3Version->getMajorVersion() >= 11) {
-            if (
-                ($site = $this->request->getAttribute('site'))
-                && ($siteConfiguration = $site->getConfiguration())
-            ) {
-                foreach (['googleAnalytics', 'etracker'] as $type) {
-                    if (
-                        ($settings = ($siteConfiguration['klarokratie'][$type] ?? ($siteConfiguration['klaro'][$type] ?? ($siteConfiguration['klaro' . ucfirst($type)] ?? []))))
-                        && (is_array($settings))
-                    ) {
-                        foreach ($settings as $key => $value) {
-                            $this->settings[$type][$key] = $value;
-                        }
+        if (
+            ($site = $this->getRequest()->getAttribute('site'))
+            && ($siteConfiguration = $site->getConfiguration())
+        ) {
+            foreach (['googleAnalytics', 'etracker'] as $type) {
+                if (
+                    ($settings = ($siteConfiguration['klarokratie'][$type] ?? ($siteConfiguration['klaro'][$type] ?? ($siteConfiguration['klaro' . ucfirst($type)] ?? []))))
+                    && (is_array($settings))
+                ) {
+                    foreach ($settings as $key => $value) {
+                        $this->settings[$type][$key] = $value;
                     }
                 }
             }
         }
+
     }
 
 
@@ -190,7 +149,7 @@ class TrackingCodeController extends TrackingCodeControllerAbstract
          */
         $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
         $this->view->assignMultiple([
-            'url' => $canonicalGenerator->getPath(),
+            'url' => $canonicalGenerator->getPath($this->request),
             'domain' => getenv('HTTP_HOST')
         ]);
 
@@ -210,7 +169,7 @@ class TrackingCodeController extends TrackingCodeControllerAbstract
          */
         $canonicalGenerator = GeneralUtility::makeInstance(CanonicalGenerator::class);
         $this->view->assignMultiple([
-            'url' => $canonicalGenerator->getPath(),
+            'url' => $canonicalGenerator->getPath($this->request),
             'domain' => getenv('HTTP_HOST')
         ]);
 
@@ -237,5 +196,19 @@ class TrackingCodeController extends TrackingCodeControllerAbstract
         return $this->responseFactory->createResponse()
             ->withHeader('Content-Type', 'text/html; charset=utf-8')
             ->withBody($this->streamFactory->createStream((string)($html ?? $this->view->render())));
+    }
+
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Mvc\Request|\Psr\Http\Message\ServerRequestInterface
+     */
+    protected function getRequest() {
+
+        $typo3Version = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+        if ($typo3Version->getMajorVersion() >= 11) {
+            return $this->request;
+        }
+
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 }

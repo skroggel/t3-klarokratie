@@ -25,6 +25,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
+/** @todo remove when support for v11 is dropped */
 
 if (GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class)->getMajorVersion() < 12) {
 

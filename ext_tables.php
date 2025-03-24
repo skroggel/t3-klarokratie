@@ -7,6 +7,6 @@ call_user_func(
 
 
     },
-    'dr_seo'
+    'klarokratie'
 );
 
