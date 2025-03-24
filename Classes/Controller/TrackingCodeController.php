@@ -32,9 +32,9 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @copyright Steffen Kroggel
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- * @todo TrackingCodeControllerAbstract can be replaced \TYPO3\CMS\Extbase\Mvc\Controller\ActionController when support for v10 is dropped
+ * @todo AbstractTrackingCodeController can be replaced \TYPO3\CMS\Extbase\Mvc\Controller\ActionController when support for v10 is dropped
  */
-class TrackingCodeController extends TrackingCodeControllerAbstract
+class TrackingCodeController extends AbstractTrackingCodeController
 {
 
     /**

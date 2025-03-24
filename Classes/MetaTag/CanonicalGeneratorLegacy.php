@@ -28,7 +28,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @todo can be removed if support for v12 is dropped
  * @deprecated since v12
  */
-final class CanonicalGeneratorLegacy extends CanonicalGeneratorLegacyAbstract
+final class CanonicalGeneratorLegacy extends AbstractCanonicalGeneratorLegacy
 {
 
     /**
