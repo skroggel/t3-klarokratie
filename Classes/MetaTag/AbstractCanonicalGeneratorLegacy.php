@@ -31,7 +31,7 @@ use TYPO3\CMS\Seo\Event\ModifyUrlForCanonicalTagEvent;
  * @todo can be removed if support for v12 is dropped
  * @deprecated since v12
  */
-abstract class CanonicalGeneratorLegacyAbstract
+abstract class AbstractCanonicalGeneratorLegacy
 {
     protected TypoScriptFrontendController $typoScriptFrontendController;
     protected PageRepository $pageRepository;

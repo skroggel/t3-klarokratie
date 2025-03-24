@@ -26,7 +26,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @todo replace CanonicalGeneratorAbstract with \TYPO3\CMS\Seo\Canonical\CanonicalGenerator when support for v12 an below is dropped
  */
-final class CanonicalGenerator extends CanonicalGeneratorAbstract
+final class CanonicalGenerator extends AbstractCanonicalGenerator
 {
 
     /**
