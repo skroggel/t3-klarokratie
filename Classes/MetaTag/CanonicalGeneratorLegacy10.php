@@ -29,9 +29,9 @@ use TYPO3\CMS\Extbase\Mvc\Request;
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @todo can be removed if support for v12 is dropped
- * @deprecated since v13
+ * @deprecated since v12
  */
-final class CanonicalGeneratorLegacy extends AbstractCanonicalGeneratorLegacy
+final class CanonicalGeneratorLegacy10 extends \TYPO3\CMS\Seo\Canonical\CanonicalGenerator
 {
 
     /**

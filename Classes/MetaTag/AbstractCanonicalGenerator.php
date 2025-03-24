@@ -34,11 +34,12 @@ use TYPO3\CMS\Seo\Exception\CanonicalGenerationDisabledException;
  * @todo can be removed if support for v12 is dropped
  * @deprecated since v12
  */
-abstract class AbstractCanonicalGenerator
+class AbstractCanonicalGenerator
 {
+    /*
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
-    ) {}
+    ) {}*/
 
     public function generate(array $params): string
     {
