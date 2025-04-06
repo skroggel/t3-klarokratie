@@ -267,7 +267,7 @@ var klaroConfig = {
     {
       name: "youTube",
       purposes: ['multimedia'],
-      contextualConsentOnly: true,
+      // contextualConsentOnly: true,
       translations: {
         zz: {
           title: 'YouTube'
@@ -283,7 +283,7 @@ var klaroConfig = {
     {
       name: "vimeo",
       purposes: ['multimedia'],
-      contextualConsentOnly: true,
+      // contextualConsentOnly: true,
       translations: {
         zz: {
           title: 'Vimeo'
@@ -369,3 +369,16 @@ var klaroConfig = {
     },
 	],
 };
+
+function klarokratieGetTableHtml(
+  cookieLabel = '', cookie = '',
+  liveTimeLabel = '', liveTime = '',
+  linkLabel  = '', link = '',
+) {
+
+  return '<table class="klaro-table">' +
+    (cookieLabel ? '<tr><th>' + cookieLabel + '</th><td>' + cookie + '</td></tr>' : '') +
+    (liveTimeLabel ? '<tr><th>' + liveTimeLabel + '</th><td>' + liveTime + '</td></tr>' : '') +
+    (linkLabel ? '<tr><th>' + linkLabel + '</th><td><a href="' + link + '" target="_blank">' + link + '</a></td></tr>' : '') +
+    '</table>';
+}
