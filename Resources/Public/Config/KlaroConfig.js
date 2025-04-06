@@ -188,13 +188,15 @@ var klaroConfig = {
       purposes: ['functional'],
       translations: {
         zz: {
-          title: 'PHP-Session (PHPSESSID)'
+          title: 'PHP-Session'
         },
         en: {
-          description: 'This cookie is specific to PHP applications. It is set to maintain your current session and ensures that you can use all functions of the website without restriction.'
+          description: 'This cookie is specific to PHP applications. It is set to maintain your current session and ensures that you can use all functions of the website without restriction.' +
+            klarokratieGetTableHtml('Cookie:', 'PHPSESSID', 'Duration:', 'Session')
         },
         de: {
-          description: 'Dieses Cookie ist spezifisch für PHP-Anwendungen. Es wird gesetzt, um Ihre aktuelle Sitzung aufrechtzuerhalten und gewährleistet so dass Sie alle Funktionen der Website uneingeschränkt nutzen können.'
+          description: 'Dieses Cookie ist spezifisch für PHP-Anwendungen. Es wird gesetzt, um Ihre aktuelle Sitzung aufrechtzuerhalten und gewährleistet so dass Sie alle Funktionen der Website uneingeschränkt nutzen können.' +
+            klarokratieGetTableHtml('Cookie:', 'PHPSESSID', 'Dauer:', 'Sitzung')
         },
       },
     },
@@ -205,13 +207,15 @@ var klaroConfig = {
       purposes: ['functional'],
       translations: {
         zz: {
-          title: 'TYPO3 (fe_typo_user)'
+          title: 'TYPO3'
         },
         en: {
-          description: 'This cookie is set by the TYPO3 content management system used by us to identify a user. It is a prerequisite for user-specific feedback on forms, for example, but also enables login to our site.'
+          description: 'This cookie is set by the TYPO3 content management system used by us to identify a user. It is a prerequisite for user-specific feedback on forms, for example, but also enables login to our site.' +
+            klarokratieGetTableHtml('Cookie:', 'fe_typo_user', 'Duration:', 'Session')
         },
         de: {
-          description: 'Dieses Cookie wird vom durch uns eingesetzten Content Management System TYPO3 für die Identifizierung eines Anwenders gesetzt. Es ist Voraussetzung für z. B. nutzerspezifische Rückmeldungen bei Formularen, ermöglicht aber auch den Login auf unserer Seite.'
+          description: 'Dieses Cookie wird vom durch uns eingesetzten Content Management System TYPO3 für die Identifizierung eines Anwenders gesetzt. Es ist Voraussetzung für z. B. nutzerspezifische Rückmeldungen bei Formularen, ermöglicht aber auch den Login auf unserer Seite.' +
+            klarokratieGetTableHtml('Cookie:', 'fe_typo_user', 'Dauer:', 'Sitzung')
         },
       },
     },
@@ -225,10 +229,12 @@ var klaroConfig = {
           title: 'Captcha (tx_srfreecap)'
         },
         en: {
-          description: 'The cookie ensures the functionality of the spam protection (captcha).'
+          description: 'The cookie ensures the functionality of the spam protection (captcha).' +
+            klarokratieGetTableHtml('Cookie:', 'tx_srfreecap', 'Duration:', 'Session')
         },
         de: {
-          description: 'Das Cookie stellt die Funktionsfähigkeit des Spam-Schutzes (Captcha) sicher.'
+          description: 'Das Cookie stellt die Funktionsfähigkeit des Spam-Schutzes (Captcha) sicher.' +
+            klarokratieGetTableHtml('Cookie:', 'tx_srfreecap', 'Dauer:', 'Sitzung')
         },
       },
     },
@@ -239,30 +245,112 @@ var klaroConfig = {
       purposes: ['functional'],
       translations: {
         zz: {
-          title: 'Klaro! (klaro)'
+          title: 'Klaro!'
         },
         en: {
-          description: 'This cookie stores the selection of cookies permitted by the user.'
+          description: 'This cookie saves the data protection settings selected by the user.' +
+            klarokratieGetTableHtml('Cookie:', 'klaro', 'Duration:', '1 year')
         },
         de: {
-          description: 'Dieses Cookie speichert die getroffene Auswahl der durch die Nutzenden zugelassenen Cookies.'
+          description: 'Dieses Cookie speichert die durch Nutzenden gewählten Datenschutzeinstellungen.' +
+            klarokratieGetTableHtml('Cookie:', 'klaro', 'Dauer:', '1 Jahr')
         },
       },
     },
     {
       purposes: ['statistics'],
       name: "etracker",
+      cookies: [
+        /^(_)?et_(.*)?/, // we delete the cookies if the user declines its use
+        'isSdEnabled',
+        'cookiesAvailable'
+      ],
       translations: {
         zz: {
           title: 'eTracker'
         },
         en: {
-          description: 'In order to continuously develop and improve our website, we record visits and downloads on our website. We use etracker Analytics from the provider etracker GmbH, Erste Brunnenstraße 1, 20459 Hamburg, Germany. The data collected is not passed on to third parties and does not allow any conclusions to be drawn about your person. The data collection is also not used for the purpose of processing for the provision of personalized content and advertising, i.e. for direct communication with a specific person, but for the aggregated statistical evaluation of website usage.  The data generated with etracker is processed and stored by etracker on behalf of the provider of this website exclusively in Germany and is therefore subject to the strict German and European data protection laws and standards. etracker has been independently audited, certified and awarded the ePrivacyseal data protection seal of approval in this respect. If you agree, you allow us to record your usage behavior on this website using cookies, among other things. If you do not agree to the setting of cookies, the recording of user behavior on this website is carried out exclusively without cookies (cookie-less). You can find more information on cookie-less tracking in our privacy policy.'
+          description: 'In order to continuously develop and improve our website, we record visits and downloads on our website. We use etracker Analytics from the provider etracker GmbH, Erste Brunnenstraße 1, 20459 Hamburg, Germany. The data collected is not passed on to third parties and does not allow any conclusions to be drawn about your person. The data collection is also not used for the purpose of processing for the provision of personalized content and advertising, i.e. for direct communication with a specific person, but for the aggregated statistical evaluation of website usage.  The data generated with etracker is processed and stored by etracker on behalf of the provider of this website exclusively in Germany and is therefore subject to the strict German and European data protection laws and standards. etracker has been independently audited, certified and awarded the ePrivacyseal data protection seal of approval in this respect. If you agree, you allow us to record your usage behavior on this website using cookies, among other things. If you do not agree to the setting of cookies, the recording of user behavior on this website is carried out exclusively without cookies (cookie-less). You can find more information on cookie-less tracking in our privacy policy.'+
+            klarokratieGetTableHtml('Cookie:', 'et_allow_cookies', 'Duration:', 'max. 480 days') +
+            klarokratieGetTableHtml('Cookie:', 'et_oi_v2', 'Duration:', '480 day - 50 years') +
+            klarokratieGetTableHtml('Cookie:', 'et_scroll_depth', 'Duration:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', 'isSdEnabled', 'Duration:', '24 hours') +
+            klarokratieGetTableHtml('Cookie:', 'et_cssSelectors', 'Duration:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', 'et_tagManagerEntries', 'Duration:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', 'et_tagManagerVarss', 'Duration:', 'Session')
         },
         de: {
-          description: 'Um unser Webangebot kontinuierlich weiterentwickeln und verbessern zu können, erfassen wir die Besuche und Downloads auf unserer Website. Wir setzen etracker Analytics des Anbieters etracker GmbH, Erste Brunnenstraße 1, 20459 Hamburg, Deutschland, ein. Die erfassten Daten werden nicht an Dritte weitergegeben und erlauben keinen Rückschluss auf Ihre Person. Auch dient die Datenerfassung nicht dem Zweck der Verarbeitung für die Bereitstellung personalisierter Inhalte und Werbung, d.h. zur direkten Kommunikation mit einer bestimmten Person, sondern der aggregierten statistischen Auswertung der Website-Nutzung.  Die mit etracker erzeugten Daten werden im Auftrag des Anbieters dieser Website von etracker ausschließlich in Deutschland verarbeitet und gespeichert und unterliegen damit den strengen deutschen und europäischen Datenschutzgesetzen und -standards. etracker wurde diesbezüglich unabhängig geprüft, zertifiziert und mit dem Datenschutz-Gütesiegel ePrivacyseal ausgezeichnet. Wenn Sie zustimmen, erlauben Sie es uns, Ihr Nutzungsverhalten auf dieser Website u. a. durch Cookies zu erfassen. Stimmen Sie dem Setzen von Cookies nicht zu, erfolgt die Erfassung des Nutzungsverhaltens auf dieser Website ausschließlich ohne Cookies (Cookie-less). Nähere Informationen zum Cookie-less-Tracking finden Sie in unserer Datenschutzerklärung.'
+          description: 'Um unser Webangebot kontinuierlich weiterentwickeln und verbessern zu können, erfassen wir die Besuche und Downloads auf unserer Website. Wir setzen etracker Analytics des Anbieters etracker GmbH, Erste Brunnenstraße 1, 20459 Hamburg, Deutschland, ein. Die erfassten Daten werden nicht an Dritte weitergegeben und erlauben keinen Rückschluss auf Ihre Person. Auch dient die Datenerfassung nicht dem Zweck der Verarbeitung für die Bereitstellung personalisierter Inhalte und Werbung, d.h. zur direkten Kommunikation mit einer bestimmten Person, sondern der aggregierten statistischen Auswertung der Website-Nutzung.  Die mit etracker erzeugten Daten werden im Auftrag des Anbieters dieser Website von etracker ausschließlich in Deutschland verarbeitet und gespeichert und unterliegen damit den strengen deutschen und europäischen Datenschutzgesetzen und -standards. etracker wurde diesbezüglich unabhängig geprüft, zertifiziert und mit dem Datenschutz-Gütesiegel ePrivacyseal ausgezeichnet. Wenn Sie zustimmen, erlauben Sie es uns, Ihr Nutzungsverhalten auf dieser Website u. a. durch Cookies zu erfassen. Stimmen Sie dem Setzen von Cookies nicht zu, erfolgt die Erfassung des Nutzungsverhaltens auf dieser Website ausschließlich ohne Cookies (Cookie-less). Nähere Informationen zum Cookie-less-Tracking finden Sie in unserer Datenschutzerklärung.' +
+            klarokratieGetTableHtml('Cookie:', 'et_allow_cookies', 'Duration:', 'max. 480 Tage') +
+            klarokratieGetTableHtml('Cookie:', 'et_oi_v2', 'Duration:', '480 Tage - 50 Jahre') +
+            klarokratieGetTableHtml('Cookie:', 'et_scroll_depth', 'Duration:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', 'isSdEnabled', 'Duration:', '24 Stunden') +
+            klarokratieGetTableHtml('Cookie:', 'et_cssSelectors', 'Duration:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', 'et_tagManagerEntries', 'Duration:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', 'et_tagManagerVarss', 'Duration:', 'Sitzung')
         },
       },
+      onAccept: `
+
+        // check if code is injected - if not, do it now
+        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
+        if (
+            (codeTemplate)
+            && (codeTemplate.getAttribute('data-injected') != 1)
+        ){
+          txKlarokratieInjectTrackingCode();
+        }
+
+        let intervalEtracker = null;
+        function updateEtracker() {
+          if (typeof window._etracker == 'object'
+              && typeof _etracker.enableCookies == 'function'
+              && typeof _etracker.disableCookies == 'function'
+          ) {
+
+            let domain = window.location.hostname;
+            _etracker.enableCookies(domain);
+
+            window.clearInterval(intervalEtracker);
+            intervalEtracker = null;
+
+            // console.log('Cookies allowed for ' + domain + '! Thank you!');
+          }
+        }
+
+        intervalEtracker = window.setInterval(updateEtracker, 200);
+      `,
+      onInit: `
+      `,
+      onDecline: `
+
+        // check if code is injected - if not, there is nothing to do!
+        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
+        if (
+            (codeTemplate)
+            && (codeTemplate.getAttribute('data-injected') == 1)
+        ){
+
+          let intervalEtracker = null;
+          function updateEtracker() {
+            if (typeof window._etracker == 'object'
+                && typeof _etracker.enableCookies == 'function'
+                && typeof _etracker.disableCookies == 'function'
+            ) {
+
+              let domain = window.location.hostname;
+              _etracker.disableCookies(domain);
+
+              window.clearInterval(intervalEtracker);
+              intervalEtracker = null;
+
+              // console.log('Cookies disabled for ' + domain + '! You are welcome!');
+            }
+          }
+
+          intervalEtracker = window.setInterval(updateEtracker, 200);
+        }
+			`,
     },
     {
       name: "youTube",
@@ -297,75 +385,68 @@ var klaroConfig = {
       },
     },
     {
-      name: "google-tag-manager",
-      purposes: ["marketing"],
-      translations: {
-        zz: {
-          title: 'Google Tag Manager'
-        },
-        en: {
-          description: 'We use the "Google Tag Manager" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.'
-        },
-        de: {
-          description: 'Wir setzen auf unserer Website den "Google Tag Manager" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.'
-        },
-      },
-      onAccept: `
-        // we notify the tag manager about all services that were accepted. You can define
-        // a custom event in GTM to load the service if consent was given.
-        for(let k of Object.keys(opts.consents)){
-            if (opts.consents[k]){
-                let eventName = 'klaro-'+k+'-accepted'
-                dataLayer.push({'event': eventName})
-            }
-        }
-        // if consent for Google Analytics was granted we enable analytics storage
-        if (opts.consents[opts.vars.googleAnalyticsName || 'google-analytics']){
-            console.log("Google analytics usage was granted")
-            gtag('consent', 'update', {'analytics_storage': 'granted'})
-        }
-        // if consent for Google Ads was granted we enable ad storage
-        if (opts.consents[opts.vars.adStorageName || 'google-ads']){
-            console.log("Google ads usage was granted")
-            gtag('consent', 'update', {'ad_storage': 'granted'})
-        }
-            `,
-      onInit: `
-				// initialization code here (will be executed only once per page-load)
-				window.dataLayer = window.dataLayer || [];
-				window.gtag = function(){dataLayer.push(arguments)}
-				gtag('consent', 'default', {'ad_storage': 'denied', 'analytics_storage': 'denied'})
-				gtag('set', 'ads_data_redaction', true)
-			`,
-      onDecline: `
-				// decline code here (will be executed only once per page-load)
-				window.dataLayer = window.dataLayer || [];
-				window.gtag = function(){dataLayer.push(arguments)}
-				gtag('consent', 'default', {'ad_storage': 'denied', 'analytics_storage': 'denied'})
-				gtag('set', 'ads_data_redaction', true)
-			`,
-      vars: {
-        googleAnalytics: "google-analytics",
-      },
-    },
-    {
       // In GTM, you should define a custom event trigger named `klaro-google-analytics-accepted` which should trigger the Google Analytics integration.
       name: "google-analytics",
-      purposes: ["marketing"],
+      purposes: ["statistics"],
       cookies: [
         /^_ga(_.*)?/, // we delete the Google Analytics cookies if the user declines its use
       ],
       translations: {
         zz: {
-          title: 'Google Analytics'
+          title: 'Google Tag Manager & Google Analytics'
         },
         en: {
-          description: 'We use the "Google Analytics" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.'
+          description: 'We use "Google Tag Manager" and "Google Analytics" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.' +
+            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Duration:', '1 year')
         },
         de: {
-          description: 'Wir setzen auf unserer Website den "Google Analytics" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.'
+          description: 'Wir setzen auf unserer Website "Google Tag Manager" und "Google Analytics" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.' +
+            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '1 Jahr')
         },
       },
+      onAccept: `
+
+        // check if code is injected - if not, do it now
+        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
+        if (
+            (codeTemplate)
+            && (codeTemplate.getAttribute('data-injected') != 1)
+        ){
+          txKlarokratieInjectTrackingCode();
+        }
+
+        // we notify the tag manager about all services that were accepted. You can define
+        // a custom event in GTM to load the service if consent was given.
+        for(let k of Object.keys(opts.consents)){
+          if (opts.consents[k]){
+            let eventName = 'klaro-'+k+'-accepted';
+            dataLayer.push({'event': eventName});
+            // console.log('Event "' + eventName + '" fired');
+          }
+        }
+
+        // we grant analytics storage
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted',
+        });
+        // console.log('Google Analytics allowed! Thank you!');
+      `,
+      onDecline: `
+
+        // check if code is injected - if not, there is nothing to do!
+        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
+        if (
+            (codeTemplate)
+            && (codeTemplate.getAttribute('data-injected') == 1)
+        ){
+
+          // we again explicitly deny analytics storage
+          gtag('consent', 'update', {
+            'analytics_storage': 'denied',
+            });
+            // console.log('Google Analytics denied! You are welcome!');
+        }
+      `,
     },
 	],
 };
