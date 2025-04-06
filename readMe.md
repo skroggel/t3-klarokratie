@@ -211,6 +211,10 @@ body .klaro label {
     margin:0;
 }
 
+body .klaro .purposes {
+    display: none;
+}
+
 body .klaro .cookie-modal .cm-btn,
 body .klaro .context-notice .cm-btn,
 body .klaro .cookie-notice .cm-btn {
@@ -269,6 +273,13 @@ body .klaro .cookie-modal .cm-modal .cm-header,
 body .klaro .cookie-modal .cm-list-title {
     font-size: 1.2em;
 }
+
+body .klaro .klaro-table + .klaro-table {
+    margin-top: 1em
+}
+body .klaro .klaro-table th{
+    padding-right: 1em
+}
 ```
 ### Example with SASS and Bootstrap
 ```
@@ -299,6 +310,10 @@ body .klaro {
 
     label {
         margin:0;
+    }
+
+    .purposes {
+        display: none;
     }
 
     .cookie-modal .cm-btn,
@@ -348,5 +363,14 @@ body .klaro {
     .cookie-modal .cm-footer-buttons {
         margin-top: 1rem;
     }
+
+    .klaro-table + .klaro-table {
+       margin-top: 1em
+    }
+
+    .klaro-table th{
+        padding-right: 1em
+    }
+
 }
 ```
