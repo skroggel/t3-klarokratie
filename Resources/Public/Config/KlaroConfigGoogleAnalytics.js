@@ -319,7 +319,6 @@ var klaroConfig = {
           'personalization_storage': 'denied',
           'security_storage' : 'denied',
         })
-        gtag('set', 'ads_data_redaction', true);
       `,
       onAccept: `
         // we notify the tag manager about all services that were accepted. You can define
