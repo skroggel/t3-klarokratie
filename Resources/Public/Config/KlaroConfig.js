@@ -116,7 +116,8 @@ var klaroConfig = {
         title: "Hat jemand \"Cookies\" gesagt?!",
 				description:
 					'Wir würden gerne einige Dienste verwenden, um Ihnen ein bestmögliches Nutzungserlebnis auf unserer Website zu bieten. Entscheiden Sie selbst, welche Dienste Sie zulassen möchten.',
-			},
+        privacyPolicy: { name: "Datenschutzerklärung" },
+      },
 			consentNotice: {
 				description:
 					"Hallo! Könnten wir bitte einige zusätzliche Dienste für {purposes} aktivieren? Sie können Ihre Zustimmung später jederzeit ändern oder widerrufen.",
@@ -125,7 +126,8 @@ var klaroConfig = {
 				privacyPolicy: { name: "Datenschutzerklärung" },
 				testing: "Testmodus!",
 			},
-			purposes: {
+      privacyPolicy: { name: "Datenschutzerklärung" },
+      purposes: {
         functional: {
           title: "Funktional",
           description: "Für das Funktionieren der Website notwendige Dienste"
