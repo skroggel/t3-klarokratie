@@ -91,9 +91,6 @@ plugin.tx_klarokratie {
 
             # cat=plugin.tx_klarokratie/googleAnalytics; type=string; label=The Tag-ID of your Google Analytics account
             tagId =
-
-            # cat=plugin.tx_klarokratie/googleAnalytic; type=bool; label=Block tracking script before consent
-            blockScriptBeforeConsent = 0
         }
     }
 }

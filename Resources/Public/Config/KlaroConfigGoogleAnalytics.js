@@ -309,17 +309,19 @@ var klaroConfig = {
             klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '1 Jahr')
         },
       },
+      onInit: `
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'functionality_storage': 'denied',
+          'personalization_storage': 'denied',
+          'security_storage' : 'denied',
+        })
+        gtag('set', 'ads_data_redaction', true);
+      `,
       onAccept: `
-
-        // check if code is injected - if not, do it now
-        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
-        if (
-            (codeTemplate)
-            && (codeTemplate.getAttribute('data-injected') != 1)
-        ){
-          txKlarokratieInjectTrackingCode();
-        }
-
         // we notify the tag manager about all services that were accepted. You can define
         // a custom event in GTM to load the service if consent was given.
         for(let k of Object.keys(opts.consents)){
@@ -334,25 +336,80 @@ var klaroConfig = {
         gtag('consent', 'update', {
           'analytics_storage': 'granted',
         });
-        // console.log('Google Analytics allowed! Thank you!');
+        console.log('Google Analytics allowed! Thank you!');
+      `,
+      onDecline: `
+        // we again explicitly deny analytics storage
+        gtag('consent', 'update', {
+          'analytics_storage': 'denied',
+        });
+        console.log('Google Analytics denied! You are welcome!');
+      `,
+    },
+    /*
+    {
+      // In GTM, you should define a custom event trigger named `klaro-google-ads-accepted` which should trigger the Google Ads integration.
+      name: "google-ads",
+      purposes: ["marketing"],
+      cookies: [
+        /^_ga(_.*)?/, // we delete the Google Analytics cookies if the user declines its use
+      ],
+      translations: {
+        zz: {
+          title: 'Google Tag Manager & Google Ads'
+        },
+        en: {
+          description: 'We use "Google Tag Manager" and "Google Ads" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.' +
+            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Duration:', '1 year')
+        },
+        de: {
+          description: 'Wir setzen auf unserer Website "Google Tag Manager" und "Google Ads" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.' +
+            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '1 Jahr')
+        },
+      },
+      onInit: `
+        gtag('consent', 'default', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'functionality_storage': 'denied',
+          'personalization_storage': 'denied',
+          'security_storage' : 'denied',
+        })
+        gtag('set', 'ads_data_redaction', true);
+      `,
+      onAccept: `
+        // we notify the tag manager about all services that were accepted. You can define
+        // a custom event in GTM to load the service if consent was given.
+        for(let k of Object.keys(opts.consents)){
+          if (opts.consents[k]){
+            let eventName = 'klaro-'+k+'-accepted';
+            dataLayer.push({'event': eventName});
+            // console.log('Event "' + eventName + '" fired');
+          }
+        }
+
+        // we grant analytics storage
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted'
+        });
+        console.log('Google Ads allowed! Thank you!');
       `,
       onDecline: `
 
-        // check if code is injected - if not, there is nothing to do!
-        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
-        if (
-            (codeTemplate)
-            && (codeTemplate.getAttribute('data-injected') == 1)
-        ){
-
-          // we again explicitly deny analytics storage
-          gtag('consent', 'update', {
-            'analytics_storage': 'denied',
-            });
-            // console.log('Google Analytics denied! You are welcome!');
-        }
+        // we again explicitly deny analytics storage
+        gtag('consent', 'update', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+        console.log('Google Ads denied! You are welcome!');
       `,
     },
+    */
 	],
 };
 
