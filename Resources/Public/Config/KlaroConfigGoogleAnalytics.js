@@ -296,7 +296,7 @@ var klaroConfig = {
       name: "google-analytics",
       purposes: ["statistics"],
       cookies: [
-        /^_ga(_.*)?/, // we delete the Google Analytics cookies if the user declines its use
+        /^_ga(_.*)?/, // we delete the Google cookies if the user declines its use
       ],
       translations: {
         zz: {
@@ -311,18 +311,11 @@ var klaroConfig = {
             klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '1 Jahr')
         },
       },
-      onInit: `
-        gtag('consent', 'default', {
-          'analytics_storage': 'denied',
-          'ad_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied',
-          'functionality_storage': 'denied',
-          'personalization_storage': 'denied',
-          'security_storage' : 'denied',
-        })
-      `,
+      onInit: ``,
       onAccept: `
+
+        klarokratieInjectGoogleTagManager();
+
         // we notify the tag manager about all services that were accepted. You can define
         // a custom event in GTM to load the service if consent was given.
         for(let k of Object.keys(opts.consents)){
@@ -353,7 +346,7 @@ var klaroConfig = {
       name: "google-ads",
       purposes: ["marketing"],
       cookies: [
-        /^_ga(_.*)?/, // we delete the Google Analytics cookies if the user declines its use
+        /^_ga(_.*)?/, // we delete the Google cookies if the user declines its use
       ],
       translations: {
         zz: {
@@ -368,19 +361,11 @@ var klaroConfig = {
             klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '1 Jahr')
         },
       },
-      onInit: `
-        gtag('consent', 'default', {
-          'analytics_storage': 'denied',
-          'ad_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied',
-          'functionality_storage': 'denied',
-          'personalization_storage': 'denied',
-          'security_storage' : 'denied',
-        })
-        gtag('set', 'ads_data_redaction', true);
-      `,
+      onInit: ``,
       onAccept: `
+
+        klarokratieInjectGoogleTagManager();
+
         // we notify the tag manager about all services that were accepted. You can define
         // a custom event in GTM to load the service if consent was given.
         for(let k of Object.keys(opts.consents)){
