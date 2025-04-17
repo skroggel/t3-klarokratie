@@ -32,7 +32,6 @@ plugin.tx_klarokratie {
             enable = {$plugin.tx_klarokratie.settings.googleAnalytics.enable}
             useTagManager = {$plugin.tx_klarokratie.settings.googleAnalytics.useTagManager}
             tagId = {$plugin.tx_klarokratie.settings.googleAnalytics.tagId}
-            blockScriptBeforeConsent = {$plugin.tx_klarokratie.settings.googleAnalytics.blockScriptBeforeConsent}
         }
  	}
 }
