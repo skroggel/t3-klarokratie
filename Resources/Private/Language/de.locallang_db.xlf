@@ -13,6 +13,11 @@
 				<source>Klarokratie: Tracking Code</source>
 				<target>Klarokratie: Tracking Code</target>
 			</trans-unit>
+			<trans-unit id="plugin.trackingCode.description" approved="yes">
+				<source>Insert tracking code (Google Analytics or etracker).</source>
+				<target>Tracking code einfügen (Google Analytics or etracker).</target>
+			</trans-unit>
+
 
 		</body>
 	</file>
