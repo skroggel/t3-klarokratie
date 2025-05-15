@@ -10,6 +10,10 @@
 			<trans-unit id="plugin.trackingCode.title" approved="yes">
 				<source>Klarokratie: Tracking Code</source>
 			</trans-unit>
+			<trans-unit id="plugin.trackingCode.description" approved="yes">
+				<source>Insert tracking code (Google Analytics or etracker).</source>
+			</trans-unit>
+
 		</body>
 	</file>
 </xliff>
