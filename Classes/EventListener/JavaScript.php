@@ -121,12 +121,15 @@ class JavaScript
             }
         }
 
+        // name is based on hash of combined config - it changes if the config changes
         if (trim($combinedJs)) {
             $fileName = 'klaro-combined-' . md5($combinedJs) . '.js';
             $relativePath = 'typo3temp/assets/' . $fileName;
             $absolutePath = Environment::getPublicPath() . '/' . $relativePath;
 
-            GeneralUtility::writeFileToTypo3tempDir($absolutePath, $combinedJs);
+            if (!file_exists($absolutePath)) {
+                GeneralUtility::writeFileToTypo3tempDir($absolutePath, $combinedJs);
+            }
             return $relativePath;
         }
 
