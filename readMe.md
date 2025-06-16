@@ -47,6 +47,42 @@ klaro:
 ```
 klaroDisable: true
 ```
+## Modular Configuration using Includes
+Starting with the latest version, the Klarokratie extension supports a modular approach to configuration:
+
+* You can define a base configuration file (e.g. KlaroConfigMinimal.js)
+* Optionally, you can then provide one or more additional config-files ("includes") that are merged into the base configuration.
+
+This allows you to separate reusable parts and keep your base config clean and minimal.
+
+Example setup:
+```
+klarokratie:
+  klaro:
+    config: EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js
+    includes:
+      - EXT:klarokratie/Resources/Public/Config/Includes/HCaptcha.js
+      - EXT:klarokratie/Resources/Public/Config/Includes/YouTube.js
+      - EXT:klarokratie/Resources/Public/Config/Includes/Vimeo.js
+      - EXT:klarokratie/Resources/Public/Config/Includes/GoogleAnalytics.js
+```
+All configuration-scripts are delivered as a single combined JavaScript file to reduce HTTP requests.
+If no includes are defined, only the base config is loaded without merging. This is the default behavior.
+The extension already comes with several useful includes for common services:
+
+* Google Analytics
+* Google Ads
+* etracker
+* YouTube
+* Vimeo
+* HCaptcha
+
+These are located in:
+```
+EXT:klarokratie/Resources/Public/Config/Includes/
+```
+You can use them directly or copy and customize them in your own site package.
+Note: if you use includes, the `EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js` is used instead of `EXT:klarokratie/Resources/Public/Config/KlaroConfig.js`
 
 ## Advanced Configuration
 ### Optional: Use Tracking-Code insertion for etracker or Google Analytics
