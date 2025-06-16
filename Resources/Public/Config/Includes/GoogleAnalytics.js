@@ -16,14 +16,23 @@
         },
         en: {
           description: 'We use "Google Tag Manager" and "Google Analytics" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.' +
-            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Duration:', '1 year')
+            klarokratieGetTableHtml('Cookie:', '_ga', 'Duration:', '2 years') +
+            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Duration:', '2 years') +
+            klarokratieGetTableHtml('Cookie:', '_gid', 'Duration:', '24 hours') +
+            klarokratieGetTableHtml('Cookie:', '_gat', 'Duration:', '1 minute') +
+            klarokratieGetTableHtml('Cookie:', '_gac_*', 'Duration:', '90 days')
         },
         de: {
           description: 'Wir setzen auf unserer Website "Google Tag Manager" und "Google Analytics" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.' +
-            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '1 Jahr')
+            klarokratieGetTableHtml('Cookie:', '_ga', 'Dauer:', '2 Jahre') +
+            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '2 Jahre') +
+            klarokratieGetTableHtml('Cookie:', '_gid', 'Dauer:', '24 Stunden') +
+            klarokratieGetTableHtml('Cookie:', '_gat', 'Dauer:', '1 Minute') +
+            klarokratieGetTableHtml('Cookie:', '_gac_*', 'Dauer:', '90 Tage')
         },
       },
-      onInit: ``,
+      onInit: `
+      `,
       onAccept: `
 
         klarokratieInjectGoogleTagManager();

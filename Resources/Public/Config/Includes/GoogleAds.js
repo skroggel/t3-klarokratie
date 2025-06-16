@@ -16,11 +16,19 @@
         },
         en: {
           description: 'We use "Google Tag Manager" and "Google Ads" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.' +
-            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Duration:', '1 year')
+            klarokratieGetTableHtml('Cookie:', 'IDE', 'Duration:', '1 year') +
+            klarokratieGetTableHtml('Cookie:', 'test_cookie', 'Duration:', '15 minutes') +
+            klarokratieGetTableHtml('Cookie:', 'NID', 'Duration:', '6 months') +
+            klarokratieGetTableHtml('Cookie:', 'ANID', 'Duration:', '13 months (in the EU)') +
+            klarokratieGetTableHtml('Cookie:', '__gads', 'Duration:', '13 months')
         },
         de: {
           description: 'Wir setzen auf unserer Website "Google Tag Manager" und "Google Ads" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.' +
-            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '1 Jahr')
+            klarokratieGetTableHtml('Cookie:', 'IDE', 'Dauer:', '1 Jahr') +
+            klarokratieGetTableHtml('Cookie:', 'test_cookie', 'Dauer:', '15 Minuten', ) +
+            klarokratieGetTableHtml('Cookie:', 'NID', 'Dauer:', '6 Monate') +
+            klarokratieGetTableHtml('Cookie:', 'ANID', 'Dauer:', '13 Monate (in der EU)') +
+            klarokratieGetTableHtml('Cookie:', '__gads', 'Dauer:', '13 Monate', 'Verwendung')
         },
       },
       onInit: ``,
