@@ -46,7 +46,7 @@
           }
         }
 
-        // we grant analytics storage
+        // we grant data storage
         gtag('consent', 'update', {
           'ad_storage': 'granted',
           'ad_user_data': 'granted',
@@ -56,7 +56,7 @@
       `,
       onDecline: `
 
-        // we again explicitly deny analytics storage
+        // we again explicitly deny data storage
         gtag('consent', 'update', {
           'ad_storage': 'denied',
           'ad_user_data': 'denied',

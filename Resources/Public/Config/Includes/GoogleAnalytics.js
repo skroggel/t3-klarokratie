@@ -47,14 +47,14 @@
           }
         }
 
-        // we grant analytics storage
+        // we grant data storage
         gtag('consent', 'update', {
           'analytics_storage': 'granted',
         });
         console.log('Google Analytics allowed! Thank you!');
       `,
       onDecline: `
-        // we again explicitly deny analytics storage
+        // we again explicitly deny data storage
         gtag('consent', 'update', {
           'analytics_storage': 'denied',
         });
