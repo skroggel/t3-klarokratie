@@ -69,6 +69,7 @@ class TrackingCodeController extends AbstractTrackingCodeController
      * action loader
      *
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      */
     public function loaderAction(): ResponseInterface
     {

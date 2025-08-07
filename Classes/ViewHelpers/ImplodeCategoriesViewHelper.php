@@ -33,7 +33,7 @@ class ImplodeCategoriesViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('domain', 'string', 'The domain prefix.');
@@ -48,20 +48,13 @@ class ImplodeCategoriesViewHelper extends AbstractViewHelper
     /**
      * Returns the filtered and combined categories
      *
-     * @param array $arguments
-     * @param \Closure  $renderChildrenClosure
-     * @param \TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface $renderingContext
      * @return string
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ): string {
-
-        $domain = $arguments['domain'];
-        unset($arguments['domain']);
-        return CategoryUtility::implodeCategories($domain, $arguments);
+    public function render(): string
+    {
+        $domain = $this->arguments['domain'];
+        unset($this->arguments['domain']);
+        return CategoryUtility::implodeCategories($domain, $this->arguments);
     }
 
 }

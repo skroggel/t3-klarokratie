@@ -16,8 +16,10 @@ namespace Madj2k\Klarokratie\EventListener;
  */
 
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
@@ -32,62 +34,106 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 class JavaScript
 {
 
-    /**
-     * @param \TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent $event
-     * @return void
-     */
     public function __invoke(BeforeJavaScriptsRenderingEvent $event): void
     {
         $request = $this->getRequest();
 
-        if (ApplicationType::fromRequest($request)->isBackend()) {
-            return;
-        }
-
-        if ($event->isInline()) {
+        if (ApplicationType::fromRequest($request)->isBackend() || $event->isInline()) {
             return;
         }
 
         $jsFile = 'EXT:klarokratie/Resources/Public/JavaScript/klaro-no-css.js';
-        $configFile = 'EXT:klarokratie/Resources/Public/Config/klaroConfig.js';
-        if (
-            ($site = $request->getAttribute('site'))
-            && ($siteConfiguration = $site->getConfiguration())
-        ){
+        $defaultConfigFile = 'EXT:klarokratie/Resources/Public/Config/KlaroConfig.js';
+        $minimalConfigFile = 'EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js';
+        $configFile = $defaultConfigFile;
+        $includes = [];
 
-            $disable = (bool) ($siteConfiguration['klarokratie']['klaro']['disable'] ?? ($siteConfiguration['klaro']['disable'] ?? ($siteConfiguration['klaroDisable'] ?? false)));
+        $site = $request->getAttribute('site');
+        $siteConfiguration = ($site instanceof Site) ? $site->getConfiguration() : null;
+
+        if ($siteConfiguration) {
+            $disable = (bool) ($siteConfiguration['klarokratie']['klaro']['disable']
+                ?? ($siteConfiguration['klaro']['disable']
+                    ?? ($siteConfiguration['klaroDisable'] ?? false)));
             if ($disable) {
                 return;
             }
 
-            $pathFromConfig = ($siteConfiguration['klarokratie']['klaro']['config'] ?? ($siteConfiguration['klaro']['config'] ?? ($siteConfiguration['klaroConfig'] ?? '')));
-            if (
-                ($pathFromConfig)
-                && (file_exists(GeneralUtility::getFileAbsFileName($pathFromConfig)))
-            ){
+            // check for includes
+            $includes = $siteConfiguration['klarokratie']['klaro']['includes'] ?? [];
+            if (count($includes) > 0) {
+                $configFile = $minimalConfigFile;
+            }
+
+            // check for custom base-config
+            $pathFromConfig = ($siteConfiguration['klarokratie']['klaro']['config']
+                ?? ($siteConfiguration['klaro']['config']
+                    ?? ($siteConfiguration['klaroConfig'] ?? '')));
+            if ($pathFromConfig) {
                 $configFile = $pathFromConfig;
             }
         }
-        $files = [
-            'KlaroConfig' => $configFile,
-            'KlaroDefault' => $jsFile
-        ];
 
-        foreach ($files as $key => $file) {
-            $asset = $event->getAssetCollector()->getJavaScripts();
-            if (!($asset[$key] ?? false)) {
-                $attributes = [
-                    'defer' => 'defer',
-                    'nonce' => $this->getNonceAttribute()
-                ];
-                $event->getAssetCollector()->addJavaScript(
-                    $key,
-                    $file,
-                    $attributes,
-                    ['priority' => true]
-                );
+        $finalConfigFile = $this->combineConfigAndIncludes($configFile, $includes);
+        if ($finalConfigFile) {
+            $event->getAssetCollector()->addJavaScript(
+                'KlaroConfig',
+                $finalConfigFile,
+                ['defer' => 'defer', 'nonce' => $this->getNonceAttribute()],
+                ['priority' => true]
+            );
+        }
+
+        $event->getAssetCollector()->addJavaScript(
+            'KlaroLoader',
+            $jsFile,
+            ['defer' => 'defer', 'nonce' => $this->getNonceAttribute()],
+            ['priority' => true]
+        );
+    }
+
+
+    /**
+     * Combines the configuration file and includes into a temporary file,
+     * or returns the original file if no includes are present.
+     * Returns an empty string if no valid file exists.
+     *
+     * @param string $configFile
+     * @param array $includes
+     * @return string
+     */
+    private function combineConfigAndIncludes(string $configFile, array $includes): string
+    {
+        $configPath = GeneralUtility::getFileAbsFileName($configFile);
+        if (!file_exists($configPath)) {
+            return '';
+        }
+
+        if (count($includes) < 1) {
+            return $configFile;
+        }
+
+        $combinedJs = file_get_contents($configPath);
+        foreach ($includes as $includeFile) {
+            $absPath = GeneralUtility::getFileAbsFileName($includeFile);
+            if (file_exists($absPath)) {
+                $combinedJs .= "\n" . file_get_contents($absPath);
             }
         }
+
+        // name is based on hash of combined config - it changes if the config changes
+        if (trim($combinedJs)) {
+            $fileName = 'klaro-combined-' . md5($combinedJs) . '.js';
+            $relativePath = 'typo3temp/assets/' . $fileName;
+            $absolutePath = Environment::getPublicPath() . '/' . $relativePath;
+
+            if (!file_exists($absolutePath)) {
+                GeneralUtility::writeFileToTypo3tempDir($absolutePath, $combinedJs);
+            }
+            return $relativePath;
+        }
+
+        return '';
     }
 
 

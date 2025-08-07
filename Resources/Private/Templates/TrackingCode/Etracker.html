@@ -4,6 +4,9 @@
 
     <f:comment><!-- see: https://help.etracker.com/article/consent-management-tools/ --></f:comment>
 
+    <f:comment><!-- for old implementations. Beyond that it's useless--></f:comment>
+    <div id="tx-klarokratie-tracking-script" data-injected="1" ></div>
+    
     <f:variable name="areas"><klarokratie:implodeCategories 
                                 domain="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.domain')}" 
                                 category1="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel1')}" 
@@ -11,37 +14,51 @@
                                 category3="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel3')}" 
                                 category4="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel4')}" 
                                 category5="{f:cObject(typoscriptObjectPath='lib.txKlarokratie.etracker.categoryLevel5')}" /></f:variable>
-    
 
-    <template id="tx-klarokratie-tracking-script" data-injected="0">
-    	<!-- Copyright (c) 2000-2024 etracker GmbH. All rights reserved. -->
-    	<!-- This material may not be reproduced, displayed, modified or distributed -->
-    	<!-- without the express prior written permission of the copyright holder. -->
-    	<!-- etracker tracklet 5.0 -->
+    <!-- Copyright (c) 2000-2024 etracker GmbH. All rights reserved. -->
+    <!-- This material may not be reproduced, displayed, modified or distributed -->
+    <!-- without the express prior written permission of the copyright holder. -->
+    <!-- etracker tracklet 5.0 -->
+    <script type="text/javascript">
+        var et_pagename = "{url}";
+        var et_areas = "{areas}";
+        // var et_tval = 0;
+        // var et_tsale = 0;
+        // var et_tonr = "";
+        // var et_basket = "";
+        <f:if condition="{settings.etracker.doNotUseSessionStorage}">
+            var _etr = { doNotUseSessionStorage: true };
+            // console.log('etracker does not use session-storage! You are welcome!');
+        </f:if>
+    </script>
     
-        <script type="text/javascript">
-            var et_pagename = "{url}";
-            var et_areas = "{areas}";
-            // var et_tval = 0;
-            // var et_tsale = 0;
-            // var et_tonr = "";
-            // var et_basket = "";
-            <f:if condition="{settings.etracker.doNotUseSessionStorage}">
-                _etr = { doNotUseSessionStorage: true };
-            </f:if>
-        </script>
-    
-        <script id="_etLoader"
-                async
-                type="text/javascript" 
-                charset="UTF-8" 
-                data-block-cookies="{f:if(condition:'{settings.etracker.blockCookiesOnPageLoad}', then: 'true', else: 'false')}"
-                data-respect-dnt="{f:if(condition:'{settings.etracker.respectDoNotTrack}', then: 'true', else: 'false')}"
-                data-secure-code="{settings.etracker.secureCode}"
-                src="//code.etracker.com/code/e.js"></script>
-        <!-- etracker tracklet 5.0 end -->
-    </template>
-
-    <f:render partial="TrackingCodeInjection" arguments="{blockInjection: settings.etracker.blockScriptBeforeConsent}" />
+    <f:if condition="{settings.etracker.blockScriptBeforeConsent}">
+        <f:then>
+            <script id="_etLoader"
+                    async
+                    type="text/plain"
+                    data-type="application/javascript" 
+                    data-name="etracker"
+                    charset="UTF-8"
+                    data-block-cookies="{f:if(condition:'{settings.etracker.blockCookiesOnPageLoad}', then: 'true', else: 'false')}"
+                    data-respect-dnt="{f:if(condition:'{settings.etracker.respectDoNotTrack}', then: 'true', else: 'false')}"
+                    data-secure-code="{settings.etracker.secureCode}"
+                    src="//code.etracker.com/code/e.js"></script>
+            <script type="text/plain"
+                    data-type="application/javascript"
+                    data-name="etracker">//console.log('etracker allowed! Thank you!');</script>
+        </f:then>
+        <f:else>
+            <script id="_etLoader"
+                    async
+                    type="text/javascript"
+                    charset="UTF-8"
+                    data-block-cookies="{f:if(condition:'{settings.etracker.blockCookiesOnPageLoad}', then: 'true', else: 'false')}"
+                    data-respect-dnt="{f:if(condition:'{settings.etracker.respectDoNotTrack}', then: 'true', else: 'false')}"
+                    data-secure-code="{settings.etracker.secureCode}"
+                    src="//code.etracker.com/code/e.js"></script>
+            <script>//console.log('etracker allowed! Thank you!');</script>
+        </f:else>
+    </f:if>
 
 </html>

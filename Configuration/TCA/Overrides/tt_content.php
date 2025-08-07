@@ -20,26 +20,48 @@ call_user_func(
 
             } else {
 
-                // register normal plugin
-                $pluginSignature = \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-                    $extKey,
-                    \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName),
-                    'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
-                    \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName) . '.title'
-                );
+                $iconIdentifier =  strtolower(TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($extKey)) .
+                    '-plugin-' .  strtolower(TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName));
 
-                // add content element
-                \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
-                    'tt_content',
-                    'CType',
-                    [
-                        'label' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
-                            TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName) . '.title',
-                        'value' => $pluginSignature,
-                        'icon' => 'EXT:' . $extKey . '/Resources/Public/Icons/Extension.svg',
-                        'group' => $extKey,
-                    ]
-                );
+                /** @todo remove this if support for v11 is dropped */
+                if ($version <= 11) {
+
+                    // register normal plugin
+                    $pluginSignature = \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+                        $extKey,
+                        \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName),
+                        'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
+                        \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName) . '.title',
+                    );
+
+                    // add content element
+                    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTcaSelectItem(
+                        'tt_content',
+                        'CType',
+                        [
+                            'label' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
+                                TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName) . '.title',
+                            'description' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
+                                TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName) . '.description',
+                            'value' => $pluginSignature,
+                            'icon' => $iconIdentifier,
+                            'group' => TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey),
+                        ]
+                    );
+
+                } else {
+                    // register normal plugin
+                    $pluginSignature = \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+                        $extKey,
+                        \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName),
+                        'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
+                        \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName) . '.title',
+                        $iconIdentifier,
+                        TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey),
+                        'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_db.xlf:plugin.' .
+                        TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($pluginName) . '.description'
+                    );
+                }
 
                 // define TCA-fields
                 // $GLOBALS['TCA']['tt_content']['types'][$pluginSignature] = $GLOBALS['TCA']['tt_content']['types']['list'];

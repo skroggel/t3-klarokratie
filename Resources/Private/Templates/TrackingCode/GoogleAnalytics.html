@@ -2,47 +2,81 @@
       data-namespace-typo3-fluid="true">
 
     <f:comment><!-- see: https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced&hl=de#gtag.js_1 --></f:comment>
+    
+    <f:comment><!-- for old implementations. Beyond that it's useless--></f:comment>
+    <div id="tx-klarokratie-tracking-script" data-injected="1" ></div>
 
-    <template id="tx-klarokratie-tracking-script" data-injected="0">
-        <!-- Google Analytics start -->
-        <script>
-            // Define dataLayer and the gtag function.
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            
-            // Set default consent to 'denied' as a placeholder
-            // Determine actual values based on your own requirements
-            gtag('consent', 'default', {
-              'ad_storage': 'denied',
-              'ad_user_data': 'denied',
-              'ad_personalization': 'denied',
-              'analytics_storage': 'denied'
+    <!-- Google Code start -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('set', 'ads_data_redaction', true);
+        gtag('consent', 'default', {
+            'analytics_storage': 'denied',
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'functionality_storage': 'denied',
+            'personalization_storage': 'denied',
+            'security_storage' : 'denied',
+            'wait_for_update': 500,
+        })
+        
+    </script>
+
+
+    <f:if condition="{settings.googleAnalytics.useTagManager}">
+        <f:then>
+            <f:comment><!-- Special injection. We keep the data-name/data-type for backwards-compatibility --></f:comment>
+            <template
+                data-klarokratie-type="application/javascript"
+                data-klarokratie-name="google-tagmanager"
+                data-name="google-analytics"
+                data-type="application/javascript"                
+            >(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','{settings.googleAnalytics.tagId}');
+                // console.log('Google Tag Manager allowed! Thank you!');
+            </template>
+        </f:then>
+        <f:else>
+            <f:comment><!-- default injection via klaro --></f:comment>
+            <script type="text/plain"
+                    data-type="application/javascript"
+                    data-name="google-analytics"
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id={settings.googleAnalytics.tagId}"></script>
+            <script>
+                gtag('js', new Date());
+                gtag('config', '{settings.googleAnalytics.tagId}');
+            </script>
+        </f:else>
+    </f:if>
+    <!-- Google Code end -->
+
+
+    <f:comment><!-- 
+        This script is needed because Google Tag Manager can be a requirement for both Google Analytics and Google Ads
+        and both may be granted separately. Google Tag Manager on the other hand can not be defined as requrired, because
+        in this case it would be loaded independently of a given consent - which is not GDPR compliant
+      --></f:comment>
+    <script>
+
+        function klarokratieInjectGoogleTagManager() {
+            const templates = document.querySelectorAll("template[data-klarokratie-name='google-tagmanager']");
+
+            templates.forEach((template) => {
+                const script = document.createElement("script");
+
+                script.type = template.getAttribute("data-klarokratie-type") || "application/javascript";
+                script.text = template.innerHTML.trim();
+
+                template.parentNode.insertBefore(script, template);
+                template.remove();
             });
-        </script>
+        }
+    </script>
 
-        
-        <f:if condition="{settings.googleAnalytics.useTagManager}">
-            <f:then>
-                <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','{settings.googleAnalytics.tagId}');</script>
-            </f:then>
-            <f:else>
-                <script async src="https://www.googletagmanager.com/gtag/js?id={settings.googleAnalytics.tagId}"></script>
-            </f:else>
-        </f:if>
-        
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-        
-          gtag('js', new Date());
-          gtag('config', '{settings.googleAnalytics.tagId}');
-        </script>
-        <!-- Google Analytics end -->
-    </template>
-
-    <f:render partial="TrackingCodeInjection" arguments="{blockInjection: settings.googleAnalytics.blockScriptBeforeConsent}" />
 </html>

@@ -116,7 +116,8 @@ var klaroConfig = {
         title: "Hat jemand \"Cookies\" gesagt?!",
 				description:
 					'Wir würden gerne einige Dienste verwenden, um Ihnen ein bestmögliches Nutzungserlebnis auf unserer Website zu bieten. Entscheiden Sie selbst, welche Dienste Sie zulassen möchten.',
-			},
+        privacyPolicy: { name: "Datenschutzerklärung" },
+      },
 			consentNotice: {
 				description:
 					"Hallo! Könnten wir bitte einige zusätzliche Dienste für {purposes} aktivieren? Sie können Ihre Zustimmung später jederzeit ändern oder widerrufen.",
@@ -125,7 +126,8 @@ var klaroConfig = {
 				privacyPolicy: { name: "Datenschutzerklärung" },
 				testing: "Testmodus!",
 			},
-			purposes: {
+      privacyPolicy: { name: "Datenschutzerklärung" },
+      purposes: {
         functional: {
           title: "Funktional",
           description: "Für das Funktionieren der Website notwendige Dienste"
@@ -188,13 +190,15 @@ var klaroConfig = {
       purposes: ['functional'],
       translations: {
         zz: {
-          title: 'PHP-Session (PHPSESSID)'
+          title: 'PHP-Session'
         },
         en: {
-          description: 'This cookie is specific to PHP applications. It is set to maintain your current session and ensures that you can use all functions of the website without restriction.'
+          description: 'This cookie is specific to PHP applications. It is set to maintain your current session and ensures that you can use all functions of the website without restriction.' +
+            klarokratieGetTableHtml('Cookie:', 'PHPSESSID', 'Duration:', 'Session')
         },
         de: {
-          description: 'Dieses Cookie ist spezifisch für PHP-Anwendungen. Es wird gesetzt, um Ihre aktuelle Sitzung aufrechtzuerhalten und gewährleistet so dass Sie alle Funktionen der Website uneingeschränkt nutzen können.'
+          description: 'Dieses Cookie ist spezifisch für PHP-Anwendungen. Es wird gesetzt, um Ihre aktuelle Sitzung aufrechtzuerhalten und gewährleistet so dass Sie alle Funktionen der Website uneingeschränkt nutzen können.' +
+            klarokratieGetTableHtml('Cookie:', 'PHPSESSID', 'Dauer:', 'Sitzung')
         },
       },
     },
@@ -205,13 +209,15 @@ var klaroConfig = {
       purposes: ['functional'],
       translations: {
         zz: {
-          title: 'TYPO3 (fe_typo_user)'
+          title: 'TYPO3'
         },
         en: {
-          description: 'This cookie is set by the TYPO3 content management system used by us to identify a user. It is a prerequisite for user-specific feedback on forms, for example, but also enables login to our site.'
+          description: 'This cookie is set by the TYPO3 content management system used by us to identify a user. It is a prerequisite for user-specific feedback on forms, for example, but also enables login to our site.' +
+            klarokratieGetTableHtml('Cookie:', 'fe_typo_user', 'Duration:', 'Session')
         },
         de: {
-          description: 'Dieses Cookie wird vom durch uns eingesetzten Content Management System TYPO3 für die Identifizierung eines Anwenders gesetzt. Es ist Voraussetzung für z. B. nutzerspezifische Rückmeldungen bei Formularen, ermöglicht aber auch den Login auf unserer Seite.'
+          description: 'Dieses Cookie wird vom durch uns eingesetzten Content Management System TYPO3 für die Identifizierung eines Anwenders gesetzt. Es ist Voraussetzung für z. B. nutzerspezifische Rückmeldungen bei Formularen, ermöglicht aber auch den Login auf unserer Seite.' +
+            klarokratieGetTableHtml('Cookie:', 'fe_typo_user', 'Dauer:', 'Sitzung')
         },
       },
     },
@@ -225,10 +231,12 @@ var klaroConfig = {
           title: 'Captcha (tx_srfreecap)'
         },
         en: {
-          description: 'The cookie ensures the functionality of the spam protection (captcha).'
+          description: 'The cookie ensures the functionality of the spam protection (captcha).' +
+            klarokratieGetTableHtml('Cookie:', 'tx_srfreecap', 'Duration:', 'Session')
         },
         de: {
-          description: 'Das Cookie stellt die Funktionsfähigkeit des Spam-Schutzes (Captcha) sicher.'
+          description: 'Das Cookie stellt die Funktionsfähigkeit des Spam-Schutzes (Captcha) sicher.' +
+            klarokratieGetTableHtml('Cookie:', 'tx_srfreecap', 'Dauer:', 'Sitzung')
         },
       },
     },
@@ -239,20 +247,22 @@ var klaroConfig = {
       purposes: ['functional'],
       translations: {
         zz: {
-          title: 'Klaro! (klaro)'
+          title: 'Klaro!'
         },
         en: {
-          description: 'This cookie stores the selection of cookies permitted by the user.'
+          description: 'This cookie saves the data protection settings selected by the user.' +
+            klarokratieGetTableHtml('Cookie:', 'klaro', 'Duration:', '1 year')
         },
         de: {
-          description: 'Dieses Cookie speichert die getroffene Auswahl der durch die Nutzenden zugelassenen Cookies.'
+          description: 'Dieses Cookie speichert die durch Nutzenden gewählten Datenschutzeinstellungen.' +
+            klarokratieGetTableHtml('Cookie:', 'klaro', 'Dauer:', '1 Jahr')
         },
       },
     },
     {
       name: "youTube",
       purposes: ['multimedia'],
-      contextualConsentOnly: true,
+      // contextualConsentOnly: true,
       translations: {
         zz: {
           title: 'YouTube'
@@ -268,7 +278,7 @@ var klaroConfig = {
     {
       name: "vimeo",
       purposes: ['multimedia'],
-      contextualConsentOnly: true,
+      // contextualConsentOnly: true,
       translations: {
         zz: {
           title: 'Vimeo'
@@ -286,29 +296,34 @@ var klaroConfig = {
       name: "google-analytics",
       purposes: ["statistics"],
       cookies: [
-        /^_ga(_.*)?/, // we delete the Google Analytics cookies if the user declines its use
+        /^_ga(_.*)?/, // we delete the Google cookies if the user declines its use
       ],
       translations: {
         zz: {
-          title: 'Google Analytics'
+          title: 'Google Tag Manager & Google Analytics'
         },
         en: {
-          description: 'We use the "Google Analytics" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.'
+          description: 'We use "Google Tag Manager" and "Google Analytics" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.' +
+            klarokratieGetTableHtml('Cookie:', '_ga', 'Duration:', '2 years') +
+            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Duration:', '2 years') +
+            klarokratieGetTableHtml('Cookie:', '_gid', 'Duration:', '24 hours') +
+            klarokratieGetTableHtml('Cookie:', '_gat', 'Duration:', '1 minute') +
+            klarokratieGetTableHtml('Cookie:', '_gac_*', 'Duration:', '90 days')
         },
         de: {
-          description: 'Wir setzen auf unserer Website den "Google Analytics" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.'
+          description: 'Wir setzen auf unserer Website "Google Tag Manager" und "Google Analytics" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.' +
+            klarokratieGetTableHtml('Cookie:', '_ga', 'Dauer:', '2 Jahre') +
+            klarokratieGetTableHtml('Cookie:', '_ga_*', 'Dauer:', '2 Jahre') +
+            klarokratieGetTableHtml('Cookie:', '_gid', 'Dauer:', '24 Stunden') +
+            klarokratieGetTableHtml('Cookie:', '_gat', 'Dauer:', '1 Minute') +
+            klarokratieGetTableHtml('Cookie:', '_gac_*', 'Dauer:', '90 Tage')
         },
       },
+      onInit: `
+      `,
       onAccept: `
 
-        // check if code is injected - if not, do it now
-        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
-        if (
-            (codeTemplate)
-            && (codeTemplate.getAttribute('data-injected') != 1)
-        ){
-          txKlarokratieInjectTrackingCode();
-        }
+        klarokratieInjectGoogleTagManager();
 
         // we notify the tag manager about all services that were accepted. You can define
         // a custom event in GTM to load the service if consent was given.
@@ -320,28 +335,98 @@ var klaroConfig = {
           }
         }
 
-        // we grant analytics storage
+        // we grant data storage
         gtag('consent', 'update', {
           'analytics_storage': 'granted',
         });
-        // console.log('Google Analytics allowed! Thank you!');
+        console.log('Google Analytics allowed! Thank you!');
+      `,
+      onDecline: `
+        // we again explicitly deny data storage
+        gtag('consent', 'update', {
+          'analytics_storage': 'denied',
+        });
+        console.log('Google Analytics denied! You are welcome!');
+      `,
+    },
+    /*
+    {
+      // In GTM, you should define a custom event trigger named `klaro-google-ads-accepted` which should trigger the Google Ads integration.
+      name: "google-ads",
+      purposes: ["marketing"],
+      cookies: [
+        /^_ga(_.*)?/, // we delete the Google cookies if the user declines its use
+      ],
+      translations: {
+        zz: {
+          title: 'Google Tag Manager & Google Ads'
+        },
+        en: {
+          description: 'We use "Google Tag Manager" and "Google Ads" of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. Google may collect and process information (including personal data). It cannot be ruled out that YGoogle may also transmit the information to a server in a third country.' +
+            klarokratieGetTableHtml('Cookie:', 'IDE', 'Duration:', '1 year') +
+            klarokratieGetTableHtml('Cookie:', 'test_cookie', 'Duration:', '15 minutes') +
+            klarokratieGetTableHtml('Cookie:', 'NID', 'Duration:', '6 months') +
+            klarokratieGetTableHtml('Cookie:', 'ANID', 'Duration:', '13 months (in the EU)') +
+            klarokratieGetTableHtml('Cookie:', '__gads', 'Duration:', '13 months')
+        },
+        de: {
+          description: 'Wir setzen auf unserer Website "Google Tag Manager" und "Google Ads" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Google kann unter Umständen Informationen (auch personenbezogene Daten) erfassen und verarbeiten. Dabei kann nicht ausgeschlossen werden, dass Google die Informationen auch an einen Server in einem Drittland übermittelt.' +
+            klarokratieGetTableHtml('Cookie:', 'IDE', 'Dauer:', '1 Jahr') +
+            klarokratieGetTableHtml('Cookie:', 'test_cookie', 'Dauer:', '15 Minuten', ) +
+            klarokratieGetTableHtml('Cookie:', 'NID', 'Dauer:', '6 Monate') +
+            klarokratieGetTableHtml('Cookie:', 'ANID', 'Dauer:', '13 Monate (in der EU)') +
+            klarokratieGetTableHtml('Cookie:', '__gads', 'Dauer:', '13 Monate', 'Verwendung')
+        },
+      },
+      onInit: ``,
+      onAccept: `
+
+        klarokratieInjectGoogleTagManager();
+
+        // we notify the tag manager about all services that were accepted. You can define
+        // a custom event in GTM to load the service if consent was given.
+        for(let k of Object.keys(opts.consents)){
+          if (opts.consents[k]){
+            let eventName = 'klaro-'+k+'-accepted';
+            dataLayer.push({'event': eventName});
+            // console.log('Event "' + eventName + '" fired');
+          }
+        }
+
+        // we grant data storage
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted'
+        });
+        console.log('Google Ads allowed! Thank you!');
       `,
       onDecline: `
 
-        // check if code is injected - if not, there is nothing to do!
-        let codeTemplate = document.querySelector('#tx-klarokratie-tracking-script');
-        if (
-            (codeTemplate)
-            && (codeTemplate.getAttribute('data-injected') == 1)
-        ){
-
-          // we again explicitly deny analytics storage
-          gtag('consent', 'update', {
-            'analytics_storage': 'denied',
-            });
-            // console.log('Google Analytics denied! You are welcome!');
-        }
+        // we again explicitly deny data storage
+        gtag('consent', 'update', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+        console.log('Google Ads denied! You are welcome!');
       `,
     },
+    */
 	],
 };
+
+function klarokratieGetTableHtml(
+  cookieLabel = '', cookie = '',
+  liveTimeLabel = '', liveTime = '',
+  usageLabel = '',  usage = '',
+  linkLabel  = '', link = '',
+) {
+
+  return '<table class="klaro-table">' +
+    (cookieLabel ? '<tr><th>' + cookieLabel + '</th><td>' + cookie + '</td></tr>' : '') +
+    (liveTimeLabel ? '<tr><th>' + liveTimeLabel + '</th><td>' + liveTime + '</td></tr>' : '') +
+    (usageLabel ? '<tr><th>' + usageLabel + '</th><td>' + usage + '</td></tr>' : '') +
+    (linkLabel ? '<tr><th>' + linkLabel + '</th><td><a href="' + link + '" target="_blank">' + link + '</a></td></tr>' : '') +
+    '</table>';
+}
