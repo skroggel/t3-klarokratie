@@ -1,5 +1,4 @@
 (function() {
-  console.log(klaroConfig.translations);
   if (
     klaroConfig.translations &&
     klaroConfig.translations.constructor === Object
