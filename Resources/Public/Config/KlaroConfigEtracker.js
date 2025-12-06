@@ -226,17 +226,26 @@ var klaroConfig = {
       default: true,
       required: true,
       purposes: ['functional'],
+      cookies: [
+        /^__cf_bm/, // we delete the cookies if the user declines its use
+        /^__cflb/,
+        /^hcaptcha/,
+      ],
       translations: {
         zz: {
-          title: 'Captcha (tx_srfreecap)'
+          title: 'Captcha (hCaptcha)'
         },
         en: {
           description: 'The cookie ensures the functionality of the spam protection (captcha).' +
-            klarokratieGetTableHtml('Cookie:', 'tx_srfreecap', 'Duration:', 'Session')
+            klarokratieGetTableHtml('Cookie:', '__cf_bm', 'Duration:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', '__cflb', 'Duration:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', 'hcaptcha', 'Duration:', 'Session')
         },
         de: {
           description: 'Das Cookie stellt die Funktionsfähigkeit des Spam-Schutzes (Captcha) sicher.' +
-            klarokratieGetTableHtml('Cookie:', 'tx_srfreecap', 'Dauer:', 'Sitzung')
+            klarokratieGetTableHtml('Cookie:', '__cf_bm', 'Dauer:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', '__cflb', 'Dauer:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', 'hcaptcha', 'Dauer:', 'Sitzung')
         },
       },
     },
@@ -263,15 +272,42 @@ var klaroConfig = {
       name: "youTube",
       purposes: ['multimedia'],
       // contextualConsentOnly: true,
+      cookies: [
+        /^LAST_RESULT_ENTRY_KEY/, // we delete the cookies if the user declines its use
+        /^VISITOR_INFO1_LIVE/,
+        /^VISITOR_PRIVACY_METADATA/,
+        /^YSC/,
+        /^__Secure-/,
+        /^nextId/,
+        /^requests/,
+      ],    
       translations: {
         zz: {
           title: 'YouTube'
         },
         en: {
-          description: 'We embed videos from the "YouTube" platform of the provider Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, on our website. YouTube is integrated by embedding the service on our website by means of a so-called iFrame. When loading this iFrame, YouTube or Google may collect and process information (including personal data). It cannot be ruled out that YouTube or Google may also transmit the information to a server in a third country.'
+          description: 'We use the YouTube service provided by Google Ireland Limited, Gordon House, Barrow Street, 4 Dublin, Ireland, email: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, website: <a href="https://www.google.com/" target="_blank">https://www.google.com/</a>. If YouTube is active on our website and a video is played, our website establishes a connection to the servers of Google Ireland Limited and transmits the data required to display the stream or video.\n' +
+            klarokratieGetTableHtml('Cookie:', 'LAST_RESULT_ENTRY_KEY', 'Dauer:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', 'VISITOR_INFO1_LIVE', 'Dauer:', 'approx. 6 months') +
+            klarokratieGetTableHtml('Cookie:', 'VISITOR_PRIVACY_METADATA', 'Dauer:', 'approx. 6 months') +
+            klarokratieGetTableHtml('Cookie:', 'YSC', 'Dauer:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', '__Secure-ROLLOUT_TOKEN', 'Dauer:', 'approx. 6 months') +
+            klarokratieGetTableHtml('Cookie:', '__Secure-YEC', 'Dauer:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', '__Secure-YNID', 'Dauer:', 'approx. 6 months') +
+            klarokratieGetTableHtml('Cookie:', 'nextId', 'Dauer:', 'Session') +
+            klarokratieGetTableHtml('Cookie:', 'requests', 'Dauer:', 'Session')
         },
         de: {
-          description: 'Wir binden auf unserer Website Videos der Plattform "YouTube" des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Die Einbindung von YouTube erfolgt durch das Einbetten des Service auf unserer Webseite mittels eines sog. iFrames. Beim Laden dieses iFrames erheben YouTube bzw. Google unter Umständen Informationen (auch personenbezogene Daten) und verarbeiten diese. Dabei kann nicht ausgeschlossen werden, dass YouTube bzw. Google die Informationen auch an einen Server in einem Drittland übermittelt.'
+          description: 'Wir verwenden auf unserer Seite den Dienst YouTube des Unternehmens Google Ireland Limited, Gordon House, Barrow Street, 4 Dublin, Irland, E-Mail: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, Website: <a href="https://www.google.com/" target="_blank">https://www.google.com/</a>. Sofern Youtube auf unserer Website aktiv geschaltet ist und ein Video abgespielt wird, stellt unsere Website eine Verbindung zu den Servern des Unternehmens Google Ireland Limited her und überträgt die benötigten Daten zur Anzeige des Streams bzw. Videos.\n' +
+            klarokratieGetTableHtml('Cookie:', 'LAST_RESULT_ENTRY_KEY', 'Dauer:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', 'VISITOR_INFO1_LIVE', 'Dauer:', 'ca. 6 Monate') +
+            klarokratieGetTableHtml('Cookie:', 'VISITOR_PRIVACY_METADATA', 'Dauer:', 'ca. 6 Monate') +
+            klarokratieGetTableHtml('Cookie:', 'YSC', 'Dauer:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', '__Secure-ROLLOUT_TOKEN', 'Dauer:', 'ca. 6 Monate') +
+            klarokratieGetTableHtml('Cookie:', '__Secure-YEC', 'Dauer:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', '__Secure-YNID', 'Dauer:', 'ca. 6 Monate') +
+            klarokratieGetTableHtml('Cookie:', 'nextId', 'Dauer:', 'Sitzung') +
+            klarokratieGetTableHtml('Cookie:', 'requests', 'Dauer:', 'Sitzung')
         },
       }
     },
