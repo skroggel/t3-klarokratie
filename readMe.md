@@ -84,6 +84,19 @@ EXT:klarokratie/Resources/Public/Config/Includes/
 You can use them directly or copy and customize them in your own site package.
 Note: if you use includes, the `EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js` is used instead of `EXT:klarokratie/Resources/Public/Config/KlaroConfig.js`
 
+You can also override the default translations. You can find an example file here. 
+```
+EXT:klarokratie/Resources/Public/Config/Overrides/
+```
+Just copy it to your site-extension and set your own translations. You can use it like so:
+```
+klarokratie:
+  klaro:
+    config: EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js
+    includes:
+      - EXT:site_default/Resources/Public/Config/Overrides/Transations.js
+```
+
 ## Advanced Configuration
 ### Optional: Use Tracking-Code insertion for etracker or Google Analytics
 If you want to use the available tracking-code-insertion for etracker or Google Analytics also include the TypoScript in your Rootpage.
