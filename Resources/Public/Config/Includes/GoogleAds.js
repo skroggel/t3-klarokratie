@@ -19,7 +19,7 @@
           title: 'Google Tag Manager & Google Ads'
         },
         en: {
-          description: 'We use the Google Tag Manager and Google Ads services provided by Google Ireland Ltd., Gordon House, Barrow Street, 4 Dublin, Ireland, email: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, website: <a href="https://www.google.com/" target="_blank">https://www.google.com/</a>, on our website. Personal data is also transferred to the USA.\n' +
+          description: 'We use the Google Tag Manager and Google Ads services provided by Google Ireland Ltd., Gordon House, Barrow Street, 4 Dublin, Ireland, email: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, website: <a href="https://www.google.com/" target="_blank">https://www.google.com/</a>, on our website. Personal data is also transferred to the USA. With regard to the transfer of personal data to the USA, there is an adequacy decision on the EU-US Data Privacy Framework of the EU Commission within the meaning of Art. 45 GDPR (hereinafter: <a href="https://commission.europa.eu/document/fa09cbad-dd7d-4684-ae60-be03fcb0fddf_en">DPF</a>). The operator of the service is certified under the DPF, so that the usual level of protection of the GDPR applies to the transfer.\n' +
             klarokratieGetTableHtml('Cookie:', 'IDE', 'Duration:', '1 year') +
             klarokratieGetTableHtml('Cookie:', 'test_cookie', 'Duration:', '15 minutes') +
             klarokratieGetTableHtml('Cookie:', 'NID', 'Duration:', '6 months') +
@@ -27,7 +27,7 @@
             klarokratieGetTableHtml('Cookie:', '__gads', 'Duration:', '13 months')
         },
         de: {
-          description: 'Wir verwenden auf unserer Seite den Dienst Google Tag Manager und Google Ads des Unternehmens Google Ireland Ltd., Gordon House, Barrow Street, 4 Dublin, Irland, E-Mail: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, Website: <a href="https://www.google.com/" target="_blank">https://www.google.com/</a>. Die Übermittlung personenbezogener Daten erfolgt auch in die USA.\n' +
+          description: 'Wir verwenden auf unserer Seite den Dienst Google Tag Manager und Google Ads des Unternehmens Google Ireland Ltd., Gordon House, Barrow Street, 4 Dublin, Irland, E-Mail: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, Website: <a href="https://www.google.com/" target="_blank">https://www.google.com/</a>. Die Übermittlung personenbezogener Daten erfolgt auch in die USA. Im Hinblick auf die Übermittlung personenbezogener Daten in die USA besteht ein Angemessenheitsbeschlusses zum EU-US Data Privacy Framework der EU Kommission im Sinne des Art. 45 DSGVO (nachfolgend: <a href="https://commission.europa.eu/document/fa09cbad-dd7d-4684-ae60-be03fcb0fddf_en">DPF</a>). Der Betreiber des Dienstes ist im Rahmen des DPF zertifiziert, so dass für die Übermittlung das übliche Schutzniveau der DSGVO gilt.\n' +
             klarokratieGetTableHtml('Cookie:', 'IDE', 'Dauer:', '1 Jahr') +
             klarokratieGetTableHtml('Cookie:', 'test_cookie', 'Dauer:', '15 Minuten', ) +
             klarokratieGetTableHtml('Cookie:', 'NID', 'Dauer:', '6 Monate') +
