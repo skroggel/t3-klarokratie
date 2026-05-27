@@ -6,14 +6,14 @@ $EM_CONF[$_EXTKEY] = [
 	'category' => 'plugin',
 	'author' => 'Steffen Kroggel',
 	'author_email' => 'developer@steffenkroggel.de',
-	'state' => 'stable',
+	'state' => 'beta',
 	'internal' => '',
 	'uploadfolder' => '0',
 	'clearCacheOnLoad' => 0,
-	'version' => '13.4.24',
+	'version' => '14.4.0',
 	'constraints' => [
 		'depends' => [
-            'typo3' => '10.4.0-13.4.99',
+            'typo3' => '13.4.0-14.4.99',
         ],
 		'conflicts' => [
 		],

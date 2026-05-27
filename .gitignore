@@ -15,5 +15,6 @@ bower_components
 /.settings
 /.project
 /.php-version
+/.phpunit.cache
 /vendor
 

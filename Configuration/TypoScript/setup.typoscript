@@ -19,20 +19,7 @@ plugin.tx_klarokratie {
 
     settings {
 
-        etracker {
-            enable = {$plugin.tx_klarokratie.settings.etracker.enable}
-            secureCode = {$plugin.tx_klarokratie.settings.etracker.secureCode}
-            blockCookiesOnPageLoad = {$plugin.tx_klarokratie.settings.etracker.blockCookiesOnPageLoad}
-            respectDoNotTrack = {$plugin.tx_klarokratie.settings.etracker.respectDoNotTrack}
-            blockScriptBeforeConsent = {$plugin.tx_klarokratie.settings.etracker.blockScriptBeforeConsent}
-            doNotUseSessionStorage = {$plugin.tx_klarokratie.settings.etracker.doNotUseSessionStorage}
-        }
 
-        googleAnalytics {
-            enable = {$plugin.tx_klarokratie.settings.googleAnalytics.enable}
-            useTagManager = {$plugin.tx_klarokratie.settings.googleAnalytics.useTagManager}
-            tagId = {$plugin.tx_klarokratie.settings.googleAnalytics.tagId}
-        }
  	}
 }
 
@@ -81,6 +68,6 @@ page.headerData {
 
         view =< plugin.tx_klarokratie.view
         persistence =< plugin.tx_klarokratie.persistence
-        settings =< plugin.tx_klarokratie.settings
+        // settings =< plugin.tx_klarokratie.settings
     }
 }

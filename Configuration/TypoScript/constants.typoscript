@@ -17,37 +17,5 @@ plugin.tx_klarokratie {
 
     settings {
 
-        etracker {
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Enable etracker code insertion
-            enable = 0
-
-            # cat=plugin.tx_klarokratie/etracker; type=string; label=The secure code of your eTracker account
-            secureCode =
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Enable blocking cookies on page load (should be active according to GDPR)
-            blockCookiesOnPageLoad = 1
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Respect DoNotTrack in browser (should be active according to GDPR)
-            respectDoNotTrack = 1
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Block tracking script before consent
-            blockScriptBeforeConsent = 0
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Do not use Session Storage (WARNING: this has a negative impact on page- and tracking-performance!)
-            doNotUseSessionStorage = 0
-        }
-
-        googleAnalytics {
-
-            # cat=plugin.tx_klarokratie/googleAnalytics; type=bool; label=Enable Google Analytics code insertion
-            enable = 0
-
-            # cat=plugin.tx_klarokratie/googleAnalytics; type=bool; label=Use Google Tag Manager
-            useTagManager = 0
-
-            # cat=plugin.tx_klarokratie/googleAnalytics; type=string; label=The Tag-ID of your Google Analytics account
-            tagId =
-        }
  	}
 }
