@@ -18,8 +18,8 @@ namespace Madj2k\Klarokratie\EventListener;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Page\Event\BeforeStylesheetsRenderingEvent;
+use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class Stylesheet
@@ -48,21 +48,27 @@ class Stylesheet
 
         $cssFile = 'EXT:klarokratie/Resources/Public/Css/klaro.min.css';
         $customCssFile = '';
-        if (
-            ($site = $request->getAttribute('site'))
-            && ($siteConfiguration = $site->getConfiguration())
-        ){
 
-            $disable = (bool) ($siteConfiguration['klarokratie']['klaro']['disable'] ?? ($siteConfiguration['klaro']['disable'] ?? ($siteConfiguration['klaroDisable'] ?? false)));
+        $site = $request->getAttribute('site');
+        $siteConfiguration = ($site instanceof Site) ? $site->getConfiguration() : null;
+
+        if ($siteConfiguration) {
+            $disable = (bool) ($siteConfiguration['klarokratie']['klaro']['disable']
+                ?? ($siteConfiguration['klaro']['disable']
+                    ?? ($siteConfiguration['klaroDisable'] ?? false)));
+
             if ($disable) {
                 return;
             }
 
-            $pathFromConfig = ($siteConfiguration['klarokratie']['klaro']['customCss'] ?? ($siteConfiguration['klaro']['customCss'] ?? ($siteConfiguration['klaroCustomCss'] ?? '')));
+            $pathFromConfig = ($siteConfiguration['klarokratie']['klaro']['customCss']
+                ?? ($siteConfiguration['klaro']['customCss']
+                    ?? ($siteConfiguration['klaroCustomCss'] ?? '')));
+
             if (
                 ($pathFromConfig)
                 && (file_exists(GeneralUtility::getFileAbsFileName($pathFromConfig)))
-            ){
+            ) {
                 $customCssFile = $pathFromConfig;
             }
         }

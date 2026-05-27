@@ -21,7 +21,6 @@ use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Page\Event\BeforeJavaScriptsRenderingEvent;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class JavaScript
@@ -60,7 +59,11 @@ class JavaScript
             }
 
             // check for includes
-            $includes = $siteConfiguration['klarokratie']['klaro']['includes'] ?? [];
+            $includes = $this->normalizeIncludes(
+                $siteConfiguration['klarokratie']['klaro']['includes']
+                    ?? ($siteConfiguration['klaro']['includes']
+                        ?? ($siteConfiguration['klaroIncludes'] ?? []))
+            );
             if (count($includes) > 0) {
                 $configFile = $minimalConfigFile;
             }
@@ -135,6 +138,54 @@ class JavaScript
 
         return '';
     }
+
+
+    /**
+     * Normalizes the Klaro includes configuration.
+     *
+     * Supports comma-separated SiteConfiguration values:
+     *
+     * <code>
+     * includes: 'EXT:site_package/Resources/Public/JavaScript/Klaro/Matomo.js, EXT:site_package/Resources/Public/JavaScript/Klaro/YouTube.js'
+     * </code>
+     *
+     * Manually written string-array values are still accepted:
+     *
+     * <code>
+     * includes:
+     *   - 'EXT:site_package/Resources/Public/JavaScript/Klaro/Matomo.js'
+     * </code>
+     *
+     * @param mixed $includes
+     * @return array<int, string>
+     */
+    private function normalizeIncludes(mixed $includes): array
+    {
+        if (is_string($includes)) {
+            $normalizedIncludes = GeneralUtility::trimExplode(',', $includes, true);
+        } elseif (is_array($includes)) {
+            $normalizedIncludes = [];
+            foreach ($includes as $include) {
+                if (is_string($include)) {
+                    $normalizedIncludes[] = trim($include);
+                } elseif (is_array($include)) {
+                    $normalizedIncludes[] = trim((string)($include['path'] ?? ''));
+                }
+            }
+        } else {
+            return [];
+        }
+
+        return array_values(
+            array_unique(
+                array_filter(
+                    $normalizedIncludes,
+                    static fn (string $include): bool => $include !== ''
+                )
+            )
+        );
+    }
+
 
 
     /**

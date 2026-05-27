@@ -8,32 +8,15 @@ call_user_func(
         //=================================================================
         // Configure Plugins
         //=================================================================
-        $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-        $version = $typo3Version->getMajorVersion();
-        /** @todo remove this if support for v10 is dropped */
-        if ($version == 10) {
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+            $extKey,
+            'TrackingCode',
+            [\Madj2k\Klarokratie\Controller\TrackingCodeController::class => 'loader, etracker, googleAnalytics'],
 
-            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-                'Madj2k.Klarokratie',
-                'TrackingCode',
-                ['TrackingCode' => 'loader, etracker, googleAnalytics'],
-
-                // non-cacheable actions
-                [],
-
-            );
-
-        } else {
-            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-                $extKey,
-                'TrackingCode',
-                [\Madj2k\Klarokratie\Controller\TrackingCodeController::class => 'loader, etracker, googleAnalytics'],
-
-                // non-cacheable actions
-                [],
-                \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
-            );
-        }
+            // non-cacheable actions
+            [],
+            \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        );
 
         //=================================================================
         // XClasses
