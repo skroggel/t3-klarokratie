@@ -1,5 +1,5 @@
 <?php
-namespace Madj2k\Klarokratie\Tests\Unit\Utilities;
+declare(strict_types=1);
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -14,324 +14,155 @@ namespace Madj2k\Klarokratie\Tests\Unit\Utilities;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+namespace Madj2k\Klarokratie\Tests\Unit\Utilities;
+
 use Madj2k\Klarokratie\Utilities\CategoryUtility;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
 
 /**
- * CategoryUtilityTest
+ * Class CategoryUtilityTest
  *
  * @author Steffen Kroggel <developer@steffenkroggel.de>
  * @copyright Steffen Kroggel <developer@steffenkroggel.de>
  * @package Madj2k_Klarokratie
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class CategoryUtilityTest extends UnitTestCase
+final class CategoryUtilityTest extends TestCase
 {
-
     /**
-     * Setup
+     * Provides category names with expected cleaned output.
+     *
+     * @return array<string, array{0: string, 1: string}>
      */
-    protected function setUp(): void
+    public static function cleanUpCategoryNameDataProvider(): array
     {
-        parent::setUp();
-    }
-
-
-    //=============================================
-
-    /**
-     * @test
-     */
-    public function cleanupCategoryNameUnifiesCategoryName()
-    {
-
-        /**
-         * Scenario:
-         *
-         * Given a category-name with non-alphanumeric signs
-         * When I call cleanupCategoryName with that category-name
-         * Then non alphanumeric signs are removed
-         * Then german umlauts are kept
-         * Then hyphens are kept
-         * Then spaces are replaced with uppercase
-         * Then the first letter is set to uppercase
-         * Then uppercase letters are kept
-         * Then slashes are replaces with hyphens
-         */
-        $checkArray = [
-            'Entrepreneurship Education' => 'EntrepreneurshipEducation',
-            'Gründen mit Erfahrung' => 'GründenMitErfahrung',
-            'startup meets Mittelstand' => 'StartupMeetsMittelstand',
-            'RG-Bau' => 'RG-Bau',
-            'APRODI' => 'APRODI',
-            'Leben/Sterben' => 'Leben-Sterben',
-            'Das Handwerk - "Wirtschaftsmacht von nebenan"' => 'DasHandwerk-WirtschaftsmachtVonNebenan'
+        return [
+            'keeps alphanumeric characters' => ['marketing', 'Marketing'],
+            'removes invalid characters' => ['marke ting!?#', 'MarkeTing'],
+            'keeps umlauts' => ['münchen öl', 'Münchenöl'],
+            'replaces slashes by hyphens' => ['video/youtube', 'Video-youtube'],
         ];
-
-        foreach ($checkArray as $source => $expected) {
-            self::assertEquals($expected, CategoryUtility::cleanUpCategoryName($source));
-        }
-
     }
 
 
     /**
-     * @test
+     * Tests cleanup of category names.
+     *
+     * @param string $input
+     * @param string $expected
+     * @return void
      */
-    public function cleanupDomainNameUnifiesDomainName()
+    #[DataProvider('cleanUpCategoryNameDataProvider')]
+    #[Test]
+    public function cleanUpCategoryNameReturnsSanitizedCategoryName(string $input, string $expected): void
     {
+        self::assertSame($expected, CategoryUtility::cleanUpCategoryName($input));
+    }
 
-        /**
-         * Scenario:
-         *
-         * Given a domain-name with invalid format according to RFC 1035
-         * When I call cleanupDomainName with that domain-name
-         * Then non alphanumeric signs are removed
-         * Then german umlauts are kept
-         * Then hyphens are kept
-         * Then uppercase is replaced with lowercase
-         */
 
-        $checkArray = [
-            'RKW.de' => 'rkw.de',
-            'www.RKW-Kompetenzzentrum.de' => 'www.rkw-kompetenzzentrum.de',
-            'www.Geschäftsmodellentwicklung.de' => 'www.geschäftsmodellentwicklung.de',
-            'www.erfolgreich-digitalisieren.de' => 'www.erfolgreich-digitalisieren.de',
-            'www.space in between.net' => 'www.spaceinbetween.net'
+    /**
+     * Provides domain names with expected cleaned output.
+     *
+     * @return array<string, array{0: string, 1: string}>
+     */
+    public static function cleanUpDomainNameDataProvider(): array
+    {
+        return [
+            'lowercases domain' => ['WWW.EXAMPLE.ORG', 'www.example.org'],
+            'keeps ports' => ['example.org:8080', 'example.org:8080'],
+            'removes protocols and paths' => ['https://www.example.org/path', 'https:www.example.orgpath'],
+            'keeps umlauts' => ['MÜNCHEN.example', 'mÜnchen.example'],
         ];
-
-        foreach ($checkArray as $source => $expected) {
-            self::assertEquals($expected, CategoryUtility::cleanUpDomainName($source));
-        }
     }
 
 
     /**
-     * @test
+     * Tests cleanup of domain names.
+     *
+     * @param string $input
+     * @param string $expected
+     * @return void
      */
-    public function categoryImplodeMergesCategoriesAndAddsDomainPrefix()
+    #[DataProvider('cleanUpDomainNameDataProvider')]
+    #[Test]
+    public function cleanUpDomainNameReturnsSanitizedDomainName(string $input, string $expected): void
     {
-
-        /**
-         * Scenario:
-         *
-         * Given an domain name with invalid signs
-         * Given an array with category-names
-         * When I call categoryImplode with that array
-         * Then the given params are combined with a hyphen as separator
-         * Then the domain-name prefixes all given categories
-         * Then the categories follow the domain-name in the order given by the array
-         * Then the category-names are sanitized
-         * Then the domain-name is sanitized
-         */
-
-        $domain = 'stepp_den bär.com';
-        $categoryArray = [
-            'Gründen mit Erfahrung',
-            'startup meets Mittelstand',
-            'RG-Bau',
-            'APRODI',
-            'Leben/Sterben',
-            'Das Handwerk - "Wirtschaftsmacht von nebenan"'
-        ];
-
-        $expected = 'steppdenbär.com/GründenMitErfahrung/StartupMeetsMittelstand/RG-Bau/APRODI/Leben-Sterben/DasHandwerk-WirtschaftsmachtVonNebenan';
-        self::assertEquals($expected, CategoryUtility::implodeCategories($domain, $categoryArray));
-
+        self::assertSame($expected, CategoryUtility::cleanUpDomainName($input));
     }
 
 
     /**
-     * @test
+     * Tests imploding categories with domain prefix.
+     *
+     * @return void
      */
-    public function categoryImplodeIgnoresEmptyDomainPrefix()
+    #[Test]
+    public function implodeCategoriesReturnsCleanedPathWithDomain(): void
     {
-
-        /**
-         * Scenario:
-         *
-         * Given an empty domain name
-         * Given an array with category-names
-         * When I call categoryImplode with that array
-         * Then the given params are combined with a hyphen as separator
-         * Then the domain-name is ignored
-         * Then the categories appear in the order given by the array
-         * Then the category-names are sanitized
-         */
-
-        $domain = '';
-        $categoryArray = [
-            'Gründen mit Erfahrung',
-            'startup meets Mittelstand',
-            'RG-Bau',
-            'APRODI',
-            'Leben/Sterben',
-            'Das Handwerk - "Wirtschaftsmacht von nebenan"',
-        ];
-
-        $expected = 'GründenMitErfahrung/StartupMeetsMittelstand/RG-Bau/APRODI/Leben-Sterben/DasHandwerk-WirtschaftsmachtVonNebenan';
-        self::assertEquals($expected, CategoryUtility::implodeCategories($domain, $categoryArray));
-
+        self::assertSame(
+            'www.example.org/Marketing/Video-youtube',
+            CategoryUtility::implodeCategories(
+                'WWW.EXAMPLE.ORG',
+                ['marketing', 'video/youtube']
+            )
+        );
     }
 
 
     /**
-     * @test
+     * Tests default categories are removed from the end.
+     *
+     * @return void
      */
-    public function categoryImplodeAddsDefaultCategories()
+    #[Test]
+    public function implodeCategoriesRemovesDefaultCategoriesFromEnd(): void
     {
-
-        /**
-         * Scenario:
-         *
-         * Given an domain name with invalid signs
-         * Given an array with category-names
-         * Given the first of the array values is empty
-         * Given one of the array values in the middle is empty
-         * Given the last of the array values is empty
-         * When I call categoryImplode with that array
-         * Then the given params are combined with a hyphen as separator
-         * Then the domain-name prefixes all given categories
-         * Then the categories follow the domain-name in the order given by the array
-         * Then the empty values in the middle of the array are replaced with 'Default'
-         * Then the empty values at the beginning of the array are replaced with 'Default'
-         * Then the empty values at the beginning of the array are replaced with 'Default'
-         * Then the category-names are sanitized
-         * Then the domain-name is sanitized
-         */
-
-        $domain = 'stepp_den bär.com';
-        $categoryArray = [
-            '',
-            'Gründen mit Erfahrung',
-            'startup meets Mittelstand',
-            'RG-Bau',
-            '',
-            'APRODI',
-            'Leben/Sterben',
-            'Das Handwerk - "Wirtschaftsmacht von nebenan"',
-            '',
-            ''
-        ];
-
-        $expected = 'steppdenbär.com/Default/GründenMitErfahrung/StartupMeetsMittelstand/RG-Bau/Default/APRODI/Leben-Sterben/DasHandwerk-WirtschaftsmachtVonNebenan';
-        self::assertEquals($expected, CategoryUtility::implodeCategories($domain, $categoryArray));
-
+        self::assertSame(
+            'example.org/Marketing',
+            CategoryUtility::implodeCategories(
+                'example.org',
+                ['Marketing', '', '']
+            )
+        );
     }
 
 
     /**
-     * @test
+     * Tests empty categories in between are kept as default categories.
+     *
+     * @return void
      */
-    public function categoryImplodeUsesGivenDefaultValue()
+    #[Test]
+    public function implodeCategoriesKeepsDefaultCategoriesInsidePath(): void
     {
-
-        /**
-         * Scenario:
-         *
-         * Given a customized default value for empty categories
-         * Given an domain name with invalid signs
-         * Given an array with category-names
-         * Given the first of the array values is empty
-         * Given one of the array values in the middle is empty
-         * Given the last of the array values is empty
-         * When I call categoryImplode with that array
-         * Then the given params are combined with a hyphen as separator
-         * Then the domain-name prefixes all given categories
-         * Then the categories follow the domain-name in the order given by the array
-         * Then the empty values in the middle of the array are replaced with the customized default value
-         * Then the empty values at the beginning of the array are replaced with the customized default value
-         * Then the empty values at the beginning of the array are replaced with with the customized default value
-         * Then the category-names are sanitized
-         * Then the domain-name is sanitized
-         * Then the custom default value is sanitized
-         */
-
-        $defaultValue = 'magic Wün_der.+Land';
-        $domain = 'stepp_den bär.com';
-        $categoryArray = [
-            '',
-            'Gründen mit Erfahrung',
-            'startup meets Mittelstand',
-            'RG-Bau',
-            '',
-            'APRODI',
-            'Leben/Sterben',
-            'Das Handwerk - "Wirtschaftsmacht von nebenan"',
-            '',
-            ''
-        ];
-
-        $expected = 'steppdenbär.com/MagicWünderLand/GründenMitErfahrung/StartupMeetsMittelstand/RG-Bau/MagicWünderLand/APRODI/Leben-Sterben/DasHandwerk-WirtschaftsmachtVonNebenan';
-        self::assertEquals($expected, CategoryUtility::implodeCategories($domain, $categoryArray, $defaultValue));
-
+        self::assertSame(
+            'example.org/Marketing/Default/Checkout',
+            CategoryUtility::implodeCategories(
+                'example.org',
+                ['Marketing', '', 'Checkout']
+            )
+        );
     }
 
 
     /**
-     * @test
+     * Tests unsanitized default category value.
+     *
+     * @return void
      */
-    public function categoryImplodeIgnoresSanitizationForGivenDefaultValue()
+    #[Test]
+    public function implodeCategoriesCanUseUnsanitizedDefaultValue(): void
     {
-
-        /**
-         * Scenario:
-         *
-         * Given a customized default value for empty categories
-         * Given the sanitization paramater for the default value is set to false
-         * Given an domain name with invalid signs
-         * Given an array with category-names
-         * Given the first of the array values is empty
-         * Given one of the array values in the middle is empty
-         * Given the last of the array values is empty
-         * When I call categoryImplode with that array
-         * Then the given params are combined with a hyphen as separator
-         * Then the domain-name prefixes all given categories
-         * Then the categories follow the domain-name in the order given by the array
-         * Then the empty values in the middle of the array are replaced with the customized default value
-         * Then the empty values at the beginning of the array are replaced with the customized default value
-         * Then the empty values at the beginning of the array are replaced with with the customized default value
-         * Then the category-names are sanitized
-         * Then the domain-name is sanitized
-         * Then the custom default value is not sanitized
-         */
-
-        $defaultValue = 'magic Wün_der.+Land';
-        $domain = 'stepp_den bär.com';
-        $categoryArray = [
-            '',
-            'Gründen mit Erfahrung',
-            'startup meets Mittelstand',
-            'RG-Bau',
-            '',
-            'APRODI',
-            'Leben/Sterben',
-            'Das Handwerk - "Wirtschaftsmacht von nebenan"',
-            '',
-            ''
-        ];
-
-        $expected = 'steppdenbär.com/magic Wün_der.+Land/GründenMitErfahrung/StartupMeetsMittelstand/RG-Bau/magic Wün_der.+Land/APRODI/Leben-Sterben/DasHandwerk-WirtschaftsmachtVonNebenan';
-        self::assertEquals($expected, CategoryUtility::implodeCategories($domain, $categoryArray, $defaultValue, false));
-
+        self::assertSame(
+            'example.org/Marketing/custom default/Checkout',
+            CategoryUtility::implodeCategories(
+                'example.org',
+                ['marketing', '', 'checkout'],
+                'custom default',
+                false
+            )
+        );
     }
-
-
-    //=============================================
-
-    /**
-     * TearDown
-     */
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
-
-
-
-
-
-
-
 }

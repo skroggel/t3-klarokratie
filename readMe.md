@@ -11,40 +11,37 @@ More information on Klaro! can be found here:
 ## Installation & Basic Configuration
 Simply install the extension.
 
-If you want to use the available tracking-code-insertion for etracker or Google Analytics also include the TypoScript in your Rootpage (see below).
-Otherwise you don't need the TypoScript.
-
-After installation you have to define the path to your Klaro!-configuration in your website-setup (YAML).
+After installation you can define the path to your Klaro!-configuration in your site configuration (`config/sites/<site>/config.yaml`).
 You can also use extension-paths if you use a site-package.
-```
+```yaml
 klarokratie:
     klaro:
         config: EXT:site_default/Resources/Public/Config/KlaroConfig.js
         customCss: EXT:site_default/Resources/Public/Css/Klaro.css
 ```
 Alternatively you can use this older notations (working, but discouraged for the sake of having clear namespaces):
-```
+```yaml
 klaro:
     config: EXT:site_default/Resources/Public/Config/KlaroConfig.js
     customCss: EXT:site_default/Resources/Public/Css/Klaro.css
 ```
-```
+```yaml
 klaroConfig: EXT:site_default/Resources/Public/Config/KlaroConfig.js
 klaroCustomCss: EXT:site_default/Resources/Public/Css/Klaro.css
 ```
 If you do not define any configuration or custom CSS a default configuration with the default styles is used.
 However, you can explicitly disable the klaro! Consent Manager by using the following setting:
-```
+```yaml
 klarokratie:
     klaro:
         disable: true
 ```
 or - accordingly the discouraged (!!!) older versions -
-```
+```yaml
 klaro:
     disable: true
 ```
-```
+```yaml
 klaroDisable: true
 ```
 ## Modular Configuration using Includes
@@ -56,7 +53,7 @@ Starting with the latest version, the Klarokratie extension supports a modular a
 This allows you to separate reusable parts and keep your base config clean and minimal.
 
 Example setup:
-```
+```yaml
 klarokratie:
   klaro:
     config: EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js
@@ -84,91 +81,91 @@ EXT:klarokratie/Resources/Public/Config/Includes/
 You can use them directly or copy and customize them in your own site package.
 Note: if you use includes, the `EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js` is used instead of `EXT:klarokratie/Resources/Public/Config/KlaroConfig.js`
 
-You can also override the default translations. You can find an example file here. 
+You can also override the default translations. You can find an example file here.
 ```
 EXT:klarokratie/Resources/Public/Config/Overrides/
 ```
 Just copy it to your site-extension and set your own translations. You can use it like so:
-```
+```yaml
 klarokratie:
   klaro:
     config: EXT:klarokratie/Resources/Public/Config/KlaroConfigMinimal.js
     includes:
-      - EXT:site_default/Resources/Public/Config/Overrides/Transations.js
+      - EXT:site_default/Resources/Public/Config/Overrides/Translations.js
 ```
 
 ## Advanced Configuration
 ### Optional: Use Tracking-Code insertion for etracker or Google Analytics
-If you want to use the available tracking-code-insertion for etracker or Google Analytics also include the TypoScript in your Rootpage.
-Otherwise you don't need the TypoScript.
+Tracking-code insertion for etracker or Google Analytics is configured via site configuration (`config/sites/<site>/config.yaml`).
 
 **An enabled tracking-code-insertion would either include the current etracker-tracklet or the current Google Analytics tracking code.**
 
-In the TypoScript you will find the following configuration options that should be self-explaining:
+Example configuration for etracker:
+```yaml
+klarokratie:
+    etracker:
+        enable: true
+        secureCode: ''
+        blockCookiesOnPageLoad: true
+        respectDoNotTrack: true
+        blockScriptBeforeConsent: true
+        doNotUseSessionStorage: false
 ```
-plugin.tx_klarokratie {
-    settings {
 
-        etracker {
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Enable etracker code insertion
-            enable = 0
-
-            # cat=plugin.tx_klarokratie/etracker; type=string; label=The secure code of your etracker account
-            secureCode =
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Enable blocking cookies on page load (should be active according to GDPR)
-            blockCookiesOnPageLoad = 1
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Respect DoNotTrack in browser (should be active according to GDPR)
-            respectDoNotTrack = 1
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Block tracking script before consent
-            blockScriptBeforeConsent = 0
-
-            # cat=plugin.tx_klarokratie/etracker; type=bool; label=Do not use Session Storage (WARNING: this has a negative impact on page- and tracking-performance!)
-            doNotUseSessionStorage = 0
-        }
-
-        googleAnalytics {
-
-            # cat=plugin.tx_klarokratie/googleAnalytics; type=bool; label=Enable Google Analytics code insertion
-            enable = 0
-
-            # cat=plugin.tx_klarokratie/googleAnalytics; type=bool; label=Use Google Tag Manager
-            useTagManager = 0
-
-            # cat=plugin.tx_klarokratie/googleAnalytics; type=string; label=The Tag-ID of your Google Analytics account
-            tagId =
-        }
-    }
-}
+Example configuration for Google Analytics:
+```yaml
+klarokratie:
+    googleAnalytics:
+        enable: true
+        useTagManager: false
+        tagId: G-XXXXXXXXXX
 ```
+
+The following tracking options are available:
+
+**etracker**
+
+* `enable`: Enables etracker code insertion.
+* `secureCode`: The secure code of your etracker account.
+* `blockCookiesOnPageLoad`: Enables blocking cookies on page load. This should be active according to GDPR.
+* `respectDoNotTrack`: Respects DoNotTrack in the browser. This should be active according to GDPR.
+* `blockScriptBeforeConsent`: Blocks the tracking script before consent.
+* `doNotUseSessionStorage`: Disables Session Storage. Warning: this has a negative impact on page and tracking performance.
+
+**Google Analytics**
+
+* `enable`: Enables Google Analytics code insertion.
+* `useTagManager`: Uses Google Tag Manager instead of the Google Analytics tag directly.
+* `tagId`: The tag ID of your Google Analytics or Google Tag Manager account.
+
 There are also Klaro!-configuration-files for etracker and Google Analytics included.
-This files handle the cookie-opt-in for your tracking according to GDPR.
-You can use them by setting the desired file in your configuration:
-```
+These files handle the cookie-opt-in for your tracking according to GDPR.
+You can use them by setting the desired file in your site configuration:
+```yaml
 klarokratie:
     klaro:
         config: EXT:site_default/Resources/Public/Config/KlaroConfigEtracker.js
 ```
 or
-```
+```yaml
 klarokratie:
     klaro:
         config: EXT:site_default/Resources/Public/Config/KlaroConfigGoogleAnalytics.js
 ```
-If you have a multi-site setup you can either define different tracking-options in each rootpage - or use the site-configuration (YAML).
-Using the site-configuration is the preferred way. **Please note: settings in the site-configuration always override TypoScript-settings.**
-```
+
+If you have a multi-site setup, define different tracking-options in each site's `config.yaml`.
+
+For backwards compatibility, older site-configuration key names are still supported, but discouraged.
+Use the `klarokratie` namespace for new projects:
+```yaml
 klarokratie:
     googleAnalytics:
-        enable: 1
-        tagId: 123456
+        enable: true
+        tagId: G-XXXXXXXXXX
 ```
 
-**IMORTANT:** to ensure that the tracking code is only executed if consent is given, set blockScriptBeforeConsent = 1.
-For reasons of backwards-compatibility the default value currently is 0.
+**IMPORTANT:** to ensure that the tracking code is only executed if consent is given, set `blockScriptBeforeConsent: true`.
+For reasons of backwards-compatibility the default value currently is `false`.
 
 ### Optional: Categories for etracker (et_areas)
 If you use etracker there is a lib-object included which you can use to set hierarchical categories.
@@ -419,4 +416,32 @@ body .klaro {
     }
 
 }
+```
+# Testing
+* Single Method
+```
+ddev exec vendor/bin/phpunit -c vendor/madj2k/t3-klarokratie/phpunit.xml \
+vendor/madj2k/t3-klarokratie/Tests/Unit/Whatever/Whatever.php \
+--filter MethodName
+```
+```
+ddev exec vendor/bin/phpunit -c vendor/madj2k/t3-klarokratie/phpunit.functional.xml \
+vendor/madj2k/t3-klarokratie/Tests/Functional/Whatever/Whatever.php \
+--filter MethodName
+```
+* Single File
+```
+ddev exec vendor/bin/phpunit -c vendor/madj2k/t3-klarokratie/phpunit.xml \
+vendor/madj2k/t3-klarokratie/Tests/Unit/Whatever/Whatever.php
+```
+```
+ddev exec vendor/bin/phpunit -c vendor/madj2k/t3-klarokratie/phpunit.functional.xml \
+vendor/madj2k/t3-klarokratie/Tests/Functional/Whatever/Whatever.php
+```
+* All files
+```
+ddev exec vendor/bin/phpunit -c vendor/madj2k/t3-klarokratie/phpunit.xml
+```
+```
+ddev exec vendor/bin/phpunit -c vendor/madj2k/t3-klarokratie/phpunit.functional.xml
 ```

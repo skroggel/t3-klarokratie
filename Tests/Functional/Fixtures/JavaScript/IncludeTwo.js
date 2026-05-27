@@ -1,0 +1,1 @@
+window.klaroTestIncludeTwo = true;
