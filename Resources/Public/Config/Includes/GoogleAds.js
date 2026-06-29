@@ -16,10 +16,14 @@
       ],
       translations: {
         zz: {
-          title: 'Google Tag Manager & Google Ads'
+          title: 'Google Ads'
         },
         en: {
-          description: 'We use the Google Tag Manager and Google Ads services provided by Google Ireland Ltd., Gordon House, Barrow Street, 4 Dublin, Ireland, email: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, website: <a href="https://www.google.com/" target="_blank">https://www.google.com/</a>, on our website. Personal data is also transferred to the USA. With regard to the transfer of personal data to the USA, there is an adequacy decision on the EU-US Data Privacy Framework of the EU Commission within the meaning of Art. 45 GDPR (hereinafter: <a href="https://commission.europa.eu/document/fa09cbad-dd7d-4684-ae60-be03fcb0fddf_en">DPF</a>). The operator of the service is certified under the DPF, so that the usual level of protection of the GDPR applies to the transfer.\n' +
+          description: 'We use Google Ads, an advertising and conversion measurement service provided by Google Ireland Limited. Google Ads may be technically integrated through Google Tag Manager. Google Ads is only activated if you have consented to the use of this service.<br><br>' +
+            'Provider: Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland, email: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, website: <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer">https://www.google.com/</a>.<br><br>' +
+            'Google Ads is used to measure the success of our advertisements, attribute conversions and, where applicable, display interest-based advertising. Cookies may be set and personal data may be processed, in particular usage data, device and browser information, IP address, interaction data and information about ad clicks and conversions.<br><br>' +
+            'The legal basis for storing and accessing information on your device is your consent pursuant to Section 25(1) TDDDG. The legal basis for the subsequent processing of personal data is your consent pursuant to Article 6(1)(a) GDPR. You may withdraw your consent at any time with effect for the future.<br><br>' +
+            'The transfer of personal data to Google LLC in the USA cannot be ruled out. For data transfers to the USA, an adequacy decision of the European Commission pursuant to Article 45 GDPR may apply on the basis of the EU-US Data Privacy Framework, provided that the respective recipient is certified accordingly. According to its own information, Google LLC is certified under the EU-US Data Privacy Framework.' +
             klarokratieGetTableHtml('Cookie:', 'IDE', 'Duration:', '1 year') +
             klarokratieGetTableHtml('Cookie:', 'test_cookie', 'Duration:', '15 minutes') +
             klarokratieGetTableHtml('Cookie:', 'NID', 'Duration:', '6 months') +
@@ -27,7 +31,11 @@
             klarokratieGetTableHtml('Cookie:', '__gads', 'Duration:', '13 months')
         },
         de: {
-          description: 'Wir verwenden auf unserer Seite den Dienst Google Tag Manager und Google Ads des Unternehmens Google Ireland Ltd., Gordon House, Barrow Street, 4 Dublin, Irland, E-Mail: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, Website: <a href="https://www.google.com/" target="_blank">https://www.google.com/</a>. Die Übermittlung personenbezogener Daten erfolgt auch in die USA. Im Hinblick auf die Übermittlung personenbezogener Daten in die USA besteht ein Angemessenheitsbeschlusses zum EU-US Data Privacy Framework der EU Kommission im Sinne des Art. 45 DSGVO (nachfolgend: <a href="https://commission.europa.eu/document/fa09cbad-dd7d-4684-ae60-be03fcb0fddf_en">DPF</a>). Der Betreiber des Dienstes ist im Rahmen des DPF zertifiziert, so dass für die Übermittlung das übliche Schutzniveau der DSGVO gilt.\n' +
+          description: 'Wir verwenden Google Ads, einen Werbe- und Conversion-Messdienst des Anbieters Google Ireland Limited. Die technische Einbindung von Google Ads kann über den Google Tag Manager erfolgen. Google Ads wird nur aktiviert, wenn Sie in den Einsatz dieses Dienstes eingewilligt haben.<br><br>' +
+            'Anbieter ist Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland, E-Mail: <a href="mailto:support-deutschland@google.com">support-deutschland@google.com</a>, Website: <a href="https://www.google.com/" target="_blank" rel="noopener noreferrer">https://www.google.com/</a>.<br><br>' +
+            'Google Ads dient der Messung des Erfolgs unserer Werbeanzeigen, der Zuordnung von Conversions und, soweit eingesetzt, der Ausspielung interessenbezogener Werbung. Hierbei können Cookies gesetzt und personenbezogene Daten, insbesondere Nutzungsdaten, Geräte- und Browserinformationen, IP-Adresse, Interaktionsdaten sowie Informationen zu Anzeigenklicks und Conversions, verarbeitet werden.<br><br>' +
+            'Rechtsgrundlage für das Speichern und Auslesen von Informationen auf Ihrem Endgerät ist Ihre Einwilligung nach § 25 Abs. 1 TDDDG. Rechtsgrundlage für die anschließende Verarbeitung personenbezogener Daten ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.<br><br>' +
+            'Eine Übermittlung personenbezogener Daten an Google LLC in die USA kann nicht ausgeschlossen werden. Für Datenübermittlungen in die USA besteht ein Angemessenheitsbeschluss der Europäischen Kommission nach Art. 45 DSGVO auf Grundlage des EU-US Data Privacy Framework, soweit der jeweilige Empfänger hierfür zertifiziert ist. Google LLC ist nach eigener Angabe nach dem EU-US Data Privacy Framework zertifiziert.' +
             klarokratieGetTableHtml('Cookie:', 'IDE', 'Dauer:', '1 Jahr') +
             klarokratieGetTableHtml('Cookie:', 'test_cookie', 'Dauer:', '15 Minuten', ) +
             klarokratieGetTableHtml('Cookie:', 'NID', 'Dauer:', '6 Monate') +
@@ -56,7 +64,7 @@
           'ad_user_data': 'granted',
           'ad_personalization': 'granted'
         });
-        console.log('Google Ads allowed! Thank you!');
+        // console.log('Google Ads allowed! Thank you!');
       `,
       onDecline: `
 
@@ -66,7 +74,7 @@
           'ad_user_data': 'denied',
           'ad_personalization': 'denied'
         });
-        console.log('Google Ads denied! You are welcome!');
+        // console.log('Google Ads denied! You are welcome!');
       `,
     };
 

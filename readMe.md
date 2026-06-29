@@ -8,6 +8,11 @@ More information on Klaro! can be found here:
 * https://klaro.org/docs/getting-started
 * https://github.com/klaro-org/klaro-js
 
+## UPGRADE v14 - Breaking Changes
+* The option `etracker.blockScriptBeforeConsent` is no longer available. Per default the etracker-scripts are now only loaded when consent is explictly given.
+However to track users with etrackers cookieless-mode regardless of the given consent just include `EXT:klarokratie/Resources/Public/Config/Includes/EtrackerCookieless.js`.
+This compliant with GDPR, see: https://www.etracker.com/en/consent-free-and-legally-compliant/
+
 ## Installation & Basic Configuration
 Simply install the extension.
 
@@ -67,12 +72,17 @@ All configuration-scripts are delivered as a single combined JavaScript file to 
 If no includes are defined, only the base config is loaded without merging. This is the default behavior.
 The extension already comes with several useful includes for common services:
 
-* Google Analytics
-* Google Ads
 * etracker
-* YouTube
-* Vimeo
+* etracker Cookieless & Consent Free (compliant with GDPR, see: https://www.etracker.com/en/consent-free-and-legally-compliant/)
+* Meta Pixel / Facebook Pixel
+* Google Ads
+* Google Analytics
+* Google Analytics Cookieless & Consent Free (please be aware that this NOT compliant with GDPR)
+* Google Maps
 * HCaptcha
+* LinkedIn
+* Vimeo
+* YouTube
 
 These are located in:
 ```
@@ -108,7 +118,6 @@ klarokratie:
         secureCode: ''
         blockCookiesOnPageLoad: true
         respectDoNotTrack: true
-        blockScriptBeforeConsent: true
         doNotUseSessionStorage: false
 ```
 
@@ -129,7 +138,6 @@ The following tracking options are available:
 * `secureCode`: The secure code of your etracker account.
 * `blockCookiesOnPageLoad`: Enables blocking cookies on page load. This should be active according to GDPR.
 * `respectDoNotTrack`: Respects DoNotTrack in the browser. This should be active according to GDPR.
-* `blockScriptBeforeConsent`: Blocks the tracking script before consent.
 * `doNotUseSessionStorage`: Disables Session Storage. Warning: this has a negative impact on page and tracking performance.
 
 **Google Analytics**
@@ -163,9 +171,6 @@ klarokratie:
         enable: true
         tagId: G-XXXXXXXXXX
 ```
-
-**IMPORTANT:** to ensure that the tracking code is only executed if consent is given, set `blockScriptBeforeConsent: true`.
-For reasons of backwards-compatibility the default value currently is `false`.
 
 ### Optional: Categories for etracker (et_areas)
 If you use etracker there is a lib-object included which you can use to set hierarchical categories.
@@ -444,4 +449,10 @@ ddev exec vendor/bin/phpunit -c vendor/madj2k/t3-klarokratie/phpunit.xml
 ```
 ```
 ddev exec vendor/bin/phpunit -c vendor/madj2k/t3-klarokratie/phpunit.functional.xml
+```
+
+# Generate the documentation as HTML
+Execute in the extension-root:
+```
+docker run --rm --pull always -v "$(pwd)":/project -it ghcr.io/typo3-documentation/render-guides:latest --config=Documentation
 ```

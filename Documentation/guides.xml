@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<guides xmlns="https://www.phpdoc.org/guides"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://www.phpdoc.org/guides ../vendor/phpdocumentor/guides-cli/resources/schema/guides.xsd"
+        links-are-relative="true"
+        default-code-language="php"
+>
+    <extension class="\T3Docs\Typo3DocsTheme\DependencyInjection\Typo3DocsThemeExtension"
+               project-repository="https://github.com/madj2k/t3-klarokratie"
+               project-issues="https://github.com/madj2k/t3-klarokratie/issues"
+               interlink-shortcode="madj2k/t3-klarokratie"
+    />
+    <project title="Klarokratie"
+             version="local"
+             release="local"
+             copyright="by madj2k &amp; contributors"
+    />
+</guides>
