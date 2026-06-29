@@ -56,7 +56,7 @@ Table of contents
 
     Introduction/Index
     Installation/Index
-    Upgrade/Index
+    Migration/Index
     Configuration/Index
     Modal/Index
     Developer/Index
