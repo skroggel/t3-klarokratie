@@ -1,0 +1,3 @@
+..  This file is part of the documentation for EXT:klarokratie.
+..  Add global substitutions, references or common roles here if required.
+

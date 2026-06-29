@@ -193,11 +193,15 @@ var klaroConfig = {
           title: 'PHP-Session'
         },
         en: {
-          description: 'This cookie is specific to PHP applications. It is set to maintain your current session and ensures that you can use all functions of the website without restriction.' +
+          description: 'We use a PHP session cookie to technically provide and maintain your current session on our website. This cookie is required for certain PHP-based functions of the website.<br><br>' +
+            'The PHP session cookie is used to assign individual page views during your visit to a shared session. This enables basic website functions, such as forms, security functions, login functions or cart/enquiry functions, to be technically provided. The cookie generally contains a randomly generated session identifier and is not used for analytics, advertising or profiling.<br><br>' +
+            'The legal basis for storing and accessing the cookie on your device is Section 25(2) no. 2 TDDDG, as the cookie is strictly necessary to provide the website functions expressly requested by you. Where personal data is processed, the processing is carried out on the basis of Article 6(1)(f) GDPR. Our legitimate interest lies in the secure, stable and functional provision of our website.' +
             klarokratieGetTableHtml('Cookie:', 'PHPSESSID', 'Duration:', 'Session')
         },
         de: {
-          description: 'Dieses Cookie ist spezifisch für PHP-Anwendungen. Es wird gesetzt, um Ihre aktuelle Sitzung aufrechtzuerhalten und gewährleistet so dass Sie alle Funktionen der Website uneingeschränkt nutzen können.' +
+          description: 'Wir verwenden ein PHP-Session-Cookie, um Ihre aktuelle Sitzung auf unserer Website technisch bereitzustellen und aufrechtzuerhalten. Dieses Cookie ist für bestimmte PHP-basierte Funktionen der Website erforderlich.<br><br>' +
+            'Das PHP-Session-Cookie dient dazu, einzelne Seitenaufrufe während Ihres Besuchs einer gemeinsamen Sitzung zuzuordnen. Dadurch können grundlegende Website-Funktionen, etwa Formulare, Sicherheitsfunktionen, Login- oder Warenkorb-/Anfragefunktionen, technisch bereitgestellt werden. Das Cookie enthält in der Regel eine zufällig erzeugte Sitzungskennung und dient nicht der Analyse, Werbung oder Profilbildung.<br><br>' +
+            'Rechtsgrundlage für das Speichern und Auslesen des Cookies auf Ihrem Endgerät ist § 25 Abs. 2 Nr. 2 TDDDG, da das Cookie für die Bereitstellung der von Ihnen ausdrücklich gewünschten Website-Funktionen unbedingt erforderlich ist. Soweit personenbezogene Daten verarbeitet werden, erfolgt dies auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der sicheren, stabilen und funktionsfähigen Bereitstellung unserer Website.' +
             klarokratieGetTableHtml('Cookie:', 'PHPSESSID', 'Dauer:', 'Sitzung')
         },
       },
@@ -212,11 +216,15 @@ var klaroConfig = {
           title: 'TYPO3'
         },
         en: {
-          description: 'This cookie is set by the TYPO3 content management system used by us to identify a user. It is a prerequisite for user-specific feedback on forms, for example, but also enables login to our site.' +
+          description: 'We use a TYPO3 frontend cookie to technically provide certain functions of our TYPO3 content management system. This cookie is required for user-specific website functions.<br><br>' +
+            'The TYPO3 frontend cookie is used to assign individual page views during your visit to a session and to technically enable certain website functions. These include, in particular, user-specific feedback in forms, the processing of form requests and, where offered, login functions or other protected areas. The cookie is not used for analytics, advertising or profiling.<br><br>' +
+            'The legal basis for storing and accessing the cookie on your device is Section 25(2) no. 2 TDDDG, as the cookie is strictly necessary to provide the website functions expressly requested by you. Where personal data is processed, the processing is carried out on the basis of Article 6(1)(f) GDPR. Our legitimate interest lies in the secure, stable and functional provision of our website.' +
             klarokratieGetTableHtml('Cookie:', 'fe_typo_user', 'Duration:', 'Session')
         },
         de: {
-          description: 'Dieses Cookie wird vom durch uns eingesetzten Content Management System TYPO3 für die Identifizierung eines Anwenders gesetzt. Es ist Voraussetzung für z. B. nutzerspezifische Rückmeldungen bei Formularen, ermöglicht aber auch den Login auf unserer Seite.' +
+          description: 'Wir verwenden ein TYPO3-Frontend-Cookie, um bestimmte Funktionen unseres Content-Management-Systems TYPO3 technisch bereitzustellen. Dieses Cookie ist für nutzerspezifische Website-Funktionen erforderlich.<br><br>' +
+            'Das TYPO3-Frontend-Cookie dient dazu, einzelne Seitenaufrufe während Ihres Besuchs einer Sitzung zuzuordnen und bestimmte Funktionen der Website technisch zu ermöglichen. Dazu gehören insbesondere nutzerspezifische Rückmeldungen bei Formularen, die Verarbeitung von Formularanfragen sowie, soweit angeboten, Login-Funktionen oder andere geschützte Bereiche. Das Cookie dient nicht der Analyse, Werbung oder Profilbildung.<br><br>' +
+            'Rechtsgrundlage für das Speichern und Auslesen des Cookies auf Ihrem Endgerät ist § 25 Abs. 2 Nr. 2 TDDDG, da das Cookie für die Bereitstellung der von Ihnen ausdrücklich gewünschten Website-Funktionen unbedingt erforderlich ist. Soweit personenbezogene Daten verarbeitet werden, erfolgt dies auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der sicheren, stabilen und funktionsfähigen Bereitstellung unserer Website.' +
             klarokratieGetTableHtml('Cookie:', 'fe_typo_user', 'Dauer:', 'Sitzung')
         },
       },
@@ -231,11 +239,15 @@ var klaroConfig = {
           title: 'Klaro!'
         },
         en: {
-          description: 'This cookie saves the data protection settings selected by the user.' +
+          description: 'We use a consent cookie from klaro! to store and implement your privacy and consent settings on our website.<br><br>' +
+            'The klaro! consent cookie stores which services or categories you have accepted or rejected. This enables us to ensure that services requiring consent are only activated in accordance with your selection and that the consent banner is not displayed again on every page view. The cookie is not used for analytics, advertising or profiling.<br><br>' +
+            'The legal basis for storing and accessing the cookie on your device is Section 25(2) no. 2 TDDDG, as the cookie is strictly necessary for storing and implementing your consent decision. Where personal data is processed, the processing is carried out on the basis of Article 6(1)(f) GDPR. Our legitimate interest lies in the legally compliant, user-friendly and technically reliable management of your privacy and consent settings.' +
             klarokratieGetTableHtml('Cookie:', 'klaro', 'Duration:', '1 year')
         },
         de: {
-          description: 'Dieses Cookie speichert die durch Nutzenden gewählten Datenschutzeinstellungen.' +
+          description: 'Wir verwenden ein Consent-Cookie von klaro!, um Ihre Datenschutz- und Einwilligungseinstellungen auf unserer Website zu speichern und umzusetzen.<br><br>' +
+            'Das klaro!-Consent-Cookie speichert, welche Dienste oder Kategorien Sie akzeptiert oder abgelehnt haben. Dadurch können wir sicherstellen, dass einwilligungspflichtige Dienste nur entsprechend Ihrer Auswahl aktiviert werden und dass Ihnen der Consent-Banner nicht bei jedem Seitenaufruf erneut angezeigt wird. Das Cookie dient nicht der Analyse, Werbung oder Profilbildung.<br><br>' +
+            'Rechtsgrundlage für das Speichern und Auslesen des Cookies auf Ihrem Endgerät ist § 25 Abs. 2 Nr. 2 TDDDG, da das Cookie für die Speicherung und Umsetzung Ihrer Einwilligungsentscheidung unbedingt erforderlich ist. Soweit personenbezogene Daten verarbeitet werden, erfolgt dies auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der rechtssicheren, nutzerfreundlichen und technisch zuverlässigen Verwaltung Ihrer Datenschutz- und Einwilligungseinstellungen.' +
             klarokratieGetTableHtml('Cookie:', 'klaro', 'Dauer:', '1 Jahr')
         },
       },
@@ -244,14 +256,14 @@ var klaroConfig = {
 };
 
 function klarokratieGetTableHtml(
-  cookieLabel = '', cookie = '',
-  liveTimeLabel = '', liveTime = '',
-  linkLabel = '', link = '',
+  label1 = '', text1 = '',
+  label2 = '', text2 = '',
+  labelLink = '', link = '',
 ) {
 
   return '<table class="klaro-table">' +
-    (cookieLabel ? '<tr><th>' + cookieLabel + '</th><td>' + cookie + '</td></tr>' : '') +
-    (liveTimeLabel ? '<tr><th>' + liveTimeLabel + '</th><td>' + liveTime + '</td></tr>' : '') +
-    (linkLabel ? '<tr><th>' + linkLabel + '</th><td><a href="' + link + '" target="_blank">' + link + '</a></td></tr>' : '') +
+    (label1 ? '<tr><th>' + label1 + '</th><td>' + text1 + '</td></tr>' : '') +
+    (label2 ? '<tr><th>' + label2 + '</th><td>' + text2 + '</td></tr>' : '') +
+    (labelLink ? '<tr><th>' + labelLink + '</th><td><a href="' + link + '" target="_blank">' + link + '</a></td></tr>' : '') +
     '</table>';
 }

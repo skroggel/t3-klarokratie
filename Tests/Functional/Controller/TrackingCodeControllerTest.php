@@ -143,7 +143,6 @@ final class TrackingCodeControllerTest extends FunctionalTestCase
                     'secureCode' => 'secure-code-123',
                     'blockCookiesOnPageLoad' => true,
                     'respectDoNotTrack' => true,
-                    'blockScriptBeforeConsent' => true,
                     'doNotUseSessionStorage' => false,
                 ],
                 'googleAnalytics' => [

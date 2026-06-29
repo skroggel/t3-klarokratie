@@ -1,0 +1,23 @@
+lib {
+    txKlarokratie {
+        etracker {
+            domain = TEXT
+            domain.value = example.org
+
+            categoryLevel1 = TEXT
+            categoryLevel1.value = functional-test
+
+            categoryLevel2 = TEXT
+            categoryLevel2.value =
+
+            categoryLevel3 = TEXT
+            categoryLevel3.value =
+
+            categoryLevel4 = TEXT
+            categoryLevel4.value =
+
+            categoryLevel5 = TEXT
+            categoryLevel5.value =
+        }
+    }
+}

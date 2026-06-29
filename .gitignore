@@ -16,5 +16,6 @@ bower_components
 /.project
 /.php-version
 /.phpunit.cache
+/Documentation-GENERATED-temp
 /vendor
 
