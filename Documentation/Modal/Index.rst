@@ -7,8 +7,8 @@ Modal
 Reopen the Klaro! modal
 =======================
 
-Klarokratie adds the field ``tx_klarokratie_open_modal`` to the TYPO3
-``pages`` table and provides the corresponding TCA configuration.
+Klarokratie adds the field ``tx_klarokratie_open_modal`` to the TYPO3 ``pages``
+table and provides the corresponding TCA configuration.
 
 This field can be enabled in the page properties and used to render a menu item
 that reopens the Klaro! modal instead of linking to a normal page.
