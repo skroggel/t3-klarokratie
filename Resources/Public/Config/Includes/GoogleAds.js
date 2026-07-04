@@ -46,7 +46,7 @@
       onInit: ``,
       onAccept: `
 
-        klarokratieInjectGoogleTagManager();
+        klarokratieInjectScriptTemplate('google-tagmanager');
 
         // we notify the tag manager about all services that were accepted. You can define
         // a custom event in GTM to load the service if consent was given.

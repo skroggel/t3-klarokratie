@@ -44,6 +44,8 @@
       },
       onAccept: `
 
+        klarokratieInjectScriptTemplate('etracker');
+
         let intervalEtracker = null;
         function updateEtracker() {
           if (typeof window._etracker == 'object'

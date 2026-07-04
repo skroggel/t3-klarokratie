@@ -1,0 +1,34 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <f:comment><!-- 
+        This script is needed because Google Tag Manager can be a requirement for both Google Analytics and Google Ads
+        and both may be granted separately. Google Tag Manager on the other hand can not be defined as requrired, because
+        in this case it would be loaded independently of a given consent - which is not GDPR compliant.
+        
+        It could also be the case that Google Analytics Cookieless / etracker cookieless is used together with 
+        Google Analytics default / etracker default. 
+        In this case we want to prevent the script from loading twice!
+      --></f:comment>
+    <script>
+    
+        function klarokratieInjectScriptTemplate(serviceName = 'google-tagmanager') {
+            const templates = document.querySelectorAll(`template[data-klarokratie-name='${serviceName}']`);
+
+            templates.forEach((template) => {
+                const script = document.createElement("script");
+    
+                script.type = template.getAttribute("data-klarokratie-type") || "application/javascript";
+                script.text = template.innerHTML.trim();
+    
+                template.parentNode.insertBefore(script, template);
+                template.remove();
+            });
+        }
+
+        function klarokratieInjectGoogleTagManager() {
+            klarokratieInjectScriptTemplate('google-tagmanager');
+        }
+    </script>
+
+</html>

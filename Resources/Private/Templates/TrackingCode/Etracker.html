@@ -31,19 +31,24 @@
             // console.log('etracker does not use session-storage! You are welcome!');
         </f:if>
     </script>
-
-        <script id="_etLoader"
-                async
-                type="text/plain"
-                data-type="application/javascript" 
-                data-name="etracker"
-                charset="UTF-8"
-                data-block-cookies="{f:if(condition:'{settings.etracker.blockCookiesOnPageLoad}', then: 'true', else: 'false')}"
-                data-respect-dnt="{f:if(condition:'{settings.etracker.respectDoNotTrack}', then: 'true', else: 'false')}"
-                data-secure-code="{settings.etracker.secureCode}"
-                src="//code.etracker.com/code/e.js"></script>
-        <script type="text/plain"
-                data-type="application/javascript"
-                data-name="etracker">//console.log('etracker allowed! Thank you!');</script>
+    
+    <f:variable name="blockCookiesOnPageLoad" value="{f:if(condition:'{settings.etracker.blockCookiesOnPageLoad}', then:'true', else:'false')}"/>
+    <f:variable name="respectDoNotTrack" value="{f:if(condition:'{settings.etracker.respectDoNotTrack}', then:'true', else:'false')}"/>
+    <template
+        data-klarokratie-type="application/javascript"
+        data-klarokratie-name="etracker"
+    >(function(d,s,b,r,c){var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
+        j.id='_etLoader';j.async=true;j.charset='UTF-8';
+        j.setAttribute('data-block-cookies',b);
+        j.setAttribute('data-respect-dnt',r);
+        j.setAttribute('data-secure-code',c);
+        j.src='//code.etracker.com/code/e.js';f.parentNode.insertBefore(j,f);
+        })(document,'script',
+        '{blockCookiesOnPageLoad}',
+        '{respectDoNotTrack}',
+        '{settings.etracker.secureCode}');
+    </template>
+    
+    <f:render partial="Default" arguments="{_all}" />
        
 </html>

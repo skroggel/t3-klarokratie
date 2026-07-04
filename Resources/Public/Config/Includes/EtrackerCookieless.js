@@ -4,7 +4,7 @@
     Array.isArray(klaroConfig.services)
   ) {
     const additionalService = {
-      name: "etracker",
+      name: "etracker-cookieless",
       purposes: ['statistics'],
       default: true,
       required: true,
@@ -28,6 +28,11 @@
             'Rechtsgrundlage für den cookieless Einsatz von etracker Analytics ist § 25 Abs. 2 Nr. 2 TDDDG, soweit hierfür ein Zugriff auf Ihr Endgerät zur Bereitstellung der Website und zur Reichweitenmessung ohne Cookies unbedingt erforderlich ist. Soweit personenbezogene Daten verarbeitet werden, erfolgt die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der datenschutzfreundlichen, statistischen Analyse und Optimierung unseres Webangebots.'
         },
       },
+      onInit: ``,
+      onAccept: `
+        klarokratieInjectScriptTemplate('etracker');
+      `,
+      onDecline: ``,
     };
 
     if (!klaroConfig.services.find(service => service.name === additionalService.name)) {

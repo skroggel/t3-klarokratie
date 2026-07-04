@@ -5,7 +5,7 @@
   ) {
     const additionalService = {
       // In GTM, you should define a custom event trigger named `klaro-google-analytics-accepted` which should trigger the Google Analytics integration.
-      name: "google-analytics",
+      name: "google-analytics-cookieless",
       purposes: ["statistics"],
       default: true,
       required: true,
@@ -35,7 +35,8 @@
       `,
       onAccept: `
 
-        klarokratieInjectGoogleTagManager();
+        klarokratieInjectScriptTemplate('google-analytics');
+        klarokratieInjectScriptTemplate('google-tagmanager');
 
         // we notify the tag manager about all services that were accepted. You can define
         // a custom event in GTM to load the service if consent was given.
