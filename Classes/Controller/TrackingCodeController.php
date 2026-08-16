@@ -98,11 +98,11 @@ final class TrackingCodeController extends \TYPO3\CMS\Extbase\Mvc\Controller\Act
      */
     public function loaderAction(): ResponseInterface
     {
-        if ($this->settings['etracker']['enable']) {
+        if ($this->settings['etracker']['enable'] ?? false) {
             return new ForwardResponse('etracker');
         }
 
-        if ($this->settings['googleAnalytics']['enable']) {
+        if ($this->settings['googleAnalytics']['enable'] ?? false) {
             return new ForwardResponse('googleAnalytics');
         }
 
